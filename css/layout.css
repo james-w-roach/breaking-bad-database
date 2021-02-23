@@ -40,3 +40,22 @@ input {
   padding-left: 1rem;
   font-size: 1.2rem;
 }
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 70rem;
+    margin: auto;
+  }
+
+  body {
+    position: relative;
+  }
+
+  form {
+    width: 20rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem 15%;
+  }
+}
