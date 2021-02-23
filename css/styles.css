@@ -1,8 +1,10 @@
+body {
+  background-color: darkgray;
+}
 
-header {
-  background-color: lawngreen;
-  width: 100vw;
-  margin: 0 auto;
+h2 {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.75rem;
 }
 
 .main-header {
