@@ -15,6 +15,24 @@ function categorySelect(event) {
 
 window.addEventListener('click', categorySelect);
 
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://rickandmortyapi.com/api/character');
+xhr.responseType = 'json';
+
+xhr.addEventListener('load', function () {
+  loadDOM();
+  window.addEventListener('DOMContentLoaded', loadDOM);
+});
+
+xhr.send();
+
+function loadDOM(event) {
+  for (var i = 0; i < xhr.response.results.length; i++) {
+    var tree = createDOM(xhr.response.results[i]);
+    $ul.appendChild(tree);
+  }
+}
+
 function createDOM(object) {
   var $li = document.createElement('li');
   $li.className = 'list-item';
@@ -38,11 +56,4 @@ function createDOM(object) {
   $column75.appendChild($character);
 
   return $li;
-}
-
-function loadDOM(event) {
-  for (var i = 0; i < xhr.response.results.length; i++) {
-    var tree = createDOM(xhr.response.results[i]);
-    $ul.appendChild(tree);
-  }
 }
