@@ -1,5 +1,6 @@
-body {
-  background-color: darkgray;
+main {
+  background-color: rgb(88, 87, 87);
+  font-family: 'Hind Siliguri', sans-serif;
 }
 
 h2 {
@@ -11,6 +12,20 @@ h2 {
   color: white;
 }
 
+button {
+  width: 10rem;
+  height: 3rem;
+  outline: none;
+  border: none;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  font-size: 1.2rem;
+}
+
 img {
-  width: 1rem;
+  width: 10rem;
+  height: 15rem;
+  object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
