@@ -1,4 +1,5 @@
 var $front = document.querySelector('#front-page');
+var $ul = document.querySelector('ul');
 
 function categorySelect(event) {
   if (event.target.className === 'chars' || event.target.getAttribute('id') === 'chars') {
