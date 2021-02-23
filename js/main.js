@@ -14,3 +14,28 @@ function categorySelect(event) {
 }
 
 window.addEventListener('click', categorySelect);
+
+function createDOM(object) {
+  var $li = document.createElement('li');
+  $li.className = 'list-item';
+
+  var $column25 = document.createElement('div');
+  $column25.className = 'column-25';
+  $li.appendChild($column25);
+
+  var $img = document.createElement('img');
+  $img.setAttribute('src', object.image);
+  $img.className = 'list-img';
+  $column25.appendChild($img);
+
+  var $column75 = document.createElement('div');
+  $column75.className = 'column-75';
+  $li.appendChild($column75);
+
+  var $character = document.createElement('h2');
+  $character.className = 'character-name';
+  $character.textContent = object.name;
+  $column75.appendChild($character);
+
+  return $li;
+}
