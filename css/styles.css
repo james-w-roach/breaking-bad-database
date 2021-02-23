@@ -1,5 +1,8 @@
-main {
+body {
   background-color: rgb(88, 87, 87);
+}
+
+main {
   font-family: 'Hind Siliguri', sans-serif;
 }
 
@@ -24,7 +27,7 @@ button {
 
 img {
   width: 10rem;
-  height: 15rem;
+  height: 14rem;
   object-fit: cover;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
