@@ -39,3 +39,10 @@ function createDOM(object) {
 
   return $li;
 }
+
+function loadDOM(event) {
+  for (var i = 0; i < xhr.response.results.length; i++) {
+    var tree = createDOM(xhr.response.results[i]);
+    $ul.appendChild(tree);
+  }
+}
