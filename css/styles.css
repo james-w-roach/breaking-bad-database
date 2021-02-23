@@ -11,10 +11,6 @@ h2 {
   font-size: 1.75rem;
 }
 
-.main-header {
-  color: white;
-}
-
 button:hover {
   cursor: pointer;
 }
