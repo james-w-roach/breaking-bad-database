@@ -41,21 +41,81 @@ input {
   font-size: 1.2rem;
 }
 
-@media screen and (min-width: 768px) {
+button {
+  width: 10rem;
+  height: 3rem;
+  outline: none;
+  border: none;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  font-size: 1.2rem;
+}
+
+img {
+  width: 10rem;
+  height: 14rem;
+  object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  .main-header {
+    padding-left: 1rem;
+  }
+
+  form {
+    width: 32rem;
+  }
+
   .container {
-    width: 70rem;
+    width: 35rem;
     margin: auto;
   }
 
-  body {
+  img {
+    width: 15rem;
+  }
+
+  button {
+    width: 15rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 45rem;
+    margin: auto;
     position: relative;
   }
 
   form {
     width: 20rem;
     position: absolute;
-    top: 0;
-    right: 0;
-    margin: 1rem 15%;
+    top: -4rem;
+    right: 1.5rem;
+  }
+
+  img {
+    width: 20rem;
+  }
+
+  button {
+    width: 20rem;
+  }
+}
+
+@media screen and (min-width: 1040px) {
+  .container {
+    width: 65rem;
+    margin: auto;
+  }
+
+  img {
+    width: 30rem;
+  }
+
+  button {
+    width: 30rem;
   }
 }
