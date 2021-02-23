@@ -14,3 +14,11 @@ h2 {
 .main-header {
   color: white;
 }
+
+button:hover {
+  cursor: pointer;
+}
+
+img:hover {
+  cursor: pointer;
+}
