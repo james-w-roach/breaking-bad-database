@@ -1,0 +1,20 @@
+body {
+  background-color: rgb(88, 87, 87);
+}
+
+main {
+  font-family: 'Hind Siliguri', sans-serif;
+}
+
+h2 {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.75rem;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+img:hover {
+  cursor: pointer;
+}
