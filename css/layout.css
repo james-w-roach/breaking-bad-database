@@ -29,6 +29,7 @@ header {
 .main-header {
   color: white;
   padding-left: 0.3rem;
+  font-size: 1.75rem;
 }
 
 form {
@@ -55,12 +56,26 @@ button {
   font-size: 1.2rem;
 }
 
-img {
+.main-img {
   width: 10rem;
   height: 14rem;
   object-fit: cover;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+}
+
+.list-item {
+  display: flex;
+  width: 21rem;
+  margin: 1rem auto;
+}
+
+.column-75 {
+  flex-basis: 75%;
+}
+
+.column-25 {
+  flex-basis: 25%;
 }
 
 @media screen and (min-width: 576px) {
@@ -77,12 +92,25 @@ img {
     margin: auto;
   }
 
-  img {
+  .main-img {
     width: 15rem;
   }
 
   button {
     width: 15rem;
+  }
+
+  .list-item {
+    width: 32rem;
+    height: 10rem;
+  }
+
+  .column-75 {
+    flex-basis: 60%;
+  }
+
+  .column-25 {
+    flex-basis: 40%;
   }
 }
 
@@ -100,7 +128,7 @@ img {
     right: 1.5rem;
   }
 
-  img {
+  .main-img {
     width: 20rem;
   }
 
@@ -115,7 +143,7 @@ img {
     margin: auto;
   }
 
-  img {
+  .main-img {
     width: 30rem;
   }
 

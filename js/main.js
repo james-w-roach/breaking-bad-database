@@ -3,22 +3,22 @@ var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('ul');
 
 function categorySelect(event) {
-  if (event.target.className === 'chars' || event.target.getAttribute('id') === 'chars') {
+  if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     var char = 'character';
     getAPIData(char);
-  } else if (event.target.className === 'locations' || event.target.getAttribute('id') === 'locations') {
+  } else if (event.target.getAttribute('id') === 'locations-img' || event.target.getAttribute('id') === 'locations') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     var location = 'location';
     getAPIData(location);
-  } else if (event.target.className === 'episodes' || event.target.getAttribute('id') === 'episodes') {
+  } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     var episode = 'episode';
     getAPIData(episode);
-  } else if (event.target.className === 'favs' || event.target.getAttribute('id') === 'favs') {
+  } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $front.className = 'hidden';
   }
 }
