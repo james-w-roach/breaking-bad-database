@@ -14,10 +14,6 @@ button:hover {
   cursor: pointer;
 }
 
-img:hover {
-  cursor: pointer;
-}
-
 .hidden {
   display: none;
 }
@@ -54,4 +50,11 @@ ul {
 
 .entry-name {
   margin: 0 0 0.5rem 0;
+}
+
+.main-img:hover,
+.list-img:hover,
+.character-name:hover,
+.column-75:hover {
+  cursor: pointer;
 }
