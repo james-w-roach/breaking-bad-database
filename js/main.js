@@ -34,7 +34,6 @@ function getAPIData(category) {
 
   xhr.addEventListener('load', function () {
     loadDOM();
-    window.addEventListener('DOMContentLoaded', loadDOM);
   });
 
   xhr.send();
