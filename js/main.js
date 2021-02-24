@@ -60,16 +60,25 @@ function createDOM(object) {
     $img.setAttribute('src', object.image);
     $img.className = 'list-img';
     $column25.appendChild($img);
+
+    var $column75 = document.createElement('div');
+    $column75.className = 'column-75';
+    $li.appendChild($column75);
+
+    var $character = document.createElement('h2');
+    $character.className = 'character-name';
+    $character.textContent = object.name;
+    $column75.appendChild($character);
+  } else {
+    var $column = document.createElement('div');
+    $column.className = 'column100';
+    $li.appendChild($column);
+
+    var $name = document.createElement('h2');
+    $name.className = 'name';
+    $name.textContent = object.name;
+    $column.appendChild($name);
   }
-
-  var $column75 = document.createElement('div');
-  $column75.className = 'column-75';
-  $li.appendChild($column75);
-
-  var $character = document.createElement('h2');
-  $character.className = 'character-name';
-  $character.textContent = object.name;
-  $column75.appendChild($character);
 
   return $li;
 }

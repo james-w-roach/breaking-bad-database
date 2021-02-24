@@ -78,6 +78,13 @@ button {
   flex-basis: 25%;
 }
 
+.column100 {
+  flex-basis: 100%;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+}
+
 @media screen and (min-width: 576px) {
   .main-header {
     padding-left: 1rem;
