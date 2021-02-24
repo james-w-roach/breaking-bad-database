@@ -33,7 +33,6 @@ function getAPIData(category) {
   xhr.responseType = 'json';
 
   xhr.addEventListener('load', function () {
-    console.log(xhr.response);
     loadDOM();
   });
 
@@ -58,16 +57,19 @@ function createDOM(object) {
 
     var $img = document.createElement('img');
     $img.setAttribute('src', object.image);
+    $img.setAttribute('id', object.id);
     $img.className = 'list-img';
     $column25.appendChild($img);
 
     var $column75 = document.createElement('div');
     $column75.className = 'column-75';
+    $column75.setAttribute('id', object.id);
     $li.appendChild($column75);
 
     var $character = document.createElement('h2');
     $character.className = 'character-name';
     $character.textContent = object.name;
+    $character.setAttribute('id', object.id);
     $column75.appendChild($character);
   } else {
     var $column = document.createElement('div');
@@ -128,11 +130,6 @@ function createEntryDOM(object) {
     $gender.textContent = 'Gender: ' + object.gender;
     $charList.appendChild($gender);
 
-    var $count = document.createElement('li');
-    $count.className = 'ep-count';
-    $count.textContent = 'Episode count: ' + object.episodes.length;
-    $charList.appendChild($count);
-
     var $status = document.createElement('li');
     $status.className = 'char-status';
     $status.textContent = 'Status: ' + object.status;
@@ -169,3 +166,9 @@ function createEntryDOM(object) {
 
   return $entry;
 }
+
+function showEntry(event) {
+  console.log(createEntryDOM(xhr.response.results[(event.target.getAttribute('id') - 1)]));
+}
+
+$ul.addEventListener('click', showEntry);
