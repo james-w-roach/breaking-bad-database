@@ -1,6 +1,7 @@
 var $front = document.querySelector('#front-page');
 var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('ul');
+var $entryPage = document.querySelector('#entry-page');
 
 function categorySelect(event) {
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
@@ -74,11 +75,13 @@ function createDOM(object) {
   } else {
     var $column = document.createElement('div');
     $column.className = 'column100';
+    $column.setAttribute('id', object.id);
     $li.appendChild($column);
 
     var $name = document.createElement('h2');
     $name.className = 'name';
     $name.textContent = object.name;
+    $name.setAttribute('id', object.id);
     $column.appendChild($name);
   }
 
@@ -168,7 +171,10 @@ function createEntryDOM(object) {
 }
 
 function showEntry(event) {
-  console.log(createEntryDOM(xhr.response.results[(event.target.getAttribute('id') - 1)]));
+  $ajaxList.className = 'ajax-list hidden';
+  var entryTree = createEntryDOM(xhr.response.results[(event.target.getAttribute('id') - 1)]);
+  $entryPage.appendChild(entryTree);
+  $entryPage.className = 'entry-page';
 }
 
 $ul.addEventListener('click', showEntry);
