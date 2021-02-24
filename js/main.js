@@ -128,6 +128,13 @@ function createEntryDOM(object) {
     $species.textContent = 'Species: ' + object.species;
     $charList.appendChild($species);
 
+    if (object.type) {
+      var $subSpecies = document.createElement('li');
+      $subSpecies.className = 'char-type';
+      $subSpecies.textContent = 'Info: ' + object.type;
+      $charList.appendChild($subSpecies);
+    }
+
     var $gender = document.createElement('li');
     $gender.className = 'char-gender';
     $gender.textContent = 'Gender: ' + object.gender;
@@ -171,10 +178,12 @@ function createEntryDOM(object) {
 }
 
 function showEntry(event) {
-  $ajaxList.className = 'ajax-list hidden';
-  var entryTree = createEntryDOM(xhr.response.results[(event.target.getAttribute('id') - 1)]);
-  $entryPage.appendChild(entryTree);
-  $entryPage.className = 'entry-page';
+  if (event.target.getAttribute('id') !== null) {
+    $ajaxList.className = 'ajax-list hidden';
+    var entryTree = createEntryDOM(xhr.response.results[(event.target.getAttribute('id') - 1)]);
+    $entryPage.appendChild(entryTree);
+    $entryPage.className = 'entry-page';
+  }
 }
 
 $ul.addEventListener('click', showEntry);
