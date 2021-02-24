@@ -55,6 +55,7 @@ ul {
 .main-img:hover,
 .list-img:hover,
 .character-name:hover,
-.column-75:hover {
+.column-75:hover,
+.main-header:hover {
   cursor: pointer;
 }

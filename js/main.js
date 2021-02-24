@@ -191,3 +191,21 @@ function showEntry(event) {
 }
 
 $ul.addEventListener('click', showEntry);
+
+function showFrontPage(event) {
+  if (event.target.className === 'main-header') {
+    $front.className = 'front-page';
+    $ajaxList.className = 'ajax-list hidden';
+    removeChildren($ul);
+    removeChildren($entryPage);
+    $entryPage.className = 'entry-page hidden';
+  }
+}
+
+window.addEventListener('click', showFrontPage);
+
+function removeChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
