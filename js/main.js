@@ -97,16 +97,20 @@ function createEntryDOM(object) {
   $title.textContent = object.name;
   $entry.appendChild($title);
 
+  var $content = document.createElement('div');
+  $content.className = 'content';
+  $entry.appendChild($content);
+
   if (object.image) {
     var $img = document.createElement('img');
     $img.setAttribute('src', object.image);
     $img.className = 'entry-img';
-    $entry.appendChild($img);
+    $content.appendChild($img);
   }
 
   var $details = document.createElement('div');
   $details.className = 'details';
-  $entry.appendChild($details);
+  $content.appendChild($details);
 
   if (object.species) {
     var $charList = document.createElement('ul');

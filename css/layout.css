@@ -33,7 +33,7 @@ header {
 }
 
 form {
-  width: 21rem;
+  width: 100%;
 }
 
 input {
@@ -85,13 +85,23 @@ button {
   padding: 0 1rem;
 }
 
+.entry {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.char-entry {
+  margin: 1rem 0;
+}
+
 @media screen and (min-width: 576px) {
   .main-header {
     padding-left: 1rem;
-  }
-
-  form {
-    width: 32rem;
   }
 
   .container {
@@ -119,6 +129,14 @@ button {
   .column-25 {
     flex-basis: 40%;
   }
+
+  .content {
+    flex-direction: row;
+  }
+
+  .char-entry {
+    margin: 0 0 0 1rem;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -141,6 +159,11 @@ button {
 
   button {
     width: 20rem;
+  }
+
+  .entry {
+    width: 40rem;
+    margin: auto;
   }
 }
 

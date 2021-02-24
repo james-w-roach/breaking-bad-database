@@ -24,6 +24,7 @@ img:hover {
 
 ul {
   padding: 0;
+  list-style-type: none;
 }
 
 .column-75 {
@@ -42,4 +43,15 @@ ul {
 
 .character-name {
   margin: 1rem 1rem;
+}
+
+.entry {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.entry-name {
+  margin: 0 0 0.5rem 0;
 }
