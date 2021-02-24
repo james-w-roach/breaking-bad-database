@@ -33,6 +33,7 @@ function getAPIData(category) {
   xhr.responseType = 'json';
 
   xhr.addEventListener('load', function () {
+    console.log(xhr.response);
     loadDOM();
   });
 
@@ -80,4 +81,91 @@ function createDOM(object) {
   }
 
   return $li;
+}
+
+function createEntryDOM(object) {
+  var $entry = document.createElement('div');
+  $entry.className = 'entry';
+
+  var $title = document.createElement('h1');
+  $title.className = 'entry-name';
+  $title.textContent = object.name;
+  $entry.appendChild($title);
+
+  if (object.image) {
+    var $img = document.createElement('img');
+    $img.setAttribute('src', object.image);
+    $img.className = 'entry-img';
+    $entry.appendChild($img);
+  }
+
+  var $details = document.createElement('div');
+  $details.className = 'details';
+  $entry.appendChild($details);
+
+  if (object.species) {
+    var $charList = document.createElement('ul');
+    $charList.className = 'char-entry';
+    $details.appendChild($charList);
+
+    var $loc = document.createElement('li');
+    $loc.className = 'char-location';
+    $loc.textContent = 'Location: ' + object.location.name;
+    $charList.appendChild($loc);
+
+    var $origin = document.createElement('li');
+    $origin.className = 'char-origin';
+    $origin.textContent = 'Origin: ' + object.origin.name;
+    $charList.appendChild($origin);
+
+    var $species = document.createElement('li');
+    $species.className = 'char-species';
+    $species.textContent = 'Species: ' + object.species;
+    $charList.appendChild($species);
+
+    var $gender = document.createElement('li');
+    $gender.className = 'char-gender';
+    $gender.textContent = 'Gender: ' + object.gender;
+    $charList.appendChild($gender);
+
+    var $count = document.createElement('li');
+    $count.className = 'ep-count';
+    $count.textContent = 'Episode count: ' + object.episodes.length;
+    $charList.appendChild($count);
+
+    var $status = document.createElement('li');
+    $status.className = 'char-status';
+    $status.textContent = 'Status: ' + object.status;
+    $charList.appendChild($status);
+  } else if (object.residents) {
+    var $locList = document.createElement('ul');
+    $locList.className = 'location-entry';
+    $details.appendChild($locList);
+
+    var $dimension = document.createElement('li');
+    $dimension.className = 'location-dimension';
+    $dimension.textContent = 'Dimension: ' + object.dimension;
+    $locList.appendChild($dimension);
+
+    var $type = document.createElement('li');
+    $type.className = 'location-type';
+    $type.textContent = 'Type: ' + object.type;
+    $locList.appendChild($type);
+  } else {
+    var $epList = document.createElement('ul');
+    $epList.className = 'episode-entry';
+    $details.appendChild($epList);
+
+    var $date = document.createElement('li');
+    $date.className = 'episode-date';
+    $date.textContent = 'Air date: ' + object.air_date;
+    $epList.appendChild($date);
+
+    var $episode = document.createElement('li');
+    $episode.className = 'episode';
+    $episode.textContent = 'Episode: ' + object.episode;
+    $epList.appendChild($episode);
+  }
+
+  return $entry;
 }
