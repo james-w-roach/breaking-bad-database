@@ -6,9 +6,6 @@ var $back = document.querySelector('#back-button');
 var $arrows = document.querySelector('#arrow-row');
 var $searchAndBack = document.querySelector('#searchAndBack');
 
-var char = 'character';
-var loc = 'location';
-var episode = 'episode';
 var count = 1;
 
 function categorySelect(event) {
@@ -20,13 +17,13 @@ function categorySelect(event) {
   }
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $ajaxList.setAttribute('data-view', 'character');
-    getAPIData(char);
+    getAPIData('character');
   } else if (event.target.getAttribute('id') === 'locations-img' || event.target.getAttribute('id') === 'locations') {
     $ajaxList.setAttribute('data-view', 'location');
-    getAPIData(loc);
+    getAPIData('location');
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
-    getAPIData(episode);
+    getAPIData('episode');
   }
 }
 
