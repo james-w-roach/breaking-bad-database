@@ -4,6 +4,7 @@ var $ul = document.querySelector('ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
 var $arrows = document.querySelector('#arrow-row');
+var $searchAndBack = document.querySelector('#searchAndBack');
 
 var char = 'character';
 var loc = 'location';
@@ -11,32 +12,21 @@ var episode = 'episode';
 var count = 1;
 
 function categorySelect(event) {
-  if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
+  if (event.target.className === 'main-img' || event.target.className === 'button') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
     $arrows.className = 'arrow-row';
+  }
+  if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $ajaxList.setAttribute('data-view', 'character');
     getAPIData(char);
   } else if (event.target.getAttribute('id') === 'locations-img' || event.target.getAttribute('id') === 'locations') {
-    $front.className = 'hidden';
-    $ajaxList.className = 'ajax-list';
-    $back.className = 'fas fa-arrow-left';
-    $arrows.className = 'arrow-row';
     $ajaxList.setAttribute('data-view', 'location');
     getAPIData(loc);
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
-    $front.className = 'hidden';
-    $ajaxList.className = 'ajax-list';
-    $back.className = 'fas fa-arrow-left';
-    $arrows.className = 'arrow-row';
     $ajaxList.setAttribute('data-view', 'episode');
     getAPIData(episode);
-  } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
-    $front.className = 'hidden';
-    $ajaxList.className = 'ajax-list';
-    $arrows.className = 'arrow-row';
-    $back.className = 'fas fa-arrow-left';
   }
 }
 
@@ -210,6 +200,7 @@ function showEntry(event) {
     $entryPage.appendChild(entryTree);
     $entryPage.className = 'entry-page';
     $arrows.className = 'hidden';
+    $searchAndBack.className = 'row entry-back';
   }
 }
 
@@ -243,6 +234,7 @@ function goBack(event) {
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
       $arrows.className = 'arrow-row';
+      $searchAndBack.className = 'row nav-row';
     } else if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';

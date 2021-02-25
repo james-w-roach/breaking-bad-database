@@ -10,10 +10,6 @@ h2 {
   font-family: 'Work Sans', sans-serif;
 }
 
-button:hover {
-  cursor: pointer;
-}
-
 .hidden {
   display: none;
 }
@@ -54,30 +50,22 @@ ul {
 
 #back-button {
   font-size: 2rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.5rem 0.6rem;
   background-color: white;
   border-radius: 0.5rem;
   margin-right: 0.3rem;
 }
 
-#back-button:hover {
-  cursor: pointer;
-}
-
 .arrow-row {
-  width: 10rem;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
   margin-bottom: 1rem;
 }
 
 .list-arrow {
-  display: inline-block;
   background-color: white;
   border-radius: 0.5rem;
   padding: 0 1rem;
-  text-align: center;
   margin: 0 0.5rem;
 }
 
@@ -89,8 +77,11 @@ ul {
 .list-img:hover,
 .character-name:hover,
 .column-75:hover,
+.column100:hover,
 .main-header:hover,
 .la:hover,
-.list-arrow:hover {
+.list-arrow:hover,
+#back-button:hover,
+button:hover {
   cursor: pointer;
 }

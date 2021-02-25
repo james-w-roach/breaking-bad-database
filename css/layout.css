@@ -167,10 +167,16 @@ button {
     margin: auto;
   }
 
-  #back-button {
-    position: absolute;
-    left: 2.5rem;
-    top: 0.7rem;
+  .row {
+    justify-content: flex-start;
+  }
+
+  .nav-row {
+    width: 32rem;
+  }
+
+  .entry-back {
+    width: 40rem;
   }
 }
 
@@ -186,10 +192,5 @@ button {
 
   button {
     width: 30rem;
-  }
-
-  #back-button {
-    left: 12.5rem;
-    top: 0.7rem;
   }
 }
