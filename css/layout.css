@@ -119,7 +119,7 @@ input {
     width: 15rem;
   }
 
-  button {
+  .button {
     width: 15rem;
   }
 
@@ -168,7 +168,7 @@ input {
     width: 20rem;
   }
 
-  button {
+  .button {
     width: 20rem;
   }
 
@@ -200,7 +200,7 @@ input {
     width: 30rem;
   }
 
-  button {
+  .button {
     width: 30rem;
   }
 }

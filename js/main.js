@@ -183,6 +183,7 @@ function createEntryDOM(object) {
 
   var $saveButton = document.createElement('button');
   $saveButton.className = 'save-button';
+  $saveButton.setAttribute('id', 'save-button');
   $saveButton.textContent = 'Save to Favorites';
   $entry.appendChild($saveButton);
 
@@ -195,9 +196,11 @@ function showEntry(event) {
     var id = event.target.getAttribute('id');
     if (id < 21) {
       var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
+      data.current = xhr.response.results[id - 1];
     } else {
       id = id - (((xhr.response.info.prev[xhr.response.info.prev.length - 1]) * 20) + 1);
       entryTree = createEntryDOM(xhr.response.results[id]);
+      data.current = xhr.response.results[id];
     }
     $entryPage.appendChild(entryTree);
     $entryPage.className = 'entry-page';
@@ -218,6 +221,7 @@ function showFrontPage(event) {
     $back.className = 'hidden';
     $arrows.className = 'hidden';
     count = 1;
+    data.current = {};
   }
 }
 
@@ -237,6 +241,7 @@ function goBack(event) {
       removeChildren($entryPage);
       $arrows.className = 'arrow-row';
       $searchAndBack.className = 'row nav-row';
+      data.current = {};
     } else if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';
@@ -276,3 +281,18 @@ function determineView() {
 }
 
 window.addEventListener('click', switchList);
+
+function saveEntry(event) {
+  if (event.target.getAttribute('id') === 'save-button') {
+    if (data.current.species) {
+      data.characters.push(data.current);
+    } else if (data.current.air_date) {
+      data.episodes.push(data.current);
+    } else {
+      data.locations.push(data.current);
+    }
+    event.target.textContent = 'Saved to Favorites!';
+  }
+}
+
+$entryPage.addEventListener('click', saveEntry);
