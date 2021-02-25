@@ -7,6 +7,7 @@ var $back = document.querySelector('#back-button');
 var char = 'character';
 var loc = 'location';
 var episode = 'episode';
+var count = 1;
 
 function categorySelect(event) {
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
@@ -194,9 +195,13 @@ function createEntryDOM(object) {
 function showEntry(event) {
   if (event.target.getAttribute('id') !== null) {
     $ajaxList.className = 'ajax-list hidden';
-    var entryTree = createEntryDOM(xhr.response.results[(event.target.getAttribute('id') - 1)]);
+    for (var i = 0; i < event.target.getAttribute('id').length; i++) {
+      var cur = xhr.response.results[(event.target.getAttribute('id').length - 1)];
+    }
+    var entryTree = createEntryDOM(cur);
     $entryPage.appendChild(entryTree);
     $entryPage.className = 'entry-page';
+    cur = 0;
   }
 }
 
@@ -210,6 +215,7 @@ function showFrontPage(event) {
     removeChildren($entryPage);
     $entryPage.className = 'entry-page hidden';
     $back.className = 'hidden';
+    count = 1;
   }
 }
 
@@ -233,13 +239,12 @@ function goBack(event) {
       $front.className = 'front-page';
       removeChildren($ul);
       $back.className = 'hidden';
+      count = 1;
     }
   }
 }
 
 window.addEventListener('click', goBack);
-
-var count = 1;
 
 function switchList(event) {
   if (event.target.getAttribute('id') === 'right' || event.target.getAttribute('id') === 'right-arrow') {
@@ -249,7 +254,9 @@ function switchList(event) {
     getAPIData(current);
   } if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
     removeChildren($ul);
-    getAPIData(char);
+    count--;
+    current = determineView() + count;
+    getAPIData(current);
   }
 }
 

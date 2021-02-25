@@ -52,14 +52,6 @@ ul {
   margin: 0 0 0.5rem 0;
 }
 
-.main-img:hover,
-.list-img:hover,
-.character-name:hover,
-.column-75:hover,
-.main-header:hover {
-  cursor: pointer;
-}
-
 #back-button {
   font-size: 2rem;
   padding: 0.3rem 0.5rem;
@@ -91,4 +83,14 @@ ul {
 
 .la {
   font-size: 2.5rem;
+}
+
+.main-img:hover,
+.list-img:hover,
+.character-name:hover,
+.column-75:hover,
+.main-header:hover,
+.la:hover,
+.list-arrow:hover {
+  cursor: pointer;
 }

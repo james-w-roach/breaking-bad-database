@@ -169,7 +169,7 @@ button {
 
   #back-button {
     position: absolute;
-    left: 6.5rem;
+    left: 2.5rem;
     top: 0.7rem;
   }
 }
@@ -189,7 +189,7 @@ button {
   }
 
   #back-button {
-    left: 16.5rem;
+    left: 12.5rem;
     top: 0.7rem;
   }
 }
