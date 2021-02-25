@@ -100,6 +100,11 @@ input {
   margin: 1rem 0;
 }
 
+.save-button {
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+
 @media screen and (min-width: 576px) {
   .main-header {
     padding-left: 1rem;
@@ -137,6 +142,11 @@ input {
 
   .char-entry {
     margin: 0 0 0 1rem;
+  }
+
+  .save-button {
+    margin: 1rem auto 0 auto;
+    width: 100%;
   }
 }
 

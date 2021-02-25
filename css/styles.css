@@ -73,6 +73,14 @@ ul {
   font-size: 2.5rem;
 }
 
+.save-button {
+  background-color: rgb(86, 165, 7);
+  color: white;
+  border: solid thin rgb(88, 87, 87);
+  border-radius: 0.2rem;
+  outline: none;
+}
+
 .main-img:hover,
 .list-img:hover,
 .character-name:hover,
