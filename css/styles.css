@@ -10,20 +10,13 @@ h2 {
   font-family: 'Work Sans', sans-serif;
 }
 
-button:hover {
-  cursor: pointer;
-}
-
-img:hover {
-  cursor: pointer;
-}
-
 .hidden {
   display: none;
 }
 
 ul {
   padding: 0;
+  list-style-type: none;
 }
 
 .column-75 {
@@ -42,4 +35,53 @@ ul {
 
 .character-name {
   margin: 1rem 1rem;
+}
+
+.entry {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.entry-name {
+  margin: 0 0 0.5rem 0;
+}
+
+#back-button {
+  font-size: 2rem;
+  padding: 0.5rem 0.6rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  margin-right: 0.3rem;
+}
+
+.arrow-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.list-arrow {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+  margin: 0 0.5rem;
+}
+
+.la {
+  font-size: 2.5rem;
+}
+
+.main-img:hover,
+.list-img:hover,
+.character-name:hover,
+.column-75:hover,
+.column100:hover,
+.main-header:hover,
+.la:hover,
+.list-arrow:hover,
+#back-button:hover,
+button:hover {
+  cursor: pointer;
 }
