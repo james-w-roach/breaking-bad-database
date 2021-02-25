@@ -4,24 +4,28 @@ var $ul = document.querySelector('ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
 
+var char = 'character';
+var loc = 'location';
+var episode = 'episode';
+
 function categorySelect(event) {
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
-    var char = 'character';
     $back.className = 'fas fa-arrow-left';
+    $ajaxList.setAttribute('data-view', 'character');
     getAPIData(char);
   } else if (event.target.getAttribute('id') === 'locations-img' || event.target.getAttribute('id') === 'locations') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
-    var location = 'location';
     $back.className = 'fas fa-arrow-left';
-    getAPIData(location);
+    $ajaxList.setAttribute('data-view', 'location');
+    getAPIData(loc);
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
-    var episode = 'episode';
+    $ajaxList.setAttribute('data-view', 'episode');
     getAPIData(episode);
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $front.className = 'hidden';
@@ -234,3 +238,29 @@ function goBack(event) {
 }
 
 window.addEventListener('click', goBack);
+
+var count = 1;
+
+function switchList(event) {
+  if (event.target.getAttribute('id') === 'right' || event.target.getAttribute('id') === 'right-arrow') {
+    removeChildren($ul);
+    count++;
+    var current = determineView() + count;
+    getAPIData(current);
+  } if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
+    removeChildren($ul);
+    getAPIData(char);
+  }
+}
+
+function determineView() {
+  if ($ajaxList.getAttribute('data-view') === 'character') {
+    return 'character/?page=';
+  } else if ($ajaxList.getAttribute('data-view') === 'location') {
+    return 'location/?page=';
+  } else if ($ajaxList.getAttribute('data-view') === 'episode') {
+    return 'episode/?page=';
+  }
+}
+
+window.addEventListener('click', switchList);
