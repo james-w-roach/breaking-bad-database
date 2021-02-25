@@ -181,6 +181,11 @@ function createEntryDOM(object) {
     $epList.appendChild($episode);
   }
 
+  var $saveButton = document.createElement('button');
+  $saveButton.className = 'save-button';
+  $saveButton.textContent = 'Save to Favorites';
+  $entry.appendChild($saveButton);
+
   return $entry;
 }
 
