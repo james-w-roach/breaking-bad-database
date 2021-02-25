@@ -34,7 +34,7 @@ header {
 }
 
 form {
-  width: 100%;
+  width: 95%;
 }
 
 input {
@@ -166,6 +166,12 @@ button {
     width: 40rem;
     margin: auto;
   }
+
+  #back-button {
+    position: absolute;
+    left: 6.5rem;
+    top: 0.7rem;
+  }
 }
 
 @media screen and (min-width: 1040px) {
@@ -180,5 +186,10 @@ button {
 
   button {
     width: 30rem;
+  }
+
+  #back-button {
+    left: 16.5rem;
+    top: 0.7rem;
   }
 }

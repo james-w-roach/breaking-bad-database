@@ -2,25 +2,31 @@ var $front = document.querySelector('#front-page');
 var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('ul');
 var $entryPage = document.querySelector('#entry-page');
+var $back = document.querySelector('#back-button');
 
 function categorySelect(event) {
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     var char = 'character';
+    $back.className = 'fas fa-arrow-left';
     getAPIData(char);
   } else if (event.target.getAttribute('id') === 'locations-img' || event.target.getAttribute('id') === 'locations') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     var location = 'location';
+    $back.className = 'fas fa-arrow-left';
     getAPIData(location);
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
+    $back.className = 'fas fa-arrow-left';
     var episode = 'episode';
     getAPIData(episode);
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $front.className = 'hidden';
+    $ajaxList.className = 'ajax-list';
+    $back.className = 'fas fa-arrow-left';
   }
 }
 
@@ -199,6 +205,7 @@ function showFrontPage(event) {
     removeChildren($ul);
     removeChildren($entryPage);
     $entryPage.className = 'entry-page hidden';
+    $back.className = 'hidden';
   }
 }
 
@@ -209,3 +216,21 @@ function removeChildren(element) {
     element.removeChild(element.firstChild);
   }
 }
+
+function goBack(event) {
+  if (event.target.getAttribute('id') === 'back-button') {
+    if ($entryPage.className === 'entry-page') {
+      $entryPage.className = 'entry-page hidden';
+      $ajaxList.className = 'ajax-list';
+      removeChildren($entryPage);
+    } else if ($ajaxList.className === 'ajax-list') {
+      $entryPage.className = 'entry-page hidden';
+      $ajaxList.className = 'ajax-list hidden';
+      $front.className = 'front-page';
+      removeChildren($ul);
+      $back.className = 'hidden';
+    }
+  }
+}
+
+window.addEventListener('click', goBack);

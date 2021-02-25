@@ -59,3 +59,15 @@ ul {
 .main-header:hover {
   cursor: pointer;
 }
+
+#back-button {
+  font-size: 2rem;
+  padding: 0.3rem 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  margin-right: 0.3rem;
+}
+
+#back-button:hover {
+  cursor: pointer;
+}
