@@ -195,11 +195,14 @@ function createEntryDOM(object) {
 function showEntry(event) {
   if (event.target.getAttribute('id') !== null) {
     $ajaxList.className = 'ajax-list hidden';
-    var cur = xhr.response.results[(event.target.getAttribute('id') - (event.target.getAttribute('id') - 1))];
+    if (count < 1) {
+      var cur = xhr.response.results[(event.target.getAttribute('id') - ((count * 10) - 1))];
+    } else {
+      cur = xhr.response.results[event.target.getAttribute('id') - 1];
+    }
     var entryTree = createEntryDOM(cur);
     $entryPage.appendChild(entryTree);
     $entryPage.className = 'entry-page';
-    cur = 0;
   }
 }
 
