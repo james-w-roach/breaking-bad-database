@@ -3,6 +3,7 @@ var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
+var $arrows = document.querySelector('#arrow-row');
 
 var char = 'character';
 var loc = 'location';
@@ -14,23 +15,27 @@ function categorySelect(event) {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
+    $arrows.className = 'arrow-row';
     $ajaxList.setAttribute('data-view', 'character');
     getAPIData(char);
   } else if (event.target.getAttribute('id') === 'locations-img' || event.target.getAttribute('id') === 'locations') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
+    $arrows.className = 'arrow-row';
     $ajaxList.setAttribute('data-view', 'location');
     getAPIData(loc);
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
+    $arrows.className = 'arrow-row';
     $ajaxList.setAttribute('data-view', 'episode');
     getAPIData(episode);
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
+    $arrows.className = 'arrow-row';
     $back.className = 'fas fa-arrow-left';
   }
 }
@@ -195,14 +200,16 @@ function createEntryDOM(object) {
 function showEntry(event) {
   if (event.target.getAttribute('id') !== null) {
     $ajaxList.className = 'ajax-list hidden';
-    if (count < 1) {
-      var cur = xhr.response.results[(event.target.getAttribute('id') - ((count * 10) - 1))];
+    var id = event.target.getAttribute('id');
+    if (id < 21) {
+      var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
     } else {
-      cur = xhr.response.results[event.target.getAttribute('id') - 1];
+      id = id - (((xhr.response.info.prev[xhr.response.info.prev.length - 1]) * 20) + 1);
+      entryTree = createEntryDOM(xhr.response.results[id]);
     }
-    var entryTree = createEntryDOM(cur);
     $entryPage.appendChild(entryTree);
     $entryPage.className = 'entry-page';
+    $arrows.className = 'hidden';
   }
 }
 
@@ -216,6 +223,7 @@ function showFrontPage(event) {
     removeChildren($entryPage);
     $entryPage.className = 'entry-page hidden';
     $back.className = 'hidden';
+    $arrows.className = 'hidden';
     count = 1;
   }
 }
@@ -234,6 +242,7 @@ function goBack(event) {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
+      $arrows.className = 'arrow-row';
     } else if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';
@@ -241,6 +250,7 @@ function goBack(event) {
       removeChildren($ul);
       $back.className = 'hidden';
       count = 1;
+      $arrows.className = 'hidden';
     }
   }
 }
