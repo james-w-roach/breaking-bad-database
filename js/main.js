@@ -385,3 +385,28 @@ function createDeleteButton() {
   $deleteButton.textContent = 'Remove from Favorites';
   return $deleteButton;
 }
+
+function deleteEntry(event) {
+  if (event.target.className === 'delete-button') {
+    if (data.current.species) {
+      var category = 'Characters';
+    } else if (data.current.air_date) {
+      category = 'Episodes';
+    } else {
+      category = 'Locations';
+    }
+    for (var i = 0; i < data[category].length; i++) {
+      if (data.current.id === data[category][i].id) {
+        data[category].splice(i, 1);
+      }
+    }
+    removeChildren($entryPage);
+    removeChildren($ul);
+    data.current = {};
+    loadFavorites();
+    $entryPage.className = 'hidden';
+    $ajaxList.className = 'ajax-list';
+  }
+}
+
+$entryPage.addEventListener('click', deleteEntry);
