@@ -119,6 +119,8 @@ function createEntryDOM(object) {
   $content.appendChild($details);
 
   if (object.species) {
+    var category = data.characters;
+
     var $charList = document.createElement('ul');
     $charList.className = 'char-entry';
     $details.appendChild($charList);
@@ -155,6 +157,8 @@ function createEntryDOM(object) {
     $status.textContent = 'Status: ' + object.status;
     $charList.appendChild($status);
   } else if (object.residents) {
+    category = data.locations;
+
     var $locList = document.createElement('ul');
     $locList.className = 'location-entry';
     $details.appendChild($locList);
@@ -169,6 +173,8 @@ function createEntryDOM(object) {
     $type.textContent = 'Type: ' + object.type;
     $locList.appendChild($type);
   } else {
+    category = data.episodes;
+
     var $epList = document.createElement('ul');
     $epList.className = 'episode-entry';
     $details.appendChild($epList);
@@ -183,13 +189,18 @@ function createEntryDOM(object) {
     $episode.textContent = 'Episode: ' + object.episode;
     $epList.appendChild($episode);
   }
-
-  var $saveButton = document.createElement('button');
-  $saveButton.className = 'save-button';
-  $saveButton.setAttribute('id', 'save-button');
-  $saveButton.textContent = 'Save to Favorites';
-  $entry.appendChild($saveButton);
-
+  if (Boolean(category[0]) === false) {
+    var save = createSaveButton();
+    $entry.appendChild(save);
+  } else {
+    for (var i = 0; i < category.length; i++) {
+      if (category[i].name === object.name) {
+        return $entry;
+      }
+    }
+    save = createSaveButton();
+    $entry.appendChild(save);
+  }
   return $entry;
 }
 
@@ -311,4 +322,12 @@ function loadFavorites() {
       $ul.appendChild(favDOM);
     }
   }
+}
+
+function createSaveButton() {
+  var $saveButton = document.createElement('button');
+  $saveButton.className = 'save-button';
+  $saveButton.setAttribute('id', 'save-button');
+  $saveButton.textContent = 'Save to Favorites';
+  return $saveButton;
 }
