@@ -24,6 +24,9 @@ function categorySelect(event) {
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
     getAPIData('episode');
+  } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
+    $ajaxList.setAttribute('data-view', 'favorites');
+    loadFavorites();
   }
 }
 
@@ -296,3 +299,16 @@ function saveEntry(event) {
 }
 
 $entryPage.addEventListener('click', saveEntry);
+
+function loadFavorites() {
+  if (Boolean(data.characters[0]) === false && Boolean(data.locations[0]) === false && Boolean(data.episodes[0]) === false) {
+    var $message = document.createElement('li');
+    $message.textContent = 'No Favorites Added Yet';
+    $ul.appendChild($message);
+  } else {
+    for (var i = 0; i < data.characters.length; i++) {
+      var favDOM = createDOM(data.characters[i]);
+      $ul.appendChild(favDOM);
+    }
+  }
+}
