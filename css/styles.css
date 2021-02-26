@@ -75,10 +75,10 @@ ul {
 
 .save-button {
   background-color: rgb(86, 165, 7);
-  color: white;
-  border: solid thin rgb(88, 87, 87);
-  border-radius: 0.2rem;
-  outline: none;
+}
+
+.delete-button {
+  background-color: rgb(140, 13, 13);
 }
 
 .main-img:hover,

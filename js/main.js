@@ -214,6 +214,10 @@ function createEntryDOM(object) {
   } else {
     for (var i = 0; i < category.length; i++) {
       if (category[i].name === object.name) {
+        if ($ajaxList.getAttribute('data-view') === 'favorites') {
+          var deleteButton = createDeleteButton();
+          $entry.appendChild(deleteButton);
+        }
         return $entry;
       }
     }
@@ -372,4 +376,12 @@ function createSaveButton() {
   $saveButton.setAttribute('id', 'save-button');
   $saveButton.textContent = 'Save to Favorites';
   return $saveButton;
+}
+
+function createDeleteButton() {
+  var $deleteButton = document.createElement('button');
+  $deleteButton.className = 'delete-button';
+  $deleteButton.setAttribute('id', 'delete-button');
+  $deleteButton.textContent = 'Remove from Favorites';
+  return $deleteButton;
 }

@@ -100,9 +100,14 @@ input {
   margin: 1rem 0;
 }
 
-.save-button {
+.save-button,
+.delete-button {
   font-size: 1rem;
   padding: 0.5rem 0;
+  color: white;
+  border: solid thin rgb(88, 87, 87);
+  border-radius: 0.2rem;
+  outline: none;
 }
 
 .fav-category {
@@ -160,7 +165,8 @@ input {
     margin: 0 0 0 1rem;
   }
 
-  .save-button {
+  .save-button,
+  .delete-button {
     margin: 1rem auto 0 auto;
     width: 100%;
   }
