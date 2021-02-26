@@ -105,6 +105,21 @@ input {
   padding: 0.5rem 0;
 }
 
+.fav-category {
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 2rem;
+  margin: 1rem auto;
+  padding: 0 0.5rem;
+}
+
+.no-favs {
+  background-color: white;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+}
+
 @media screen and (min-width: 576px) {
   .main-header {
     padding-left: 1rem;

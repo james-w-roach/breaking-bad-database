@@ -26,6 +26,7 @@ function categorySelect(event) {
     getAPIData('episode');
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
+    $arrows.className = 'hidden';
     loadFavorites();
   }
 }
@@ -314,14 +315,16 @@ function saveEntry(event) {
 $entryPage.addEventListener('click', saveEntry);
 
 function loadFavorites() {
-  var $message = document.createElement('li');
-  $message.textContent = 'No Favorites Added Yet';
   for (var key in data) {
     if (key !== 'current') {
       var cat = document.createElement('li');
-      cat.textContent = key + ':';
+      cat.textContent = key;
+      cat.className = 'fav-category';
       $ul.appendChild(cat);
       if (Boolean(data[key][0]) === false) {
+        var $message = document.createElement('li');
+        $message.textContent = 'No Favorites Added Yet';
+        $message.className = 'no-favs';
         $ul.appendChild($message);
       } else {
         for (var i = 0; i < data[key].length; i++) {
