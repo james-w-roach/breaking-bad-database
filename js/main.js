@@ -66,29 +66,47 @@ function createDOM(object) {
     var $img = document.createElement('img');
     $img.setAttribute('src', object.image);
     $img.setAttribute('id', object.id);
+    $img.setAttribute('data-category', 'Characters');
     $img.className = 'list-img';
     $column25.appendChild($img);
 
     var $column75 = document.createElement('div');
     $column75.className = 'column-75';
     $column75.setAttribute('id', object.id);
+    $column75.setAttribute('data-category', 'Characters');
     $li.appendChild($column75);
 
     var $character = document.createElement('h2');
     $character.className = 'character-name';
     $character.textContent = object.name;
     $character.setAttribute('id', object.id);
+    $character.setAttribute('data-category', 'Characters');
     $column75.appendChild($character);
-  } else {
+  } else if (object.air_date) {
     var $column = document.createElement('div');
     $column.className = 'column100';
     $column.setAttribute('id', object.id);
+    $column.setAttribute('data-category', 'Episodes');
     $li.appendChild($column);
 
     var $name = document.createElement('h2');
     $name.className = 'name';
     $name.textContent = object.name;
     $name.setAttribute('id', object.id);
+    $name.setAttribute('data-category', 'Episodes');
+    $column.appendChild($name);
+  } else {
+    $column = document.createElement('div');
+    $column.className = 'column100';
+    $column.setAttribute('id', object.id);
+    $column.setAttribute('data-category', 'Locations');
+    $li.appendChild($column);
+
+    $name = document.createElement('h2');
+    $name.className = 'name';
+    $name.textContent = object.name;
+    $name.setAttribute('id', object.id);
+    $name.setAttribute('data-category', 'Locations');
     $column.appendChild($name);
   }
 
@@ -208,7 +226,6 @@ function createEntryDOM(object) {
 function showEntry(event) {
   if (event.target.getAttribute('id') !== null) {
     if ($ajaxList.getAttribute('data-view') !== 'favorites') {
-      $ajaxList.className = 'ajax-list hidden';
       var id = event.target.getAttribute('id');
       if (id < 21) {
         var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
@@ -218,11 +235,20 @@ function showEntry(event) {
         entryTree = createEntryDOM(xhr.response.results[id]);
         data.current = xhr.response.results[id];
       }
-      $entryPage.appendChild(entryTree);
-      $entryPage.className = 'entry-page';
-      $arrows.className = 'hidden';
-      $searchAndBack.className = 'row entry-back';
+    } else {
+      var category = event.target.getAttribute('data-category');
+      for (var i = 0; i < data[category].length; i++) {
+        if (data[category][i].id.toString() === event.target.getAttribute('id')) {
+          entryTree = createEntryDOM(data[category][i]);
+          data.current = data[category][i];
+        }
+      }
     }
+    $ajaxList.className = 'ajax-list hidden';
+    $entryPage.appendChild(entryTree);
+    $entryPage.className = 'entry-page';
+    $arrows.className = 'hidden';
+    $searchAndBack.className = 'row entry-back';
   }
 }
 
@@ -256,7 +282,11 @@ function goBack(event) {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
-      $arrows.className = 'arrow-row';
+      if ($ajaxList.getAttribute('data-view') === 'favorites') {
+        $arrows.className = 'hidden';
+      } else {
+        $arrows.className = 'arrow-row';
+      }
       $searchAndBack.className = 'row nav-row';
       data.current = {};
     } else if ($ajaxList.className === 'ajax-list') {
