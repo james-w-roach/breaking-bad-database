@@ -163,6 +163,15 @@ input {
     margin: 1rem auto 0 auto;
     width: 100%;
   }
+
+  .fav-category {
+    width: 33rem;
+  }
+
+  .no-favs {
+    width: 32rem;
+    margin: auto;
+  }
 }
 
 @media screen and (min-width: 768px) {
