@@ -119,7 +119,7 @@ function createEntryDOM(object) {
   $content.appendChild($details);
 
   if (object.species) {
-    var category = data.characters;
+    var category = data.Characters;
 
     var $charList = document.createElement('ul');
     $charList.className = 'char-entry';
@@ -157,7 +157,7 @@ function createEntryDOM(object) {
     $status.textContent = 'Status: ' + object.status;
     $charList.appendChild($status);
   } else if (object.residents) {
-    category = data.locations;
+    category = data.Locations;
 
     var $locList = document.createElement('ul');
     $locList.className = 'location-entry';
@@ -173,7 +173,7 @@ function createEntryDOM(object) {
     $type.textContent = 'Type: ' + object.type;
     $locList.appendChild($type);
   } else {
-    category = data.episodes;
+    category = data.Episodes;
 
     var $epList = document.createElement('ul');
     $epList.className = 'episode-entry';
@@ -206,20 +206,22 @@ function createEntryDOM(object) {
 
 function showEntry(event) {
   if (event.target.getAttribute('id') !== null) {
-    $ajaxList.className = 'ajax-list hidden';
-    var id = event.target.getAttribute('id');
-    if (id < 21) {
-      var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
-      data.current = xhr.response.results[id - 1];
-    } else {
-      id = id - (((xhr.response.info.prev[xhr.response.info.prev.length - 1]) * 20) + 1);
-      entryTree = createEntryDOM(xhr.response.results[id]);
-      data.current = xhr.response.results[id];
+    if ($ajaxList.getAttribute('data-view') !== 'favorites') {
+      $ajaxList.className = 'ajax-list hidden';
+      var id = event.target.getAttribute('id');
+      if (id < 21) {
+        var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
+        data.current = xhr.response.results[id - 1];
+      } else {
+        id = id - (((xhr.response.info.prev[xhr.response.info.prev.length - 1]) * 20) + 1);
+        entryTree = createEntryDOM(xhr.response.results[id]);
+        data.current = xhr.response.results[id];
+      }
+      $entryPage.appendChild(entryTree);
+      $entryPage.className = 'entry-page';
+      $arrows.className = 'hidden';
+      $searchAndBack.className = 'row entry-back';
     }
-    $entryPage.appendChild(entryTree);
-    $entryPage.className = 'entry-page';
-    $arrows.className = 'hidden';
-    $searchAndBack.className = 'row entry-back';
   }
 }
 
@@ -299,27 +301,34 @@ window.addEventListener('click', switchList);
 function saveEntry(event) {
   if (event.target.getAttribute('id') === 'save-button') {
     if (data.current.species) {
-      data.characters.push(data.current);
+      data.Characters.push(data.current);
     } else if (data.current.air_date) {
-      data.episodes.push(data.current);
+      data.Episodes.push(data.current);
     } else {
-      data.locations.push(data.current);
+      data.Locations.push(data.current);
     }
-    event.target.textContent = 'Saved to Favorites!';
+    event.target.className = 'hidden';
   }
 }
 
 $entryPage.addEventListener('click', saveEntry);
 
 function loadFavorites() {
-  if (Boolean(data.characters[0]) === false && Boolean(data.locations[0]) === false && Boolean(data.episodes[0]) === false) {
-    var $message = document.createElement('li');
-    $message.textContent = 'No Favorites Added Yet';
-    $ul.appendChild($message);
-  } else {
-    for (var i = 0; i < data.characters.length; i++) {
-      var favDOM = createDOM(data.characters[i]);
-      $ul.appendChild(favDOM);
+  var $message = document.createElement('li');
+  $message.textContent = 'No Favorites Added Yet';
+  for (var key in data) {
+    if (key !== 'current') {
+      var cat = document.createElement('li');
+      cat.textContent = key + ':';
+      $ul.appendChild(cat);
+      if (Boolean(data[key][0]) === false) {
+        $ul.appendChild($message);
+      } else {
+        for (var i = 0; i < data[key].length; i++) {
+          var favDOM = createDOM(data[key][i]);
+          $ul.appendChild(favDOM);
+        }
+      }
     }
   }
 }
