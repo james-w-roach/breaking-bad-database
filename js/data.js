@@ -1,9 +1,9 @@
 /* exported data */
 var data = {
   current: {},
-  Characters: [],
-  Locations: [],
-  Episodes: []
+  characters: [],
+  locations: [],
+  episodes: []
 };
 
 var localStorageJSON = localStorage.getItem('C-137 Data');

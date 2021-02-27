@@ -66,47 +66,47 @@ function createDOM(object) {
     var $img = document.createElement('img');
     $img.setAttribute('src', object.image);
     $img.setAttribute('id', object.id);
-    $img.setAttribute('data-category', 'Characters');
+    $img.setAttribute('data-category', 'characters');
     $img.className = 'list-img';
     $column25.appendChild($img);
 
     var $column75 = document.createElement('div');
     $column75.className = 'column-75';
     $column75.setAttribute('id', object.id);
-    $column75.setAttribute('data-category', 'Characters');
+    $column75.setAttribute('data-category', 'characters');
     $li.appendChild($column75);
 
     var $character = document.createElement('h2');
     $character.className = 'character-name';
     $character.textContent = object.name;
     $character.setAttribute('id', object.id);
-    $character.setAttribute('data-category', 'Characters');
+    $character.setAttribute('data-category', 'characters');
     $column75.appendChild($character);
   } else if (object.air_date) {
     var $column = document.createElement('div');
     $column.className = 'column100';
     $column.setAttribute('id', object.id);
-    $column.setAttribute('data-category', 'Episodes');
+    $column.setAttribute('data-category', 'episodes');
     $li.appendChild($column);
 
     var $name = document.createElement('h2');
     $name.className = 'name';
     $name.textContent = object.name;
     $name.setAttribute('id', object.id);
-    $name.setAttribute('data-category', 'Episodes');
+    $name.setAttribute('data-category', 'episodes');
     $column.appendChild($name);
   } else {
     $column = document.createElement('div');
     $column.className = 'column100';
     $column.setAttribute('id', object.id);
-    $column.setAttribute('data-category', 'Locations');
+    $column.setAttribute('data-category', 'locations');
     $li.appendChild($column);
 
     $name = document.createElement('h2');
     $name.className = 'name';
     $name.textContent = object.name;
     $name.setAttribute('id', object.id);
-    $name.setAttribute('data-category', 'Locations');
+    $name.setAttribute('data-category', 'locations');
     $column.appendChild($name);
   }
 
@@ -138,7 +138,7 @@ function createEntryDOM(object) {
   $content.appendChild($details);
 
   if (object.species) {
-    var category = data.Characters;
+    var category = data.characters;
 
     var $charList = document.createElement('ul');
     $charList.className = 'char-entry';
@@ -176,7 +176,7 @@ function createEntryDOM(object) {
     $status.textContent = 'Status: ' + object.status;
     $charList.appendChild($status);
   } else if (object.residents) {
-    category = data.Locations;
+    category = data.locations;
 
     var $locList = document.createElement('ul');
     $locList.className = 'location-entry';
@@ -192,7 +192,7 @@ function createEntryDOM(object) {
     $type.textContent = 'Type: ' + object.type;
     $locList.appendChild($type);
   } else {
-    category = data.Episodes;
+    category = data.episodes;
 
     var $epList = document.createElement('ul');
     $epList.className = 'episode-entry';
@@ -336,11 +336,11 @@ window.addEventListener('click', switchList);
 function saveEntry(event) {
   if (event.target.getAttribute('id') === 'save-button') {
     if (data.current.species) {
-      data.Characters.push(data.current);
+      data.characters.push(data.current);
     } else if (data.current.air_date) {
-      data.Episodes.push(data.current);
+      data.episodes.push(data.current);
     } else {
-      data.Locations.push(data.current);
+      data.locations.push(data.current);
     }
     event.target.className = 'hidden';
   }
@@ -352,7 +352,7 @@ function loadFavorites() {
   for (var key in data) {
     if (key !== 'current') {
       var cat = document.createElement('li');
-      cat.textContent = key;
+      cat.textContent = keyToString(key);
       cat.className = 'fav-category';
       $ul.appendChild(cat);
       if (!data[key][0]) {
@@ -389,11 +389,11 @@ function createDeleteButton() {
 function deleteEntry(event) {
   if (event.target.className === 'delete-button') {
     if (data.current.species) {
-      var category = 'Characters';
+      var category = 'characters';
     } else if (data.current.air_date) {
-      category = 'Episodes';
+      category = 'episodes';
     } else {
-      category = 'Locations';
+      category = 'locations';
     }
     for (var i = 0; i < data[category].length; i++) {
       if (data.current.id === data[category][i].id) {
@@ -410,3 +410,13 @@ function deleteEntry(event) {
 }
 
 $entryPage.addEventListener('click', deleteEntry);
+
+function keyToString(key) {
+  var string = key.toString();
+  var string2 = '';
+  string2 += string[0].toUpperCase();
+  for (var i = 1; i < string.length; i++) {
+    string2 += string[i];
+  }
+  return string2;
+}
