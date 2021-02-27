@@ -1,6 +1,6 @@
 var $front = document.querySelector('#front-page');
 var $ajaxList = document.querySelector('#ajax-list');
-var $ul = document.querySelector('ul');
+var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
 var $arrows = document.querySelector('#arrow-row');

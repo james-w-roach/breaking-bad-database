@@ -100,6 +100,11 @@ input {
   margin: 1rem 0;
 }
 
+.location-entry,
+.episode-entry {
+  margin: 0 0 1rem 0;
+}
+
 .save-button,
 .delete-button {
   font-size: 1rem;
@@ -112,11 +117,9 @@ input {
 
 .fav-category {
   color: white;
-  border-radius: 0.5rem;
   font-size: 2rem;
   margin: 1rem auto;
   text-align: center;
-  padding: 0 0.5rem;
 }
 
 .no-favs {
@@ -124,6 +127,7 @@ input {
   border-radius: 0.5rem;
   font-size: 1.5rem;
   padding: 0.5rem 1rem;
+  text-align: center;
 }
 
 @media screen and (min-width: 576px) {
@@ -171,10 +175,6 @@ input {
     width: 100%;
   }
 
-  .fav-category {
-    width: 34rem;
-  }
-
   .no-favs {
     width: 32rem;
     margin: auto;
@@ -212,7 +212,7 @@ input {
     justify-content: flex-start;
   }
 
-  ul {
+  .ajax-ul {
     display: flex;
     flex-wrap: wrap;
   }
