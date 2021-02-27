@@ -208,7 +208,7 @@ function createEntryDOM(object) {
     $episode.textContent = 'Episode: ' + object.episode;
     $epList.appendChild($episode);
   }
-  if (Boolean(category[0]) === false) {
+  if (!category[0]) {
     var save = createSaveButton();
     $entry.appendChild(save);
   } else {
@@ -355,7 +355,7 @@ function loadFavorites() {
       cat.textContent = key;
       cat.className = 'fav-category';
       $ul.appendChild(cat);
-      if (Boolean(data[key][0]) === false) {
+      if (!data[key][0]) {
         var $message = document.createElement('li');
         $message.textContent = 'No Favorites Added Yet';
         $message.className = 'no-favs';
