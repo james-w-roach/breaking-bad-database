@@ -1,6 +1,6 @@
 var $front = document.querySelector('#front-page');
 var $ajaxList = document.querySelector('#ajax-list');
-var $ul = document.querySelector('ul');
+var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
 var $arrows = document.querySelector('#arrow-row');
@@ -24,6 +24,10 @@ function categorySelect(event) {
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
     getAPIData('episode');
+  } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
+    $ajaxList.setAttribute('data-view', 'favorites');
+    $arrows.className = 'hidden';
+    loadFavorites();
   }
 }
 
@@ -62,29 +66,47 @@ function createDOM(object) {
     var $img = document.createElement('img');
     $img.setAttribute('src', object.image);
     $img.setAttribute('id', object.id);
+    $img.setAttribute('data-category', 'characters');
     $img.className = 'list-img';
     $column25.appendChild($img);
 
     var $column75 = document.createElement('div');
     $column75.className = 'column-75';
     $column75.setAttribute('id', object.id);
+    $column75.setAttribute('data-category', 'characters');
     $li.appendChild($column75);
 
     var $character = document.createElement('h2');
     $character.className = 'character-name';
     $character.textContent = object.name;
     $character.setAttribute('id', object.id);
+    $character.setAttribute('data-category', 'characters');
     $column75.appendChild($character);
-  } else {
+  } else if (object.air_date) {
     var $column = document.createElement('div');
     $column.className = 'column100';
     $column.setAttribute('id', object.id);
+    $column.setAttribute('data-category', 'episodes');
     $li.appendChild($column);
 
     var $name = document.createElement('h2');
     $name.className = 'name';
     $name.textContent = object.name;
     $name.setAttribute('id', object.id);
+    $name.setAttribute('data-category', 'episodes');
+    $column.appendChild($name);
+  } else {
+    $column = document.createElement('div');
+    $column.className = 'column100';
+    $column.setAttribute('id', object.id);
+    $column.setAttribute('data-category', 'locations');
+    $li.appendChild($column);
+
+    $name = document.createElement('h2');
+    $name.className = 'name';
+    $name.textContent = object.name;
+    $name.setAttribute('id', object.id);
+    $name.setAttribute('data-category', 'locations');
     $column.appendChild($name);
   }
 
@@ -116,6 +138,8 @@ function createEntryDOM(object) {
   $content.appendChild($details);
 
   if (object.species) {
+    var category = data.characters;
+
     var $charList = document.createElement('ul');
     $charList.className = 'char-entry';
     $details.appendChild($charList);
@@ -152,6 +176,8 @@ function createEntryDOM(object) {
     $status.textContent = 'Status: ' + object.status;
     $charList.appendChild($status);
   } else if (object.residents) {
+    category = data.locations;
+
     var $locList = document.createElement('ul');
     $locList.className = 'location-entry';
     $details.appendChild($locList);
@@ -166,6 +192,8 @@ function createEntryDOM(object) {
     $type.textContent = 'Type: ' + object.type;
     $locList.appendChild($type);
   } else {
+    category = data.episodes;
+
     var $epList = document.createElement('ul');
     $epList.className = 'episode-entry';
     $details.appendChild($epList);
@@ -180,20 +208,47 @@ function createEntryDOM(object) {
     $episode.textContent = 'Episode: ' + object.episode;
     $epList.appendChild($episode);
   }
-
+  if (!category[0]) {
+    var save = createSaveButton();
+    $entry.appendChild(save);
+  } else {
+    for (var i = 0; i < category.length; i++) {
+      if (category[i].name === object.name) {
+        if ($ajaxList.getAttribute('data-view') === 'favorites') {
+          var deleteButton = createDeleteButton();
+          $entry.appendChild(deleteButton);
+        }
+        return $entry;
+      }
+    }
+    save = createSaveButton();
+    $entry.appendChild(save);
+  }
   return $entry;
 }
 
 function showEntry(event) {
   if (event.target.getAttribute('id') !== null) {
-    $ajaxList.className = 'ajax-list hidden';
-    var id = event.target.getAttribute('id');
-    if (id < 21) {
-      var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
+    if ($ajaxList.getAttribute('data-view') !== 'favorites') {
+      var id = event.target.getAttribute('id');
+      if (id < 21) {
+        var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
+        data.current = xhr.response.results[id - 1];
+      } else {
+        id = id - (((xhr.response.info.prev[xhr.response.info.prev.length - 1]) * 20) + 1);
+        entryTree = createEntryDOM(xhr.response.results[id]);
+        data.current = xhr.response.results[id];
+      }
     } else {
-      id = id - (((xhr.response.info.prev[xhr.response.info.prev.length - 1]) * 20) + 1);
-      entryTree = createEntryDOM(xhr.response.results[id]);
+      var category = event.target.getAttribute('data-category');
+      for (var i = 0; i < data[category].length; i++) {
+        if (data[category][i].id.toString() === event.target.getAttribute('id')) {
+          entryTree = createEntryDOM(data[category][i]);
+          data.current = data[category][i];
+        }
+      }
     }
+    $ajaxList.className = 'ajax-list hidden';
     $entryPage.appendChild(entryTree);
     $entryPage.className = 'entry-page';
     $arrows.className = 'hidden';
@@ -213,6 +268,7 @@ function showFrontPage(event) {
     $back.className = 'hidden';
     $arrows.className = 'hidden';
     count = 1;
+    data.current = {};
   }
 }
 
@@ -230,8 +286,13 @@ function goBack(event) {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
-      $arrows.className = 'arrow-row';
+      if ($ajaxList.getAttribute('data-view') === 'favorites') {
+        $arrows.className = 'hidden';
+      } else {
+        $arrows.className = 'arrow-row';
+      }
       $searchAndBack.className = 'row nav-row';
+      data.current = {};
     } else if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';
@@ -271,3 +332,91 @@ function determineView() {
 }
 
 window.addEventListener('click', switchList);
+
+function saveEntry(event) {
+  if (event.target.getAttribute('id') === 'save-button') {
+    if (data.current.species) {
+      data.characters.push(data.current);
+    } else if (data.current.air_date) {
+      data.episodes.push(data.current);
+    } else {
+      data.locations.push(data.current);
+    }
+    event.target.className = 'hidden';
+  }
+}
+
+$entryPage.addEventListener('click', saveEntry);
+
+function loadFavorites() {
+  for (var key in data) {
+    if (key !== 'current') {
+      var cat = document.createElement('li');
+      cat.textContent = keyToString(key);
+      cat.className = 'fav-category';
+      $ul.appendChild(cat);
+      if (!data[key][0]) {
+        var $message = document.createElement('li');
+        $message.textContent = 'No Favorites Added Yet';
+        $message.className = 'no-favs';
+        $ul.appendChild($message);
+      } else {
+        for (var i = 0; i < data[key].length; i++) {
+          var favDOM = createDOM(data[key][i]);
+          $ul.appendChild(favDOM);
+        }
+      }
+    }
+  }
+}
+
+function createSaveButton() {
+  var $saveButton = document.createElement('button');
+  $saveButton.className = 'save-button';
+  $saveButton.setAttribute('id', 'save-button');
+  $saveButton.textContent = 'Save to Favorites';
+  return $saveButton;
+}
+
+function createDeleteButton() {
+  var $deleteButton = document.createElement('button');
+  $deleteButton.className = 'delete-button';
+  $deleteButton.setAttribute('id', 'delete-button');
+  $deleteButton.textContent = 'Remove from Favorites';
+  return $deleteButton;
+}
+
+function deleteEntry(event) {
+  if (event.target.className === 'delete-button') {
+    if (data.current.species) {
+      var category = 'characters';
+    } else if (data.current.air_date) {
+      category = 'episodes';
+    } else {
+      category = 'locations';
+    }
+    for (var i = 0; i < data[category].length; i++) {
+      if (data.current.id === data[category][i].id) {
+        data[category].splice(i, 1);
+      }
+    }
+    removeChildren($entryPage);
+    removeChildren($ul);
+    data.current = {};
+    loadFavorites();
+    $entryPage.className = 'hidden';
+    $ajaxList.className = 'ajax-list';
+  }
+}
+
+$entryPage.addEventListener('click', deleteEntry);
+
+function keyToString(key) {
+  var string = key.toString();
+  var string2 = '';
+  string2 += string[0].toUpperCase();
+  for (var i = 1; i < string.length; i++) {
+    string2 += string[i];
+  }
+  return string2;
+}

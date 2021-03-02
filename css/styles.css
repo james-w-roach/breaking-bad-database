@@ -19,6 +19,11 @@ ul {
   list-style-type: none;
 }
 
+.ajax-ul {
+  margin-top: -1rem;
+  margin-bottom: 0;
+}
+
 .column-75 {
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
@@ -71,6 +76,14 @@ ul {
 
 .la {
   font-size: 2.5rem;
+}
+
+.save-button {
+  background-color: rgb(86, 165, 7);
+}
+
+.delete-button {
+  background-color: rgb(140, 13, 13);
 }
 
 .main-img:hover,
