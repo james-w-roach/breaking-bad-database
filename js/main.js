@@ -37,7 +37,7 @@ var xhr;
 
 function getAPIData(category) {
   xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://rickandmortyapi.com/api/' + category);
+  xhr.open('GET', 'https://www.breakingbadapi.com/api/' + category);
   xhr.responseType = 'json';
 
   xhr.addEventListener('load', function () {
@@ -49,7 +49,7 @@ function getAPIData(category) {
 
 function loadDOM(event) {
   for (var i = 0; i < xhr.response.results.length; i++) {
-    var tree = createDOM(xhr.response.results[i]);
+    var tree = createDOM(xhr.response[i]);
     $ul.appendChild(tree);
   }
 }
@@ -64,49 +64,36 @@ function createDOM(object) {
     $li.appendChild($column25);
 
     var $img = document.createElement('img');
-    $img.setAttribute('src', object.image);
-    $img.setAttribute('id', object.id);
+    $img.setAttribute('src', object.img);
+    $img.setAttribute('id', object.char_id);
     $img.setAttribute('data-category', 'characters');
     $img.className = 'list-img';
     $column25.appendChild($img);
 
     var $column75 = document.createElement('div');
     $column75.className = 'column-75';
-    $column75.setAttribute('id', object.id);
+    $column75.setAttribute('id', object.char_id);
     $column75.setAttribute('data-category', 'characters');
     $li.appendChild($column75);
 
     var $character = document.createElement('h2');
     $character.className = 'character-name';
     $character.textContent = object.name;
-    $character.setAttribute('id', object.id);
+    $character.setAttribute('id', object.char_id);
     $character.setAttribute('data-category', 'characters');
     $column75.appendChild($character);
   } else if (object.air_date) {
     var $column = document.createElement('div');
     $column.className = 'column100';
-    $column.setAttribute('id', object.id);
+    $column.setAttribute('id', object.char_id);
     $column.setAttribute('data-category', 'episodes');
     $li.appendChild($column);
 
     var $name = document.createElement('h2');
     $name.className = 'name';
     $name.textContent = object.name;
-    $name.setAttribute('id', object.id);
+    $name.setAttribute('id', object.char_id);
     $name.setAttribute('data-category', 'episodes');
-    $column.appendChild($name);
-  } else {
-    $column = document.createElement('div');
-    $column.className = 'column100';
-    $column.setAttribute('id', object.id);
-    $column.setAttribute('data-category', 'locations');
-    $li.appendChild($column);
-
-    $name = document.createElement('h2');
-    $name.className = 'name';
-    $name.textContent = object.name;
-    $name.setAttribute('id', object.id);
-    $name.setAttribute('data-category', 'locations');
     $column.appendChild($name);
   }
 
@@ -128,7 +115,7 @@ function createEntryDOM(object) {
 
   if (object.image) {
     var $img = document.createElement('img');
-    $img.setAttribute('src', object.image);
+    $img.setAttribute('src', object.img);
     $img.className = 'entry-img';
     $content.appendChild($img);
   }
@@ -137,39 +124,45 @@ function createEntryDOM(object) {
   $details.className = 'details';
   $content.appendChild($details);
 
-  if (object.species) {
+  if (object.occupation) {
     var category = data.characters;
 
     var $charList = document.createElement('ul');
     $charList.className = 'char-entry';
     $details.appendChild($charList);
 
-    var $loc = document.createElement('li');
-    $loc.className = 'char-location';
-    $loc.textContent = 'Location: ' + object.location.name;
-    $charList.appendChild($loc);
+    var $occupation = document.createElement('li');
+    $occupation.className = 'char-occ';
+    $occupation.textContent = 'Occupation: ';
+    for (var i = 0; i < object.occupation.length; i++) {
+      $occupation.textContent += object.occupation[i];
+      if (i !== object.occupation.length - 1) {
+        $occupation.textContent += ', ';
+      }
+    }
+    $charList.appendChild($occupation);
 
-    var $origin = document.createElement('li');
-    $origin.className = 'char-origin';
-    $origin.textContent = 'Origin: ' + object.origin.name;
-    $charList.appendChild($origin);
-
-    var $species = document.createElement('li');
-    $species.className = 'char-species';
-    $species.textContent = 'Species: ' + object.species;
-    $charList.appendChild($species);
-
-    if (object.type) {
-      var $subSpecies = document.createElement('li');
-      $subSpecies.className = 'char-type';
-      $subSpecies.textContent = 'Info: ' + object.type;
-      $charList.appendChild($subSpecies);
+    if (object.birthday !== 'Unknown') {
+      var $birthday = document.createElement('li');
+      $birthday.className = 'char-birthday';
+      $birthday.textContent = 'Birthday: ' + object.birthday;
+      $charList.appendChild($birthday);
     }
 
-    var $gender = document.createElement('li');
-    $gender.className = 'char-gender';
-    $gender.textContent = 'Gender: ' + object.gender;
-    $charList.appendChild($gender);
+    var $nickname = document.createElement('li');
+    $nickname.className = 'char-nickname';
+    $nickname.textContent = 'Nickname: ' + object.nickname;
+    $charList.appendChild($nickname);
+
+    var $seasons = document.createElement('li');
+    $seasons.className = 'char-seasons';
+    $seasons.textContent = 'Appears in: ' + object.species;
+    $charList.appendChild($seasons);
+
+    var $actor = document.createElement('li');
+    $actor.className = 'char-actor';
+    $actor.textContent = 'Protrayed by: ' + object.portrayed;
+    $charList.appendChild($actor);
 
     var $status = document.createElement('li');
     $status.className = 'char-status';
@@ -212,8 +205,8 @@ function createEntryDOM(object) {
     var save = createSaveButton();
     $entry.appendChild(save);
   } else {
-    for (var i = 0; i < category.length; i++) {
-      if (category[i].name === object.name) {
+    for (var j = 0; j < category.length; j++) {
+      if (category[j].name === object.name) {
         if ($ajaxList.getAttribute('data-view') === 'favorites') {
           var deleteButton = createDeleteButton();
           $entry.appendChild(deleteButton);
