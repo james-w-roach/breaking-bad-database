@@ -329,6 +329,10 @@ function goBack(event) {
       }
       $searchAndBack.className = 'row nav-row';
       data.current = {};
+    } else if ($entryPage.className === 'entry-page search') {
+      $front.className = 'front-page';
+      $entryPage.className = 'entry-page hidden';
+      removeChildren($entryPage);
     } else if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';
@@ -475,3 +479,75 @@ function changeSeries(event) {
 }
 
 $seriesButtons.addEventListener('click', changeSeries);
+
+var $searchInput = document.querySelector('#search');
+var $categoryInput = document.querySelector('#category-selector');
+
+function searchAPI(event) {
+  event.preventDefault();
+  var newString = convertStringToAPI($searchInput.value);
+  if ($categoryInput.value === 'characters') {
+    loadCharEntry('characters?name=' + newString);
+  } else if ($categoryInput.value === 'breaking-bad-episodes') {
+    loadEpEntry('episodes?series=Breaking+Bad', newString);
+  } else if ($categoryInput.value === 'better-call-saul-episodes') {
+    loadEpEntry('episodes?series=Better+Call+Saul', newString);
+  }
+}
+
+window.addEventListener('submit', searchAPI);
+
+function convertStringToAPI(string) {
+  var APIString = '';
+  for (var i = 0; i < string.length; i++) {
+    if (i === 0 || (string[i - 1]) === ' ') {
+      APIString += string[i].toUpperCase();
+    } else if (string[i] === ' ') {
+      APIString += '+';
+    } else {
+      APIString += string[i].toLowerCase();
+    }
+  }
+  return APIString;
+}
+
+function loadCharEntry(category) {
+  xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://www.breakingbadapi.com/api/' + category);
+  xhr.responseType = 'json';
+
+  xhr.addEventListener('load', function () {
+    var entryTree = createEntryDOM(xhr.response[0]);
+    $searchInput.value = '';
+    removeChildren($entryPage);
+    $entryPage.className = 'entry-page search';
+    $back.className = 'fas fa-arrow-left';
+    $entryPage.appendChild(entryTree);
+    $front.className = 'hidden';
+  });
+
+  xhr.send();
+}
+
+function loadEpEntry(series, episode) {
+  xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://www.breakingbadapi.com/api/' + series);
+  xhr.responseType = 'json';
+
+  xhr.addEventListener('load', function () {
+    for (var i = 0; i < xhr.response.length; i++) {
+      if (xhr.response[i].title === episode) {
+        var entryTree = createEntryDOM(xhr.response[i]);
+        data.current = xhr.response[i];
+      }
+    }
+    $searchInput.value = '';
+    removeChildren($entryPage);
+    $entryPage.className = 'entry-page search';
+    $back.className = 'fas fa-arrow-left';
+    $entryPage.appendChild(entryTree);
+    $front.className = 'hidden';
+  });
+
+  xhr.send();
+}
