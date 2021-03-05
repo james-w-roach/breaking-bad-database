@@ -333,6 +333,7 @@ function goBack(event) {
       $front.className = 'front-page';
       $entryPage.className = 'entry-page hidden';
       removeChildren($entryPage);
+      $back.className = 'hidden';
     } else if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';
@@ -517,7 +518,11 @@ function loadCharEntry(category) {
   xhr.responseType = 'json';
 
   xhr.addEventListener('load', function () {
-    var entryTree = createEntryDOM(xhr.response[0]);
+    if (xhr.response[0]) {
+      var entryTree = createEntryDOM(xhr.response[0]);
+    } else {
+      entryTree = createErrorMessage();
+    }
     $searchInput.value = '';
     removeChildren($entryPage);
     $entryPage.className = 'entry-page search';
@@ -539,6 +544,8 @@ function loadEpEntry(series, episode) {
       if (xhr.response[i].title === episode) {
         var entryTree = createEntryDOM(xhr.response[i]);
         data.current = xhr.response[i];
+      } else {
+        entryTree = createErrorMessage();
       }
     }
     $searchInput.value = '';
@@ -550,4 +557,25 @@ function loadEpEntry(series, episode) {
   });
 
   xhr.send();
+}
+
+function createErrorMessage() {
+  var $entry = document.createElement('div');
+  $entry.className = 'entry';
+
+  var $title = document.createElement('h1');
+  $title.className = 'entry-name';
+  $title.textContent = 'No matching results';
+  $entry.appendChild($title);
+
+  var $content = document.createElement('div');
+  $content.className = 'content';
+  $entry.appendChild($content);
+
+  var $message = document.createElement('p');
+  $message.className = 'message';
+  $message.textContent = 'Please ensure the correct category is selected. Also make sure to check for spelling errors and to include spaces.';
+  $content.appendChild($message);
+
+  return $entry;
 }
