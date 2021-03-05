@@ -427,11 +427,13 @@ function deleteEntry(event) {
   if (event.target.className === 'delete-button') {
     if (data.current.occupation) {
       var category = 'characters';
+      var id = 'char_id';
     } else if (data.current.air_date) {
       category = 'episodes';
+      id = 'episode_id';
     }
     for (var i = 0; i < data[category].length; i++) {
-      if (data.current.id === data[category][i].id) {
+      if (data.current[id] === data[category][i][id]) {
         data[category].splice(i, 1);
       }
     }
