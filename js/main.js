@@ -5,25 +5,24 @@ var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
 var $arrows = document.querySelector('#arrow-row');
 var $searchAndBack = document.querySelector('#searchAndBack');
+var $seriesButtons = document.querySelector('#series-button-row');
 
-var count = 1;
+var count = 0;
 
 function categorySelect(event) {
   if (event.target.className === 'main-img' || event.target.className === 'button') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
-    $arrows.className = 'arrow-row';
   }
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $ajaxList.setAttribute('data-view', 'character');
-    getAPIData('character');
-  } else if (event.target.getAttribute('id') === 'locations-img' || event.target.getAttribute('id') === 'locations') {
-    $ajaxList.setAttribute('data-view', 'location');
-    getAPIData('location');
+    getAPIData('characters');
+    $arrows.className = 'arrow-row';
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
-    getAPIData('episode');
+    $seriesButtons.className = 'series-button-row';
+    getAPIData('episodes?series=Breaking+Bad');
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
     $arrows.className = 'hidden';
@@ -48,7 +47,7 @@ function getAPIData(category) {
 }
 
 function loadDOM(event) {
-  for (var i = 0; i < xhr.response.results.length; i++) {
+  for (var i = 0; i < xhr.response.length; i++) {
     var tree = createDOM(xhr.response[i]);
     $ul.appendChild(tree);
   }
@@ -56,9 +55,15 @@ function loadDOM(event) {
 
 function createDOM(object) {
   var $li = document.createElement('li');
-  $li.className = 'list-item';
+  if (object.char_id > 21) {
+    $li.className = 'list-item hidden';
+  } else {
+    $li.className = 'list-item';
+  }
 
-  if (object.image) {
+  if (object.img) {
+    $li.setAttribute('id', object.char_id);
+
     var $column25 = document.createElement('div');
     $column25.className = 'column-25';
     $li.appendChild($column25);
@@ -83,20 +88,21 @@ function createDOM(object) {
     $character.setAttribute('data-category', 'characters');
     $column75.appendChild($character);
   } else if (object.air_date) {
+    $li.setAttribute('id', object.episode_id);
+
     var $column = document.createElement('div');
     $column.className = 'column100';
-    $column.setAttribute('id', object.char_id);
+    $column.setAttribute('id', object.episode_id);
     $column.setAttribute('data-category', 'episodes');
     $li.appendChild($column);
 
     var $name = document.createElement('h2');
     $name.className = 'name';
-    $name.textContent = object.name;
-    $name.setAttribute('id', object.char_id);
+    $name.textContent = object.title;
+    $name.setAttribute('id', object.episode_id);
     $name.setAttribute('data-category', 'episodes');
     $column.appendChild($name);
   }
-
   return $li;
 }
 
@@ -106,14 +112,18 @@ function createEntryDOM(object) {
 
   var $title = document.createElement('h1');
   $title.className = 'entry-name';
-  $title.textContent = object.name;
+  if (object.name) {
+    $title.textContent = object.name;
+  } else {
+    $title.textContent = object.title;
+  }
   $entry.appendChild($title);
 
   var $content = document.createElement('div');
   $content.className = 'content';
   $entry.appendChild($content);
 
-  if (object.image) {
+  if (object.img) {
     var $img = document.createElement('img');
     $img.setAttribute('src', object.img);
     $img.className = 'entry-img';
@@ -126,6 +136,7 @@ function createEntryDOM(object) {
 
   if (object.occupation) {
     var category = data.characters;
+    var name = 'name';
 
     var $charList = document.createElement('ul');
     $charList.className = 'char-entry';
@@ -154,10 +165,37 @@ function createEntryDOM(object) {
     $nickname.textContent = 'Nickname: ' + object.nickname;
     $charList.appendChild($nickname);
 
-    var $seasons = document.createElement('li');
-    $seasons.className = 'char-seasons';
-    $seasons.textContent = 'Appears in: ' + object.species;
-    $charList.appendChild($seasons);
+    var $appears = document.createElement('li');
+    $appears.textContent = 'Appears in:';
+    $charList.appendChild($appears);
+
+    if (object.appearance) {
+      var $breakingBad = document.createElement('li');
+      $breakingBad.className = 'series';
+      $breakingBad.textContent = 'Breaking Bad: Seasons ';
+      for (var j = 0; j < object.appearance.length; j++) {
+        if (j !== object.appearance.length - 1) {
+          $breakingBad.textContent += object.appearance[j] + ', ';
+        } else {
+          $breakingBad.textContent += ' and ' + object.appearance[j];
+        }
+      }
+      $charList.appendChild($breakingBad);
+    }
+
+    if (!object.better_call_saul_appearance) {
+      var $betterCallSaul = document.createElement('li');
+      $betterCallSaul.className = 'series';
+      $betterCallSaul.textContent = 'Better Call Saul: Seasons ';
+      for (var k = 0; k < object.better_call_saul_appearance.length; k++) {
+        if (k !== object.better_call_saul_appearance.length - 1) {
+          $betterCallSaul.textContent += object.better_call_saul_appearance[k] + ', ';
+        } else {
+          $betterCallSaul.textContent += ', and ' + object.better_call_saul_appearance[k];
+        }
+      }
+      $charList.appendChild($betterCallSaul);
+    }
 
     var $actor = document.createElement('li');
     $actor.className = 'char-actor';
@@ -168,24 +206,9 @@ function createEntryDOM(object) {
     $status.className = 'char-status';
     $status.textContent = 'Status: ' + object.status;
     $charList.appendChild($status);
-  } else if (object.residents) {
-    category = data.locations;
-
-    var $locList = document.createElement('ul');
-    $locList.className = 'location-entry';
-    $details.appendChild($locList);
-
-    var $dimension = document.createElement('li');
-    $dimension.className = 'location-dimension';
-    $dimension.textContent = 'Dimension: ' + object.dimension;
-    $locList.appendChild($dimension);
-
-    var $type = document.createElement('li');
-    $type.className = 'location-type';
-    $type.textContent = 'Type: ' + object.type;
-    $locList.appendChild($type);
   } else {
     category = data.episodes;
+    name = 'title';
 
     var $epList = document.createElement('ul');
     $epList.className = 'episode-entry';
@@ -198,15 +221,28 @@ function createEntryDOM(object) {
 
     var $episode = document.createElement('li');
     $episode.className = 'episode';
-    $episode.textContent = 'Episode: ' + object.episode;
+    $episode.textContent = 'Episode #: ' + object.episode;
     $epList.appendChild($episode);
+
+    var $characters = document.createElement('li');
+    $characters.className = 'characters';
+    $characters.textContent = 'Characters involved: ';
+    for (var m = 0; m < object.characters.length; m++) {
+      if (m !== object.characters.length - 1) {
+        $characters.textContent += object.characters[m] + ', ';
+      } else {
+        $characters.textContent += object.characters[m];
+      }
+    }
+    $epList.appendChild($characters);
+
   }
   if (!category[0]) {
     var save = createSaveButton();
     $entry.appendChild(save);
   } else {
-    for (var j = 0; j < category.length; j++) {
-      if (category[j].name === object.name) {
+    for (var l = 0; l < category.length; l++) {
+      if (category[l][name] === object[name]) {
         if ($ajaxList.getAttribute('data-view') === 'favorites') {
           var deleteButton = createDeleteButton();
           $entry.appendChild(deleteButton);
@@ -224,25 +260,29 @@ function showEntry(event) {
   if (event.target.getAttribute('id') !== null) {
     if ($ajaxList.getAttribute('data-view') !== 'favorites') {
       var id = event.target.getAttribute('id');
-      if (id < 21) {
-        var entryTree = createEntryDOM(xhr.response.results[(id - 1)]);
-        data.current = xhr.response.results[id - 1];
+      if (data.series === 'Better Call Saul') {
+        var entryTree = createEntryDOM(xhr.response[id - 63]);
+        data.current = xhr.response[id - 63];
       } else {
-        id = id - (((xhr.response.info.prev[xhr.response.info.prev.length - 1]) * 20) + 1);
-        entryTree = createEntryDOM(xhr.response.results[id]);
-        data.current = xhr.response.results[id];
+        entryTree = createEntryDOM(xhr.response[(id - 1)]);
+        data.current = xhr.response[id - 1];
       }
     } else {
       var category = event.target.getAttribute('data-category');
+      if (category === 'episodes') {
+        var idType = 'episode_id';
+      } else {
+        idType = 'char_id';
+      }
       for (var i = 0; i < data[category].length; i++) {
-        if (data[category][i].id.toString() === event.target.getAttribute('id')) {
+        if (data[category][i][idType].toString() === event.target.getAttribute('id')) {
           entryTree = createEntryDOM(data[category][i]);
           data.current = data[category][i];
         }
       }
     }
-    $ajaxList.className = 'ajax-list hidden';
     $entryPage.appendChild(entryTree);
+    $ajaxList.className = 'ajax-list hidden';
     $entryPage.className = 'entry-page';
     $arrows.className = 'hidden';
     $searchAndBack.className = 'row entry-back';
@@ -260,8 +300,11 @@ function showFrontPage(event) {
     $entryPage.className = 'entry-page hidden';
     $back.className = 'hidden';
     $arrows.className = 'hidden';
-    count = 1;
+    count = 0;
     data.current = {};
+    data.series = 'Breaking Bad';
+    $seriesButtons.children[0].className = 'active-category';
+    $seriesButtons.children[1].className = 'inactive';
   }
 }
 
@@ -292,8 +335,12 @@ function goBack(event) {
       $front.className = 'front-page';
       removeChildren($ul);
       $back.className = 'hidden';
-      count = 1;
+      count = 0;
       $arrows.className = 'hidden';
+      $seriesButtons.className = 'hidden';
+      data.series = 'Breaking Bad';
+      $seriesButtons.children[0].className = 'active-category';
+      $seriesButtons.children[1].className = 'inactive';
     }
   }
 }
@@ -302,38 +349,35 @@ window.addEventListener('click', goBack);
 
 function switchList(event) {
   if (event.target.getAttribute('id') === 'right' || event.target.getAttribute('id') === 'right-arrow') {
-    removeChildren($ul);
-    count++;
-    var current = determineView() + count;
-    getAPIData(current);
-  } if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
-    removeChildren($ul);
-    count--;
-    current = determineView() + count;
-    getAPIData(current);
+    if (count !== 42) {
+      count += 21;
+    }
+  }
+  if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
+    if (count !== 0) {
+      count -= 21;
+    }
+  }
+  for (var i = 0; i < $ul.children.length; i++) {
+    if (count === 0) {
+      $ul.children[0].className = 'list-item';
+    }
+    if (i <= count || i > (count + 20)) {
+      $ul.children[i].className = 'hidden';
+    } else {
+      $ul.children[i].className = 'list-item';
+    }
   }
 }
 
-function determineView() {
-  if ($ajaxList.getAttribute('data-view') === 'character') {
-    return 'character/?page=';
-  } else if ($ajaxList.getAttribute('data-view') === 'location') {
-    return 'location/?page=';
-  } else if ($ajaxList.getAttribute('data-view') === 'episode') {
-    return 'episode/?page=';
-  }
-}
-
-window.addEventListener('click', switchList);
+$arrows.addEventListener('click', switchList);
 
 function saveEntry(event) {
   if (event.target.getAttribute('id') === 'save-button') {
-    if (data.current.species) {
+    if (data.current.name) {
       data.characters.push(data.current);
     } else if (data.current.air_date) {
       data.episodes.push(data.current);
-    } else {
-      data.locations.push(data.current);
     }
     event.target.className = 'hidden';
   }
@@ -343,7 +387,7 @@ $entryPage.addEventListener('click', saveEntry);
 
 function loadFavorites() {
   for (var key in data) {
-    if (key !== 'current') {
+    if (key !== 'current' && key !== 'series') {
       var cat = document.createElement('li');
       cat.textContent = keyToString(key);
       cat.className = 'fav-category';
@@ -381,12 +425,10 @@ function createDeleteButton() {
 
 function deleteEntry(event) {
   if (event.target.className === 'delete-button') {
-    if (data.current.species) {
+    if (data.current.occupation) {
       var category = 'characters';
     } else if (data.current.air_date) {
       category = 'episodes';
-    } else {
-      category = 'locations';
     }
     for (var i = 0; i < data[category].length; i++) {
       if (data.current.id === data[category][i].id) {
@@ -413,3 +455,21 @@ function keyToString(key) {
   }
   return string2;
 }
+
+function changeSeries(event) {
+  if (event.target.className === 'inactive' && event.target.textContent === 'Better Call Saul') {
+    event.target.className = 'active-category';
+    $seriesButtons.children[0].className = 'inactive';
+    data.series = 'Better Call Saul';
+    removeChildren($ul);
+    getAPIData('episodes?series=Better+Call+Saul');
+  } else if (event.target.className === 'inactive' && event.target.textContent === 'Breaking Bad') {
+    event.target.className = 'active-category';
+    $seriesButtons.children[1].className = 'inactive';
+    data.series = 'Breaking Bad';
+    removeChildren($ul);
+    getAPIData('episodes?series=Breaking+Bad');
+  }
+}
+
+$seriesButtons.addEventListener('click', changeSeries);

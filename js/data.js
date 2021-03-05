@@ -1,8 +1,8 @@
 /* exported data */
 var data = {
   current: {},
+  series: 'Breaking Bad',
   characters: [],
-  locations: [],
   episodes: []
 };
 
