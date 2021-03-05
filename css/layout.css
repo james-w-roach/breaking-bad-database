@@ -1,5 +1,5 @@
 header {
-  background-color: rgb(86, 165, 7);
+  background-color: rgb(39, 77, 33);
   width: 100vw;
   height: 5rem;
   margin: 0 auto;
@@ -27,10 +27,8 @@ header {
 }
 
 .main-header {
-  color: white;
   padding-left: 0.3rem;
-  font-size: 1.75rem;
-  width: 15rem;
+  width: 9rem;
 }
 
 form {
@@ -40,11 +38,11 @@ form {
 input {
   width: 100%;
   height: 3rem;
-  border-radius: 0.5rem;
   border: none;
   outline: none;
   padding-left: 1rem;
   font-size: 1.2rem;
+  border-radius: 0.2rem;
 }
 
 .button {
@@ -52,17 +50,17 @@ input {
   height: 3rem;
   outline: none;
   border: none;
-  border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
   font-size: 1.2rem;
+  border-bottom-right-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
 }
 
 .main-img {
   width: 10rem;
   height: 14rem;
   object-fit: cover;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-right-radius: 0.2rem;
+  border-top-left-radius: 0.2rem;
 }
 
 .list-item {
