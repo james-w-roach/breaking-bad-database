@@ -544,16 +544,19 @@ function loadEpEntry(series, episode) {
       if (xhr.response[i].title === episode) {
         var entryTree = createEntryDOM(xhr.response[i]);
         data.current = xhr.response[i];
-      } else {
-        entryTree = createErrorMessage();
       }
     }
     $searchInput.value = '';
     removeChildren($entryPage);
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
-    $entryPage.appendChild(entryTree);
     $front.className = 'hidden';
+    if (entryTree) {
+      $entryPage.appendChild(entryTree);
+    } else {
+      entryTree = createErrorMessage();
+      $entryPage.appendChild(entryTree);
+    }
   });
 
   xhr.send();
@@ -574,7 +577,7 @@ function createErrorMessage() {
 
   var $message = document.createElement('p');
   $message.className = 'message';
-  $message.textContent = 'Please ensure the correct category is selected. Also make sure to check for spelling errors and to include spaces.';
+  $message.textContent = 'Please check if the correct category is selected. If you are looking for a character, simply type their first name or full name into the search bar and press enter. Also make sure to check for spelling errors and include spaces where needed.';
   $content.appendChild($message);
 
   return $entry;
