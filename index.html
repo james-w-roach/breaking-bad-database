@@ -14,7 +14,7 @@
 <body>
   <header>
     <div class="container">
-      <h2 class="main-header">Database C-137</h2>
+      <img class="main-header" src="images/BrBaDb-logoV4@2x.png">
     </div>
   </header>
   <main>
@@ -22,32 +22,43 @@
       <div id="searchAndBack" class="row nav-row">
         <i id="back-button" class="hidden"></i>
         <form action="index.html" method="get">
+          <select name="category" id="category-selector" required>
+            <option value="" selected="selected">Category</option>
+            <option value="characters">Characters</option>
+            <option value="breaking-bad-episodes">Breaking Bad Episodes</option>
+            <option value="better-call-saul-episodes">Better Call Saul Episodes</option>
+          </select>
           <input type="search" name="search" id="search" placeholder="Search">
         </form>
       </div>
       <div id="front-page">
         <div class="row">
           <div class="column">
-            <img class="main-img" id="chars-img" src="https://fsmedia.imgix.net/0f/a3/4f/93/472e/478a/a974/49d39db04079/the-detail-in-total-rickall-is-insane.png?rect=0%2C0%2C1920%2C959&auto=format%2Ccompress&dpr=2&w=650">
+            <img class="main-img" id="chars-img" src="https://img1.looper.com/img/gallery/the-real-reason-walter-white-had-to-die-in-breaking-bad/intro-1588169156.jpg">
             <button class="button" id="chars">Characters</button>
           </div>
           <div class="column">
-            <img class="main-img" id="locations-img" src="https://filmdaily.co/wp-content/uploads/2018/06/rick-and-morty-bird-world-1024x475.jpg">
-            <button class="button" id="locations">Locations</button>
+            <img class="main-img" id="episodes-img"
+              src="https://images5.alphacoders.com/287/287897.jpg">
+            <button class="button" id="episodes">Episodes</button>
           </div>
         </div>
         <div class="row">
           <div class="column">
-            <img class="main-img" id="episodes-img" src="https://m.media-amazon.com/images/M/MV5BZjRjOTFkOTktZWUzMi00YzMyLThkMmYtMjEwNmQyNzliYTNmXkEyXkFqcGdeQXVyNzQ1ODk3MTQ@._V1_.jpg">
-            <button class="button" id="episodes">Episodes</button>
+            <img class="main-img" id="favs-img" src="https://blog-eeuu.com/wp-content/uploads/2018/08/breaking-bad-logo.jpeg">
+            <button class="button" id="favs">Favorites</button>
           </div>
           <div class="column">
-            <img class="main-img" id="favs-img" src="https://imgix.bustle.com/uploads/image/2020/5/27/9c2052a1-b40a-4b5f-992a-3481123cfcc8-191107-leon-rick-morty-tease_nmv5um.jpg?w=1200&h=630&fit=crop&crop=faces&fm=jpg">
-            <button class="button" id="favs">Favorites</button>
+            <img class="main-img" id="about-img" src="images/BrBaDb_about_imgV2@2x.png">
+            <button class="button" id="about">About</button>
           </div>
         </div>
       </div>
       <div id="ajax-list" class="ajax-list hidden">
+        <div id="series-button-row" class="series-button-row hidden">
+          <button id="breaking-bad" class="active-category">Breaking Bad</button>
+          <button id="better-call-saul" class="inactive">Better Call Saul</button>
+        </div>
         <ul class="ajax-ul">
 
         </ul>

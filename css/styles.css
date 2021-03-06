@@ -25,17 +25,20 @@ ul {
 }
 
 .column-75 {
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
   background-color: white;
 }
 
+.column-25 {
+  width: 4rem;
+  height: 7rem;
+}
+
 .list-img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
 }
 
 .character-name {
@@ -55,9 +58,8 @@ ul {
 
 #back-button {
   font-size: 2rem;
-  padding: 0.5rem 0.6rem;
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   margin-right: 0.3rem;
 }
 
@@ -79,11 +81,11 @@ ul {
 }
 
 .save-button {
-  background-color: rgb(86, 165, 7);
+  background-color: rgb(39, 77, 33);
 }
 
 .delete-button {
-  background-color: rgb(140, 13, 13);
+  background-color: rgb(171, 43, 43);
 }
 
 .main-img:hover,
