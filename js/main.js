@@ -7,7 +7,8 @@ var $arrows = document.querySelector('#arrow-row');
 var $searchAndBack = document.querySelector('#searchAndBack');
 var $seriesButtons = document.querySelector('#series-button-row');
 
-var count = 0;
+var entryCounter = 0;
+var maxEntries = 22;
 
 function categorySelect(event) {
   if (event.target.className === 'main-img' || event.target.className === 'button') {
@@ -300,7 +301,7 @@ function showFrontPage(event) {
     $entryPage.className = 'entry-page hidden';
     $back.className = 'hidden';
     $arrows.className = 'hidden';
-    count = 0;
+    entryCounter = 0;
     data.current = {};
     data.series = 'Breaking Bad';
     $seriesButtons.children[0].className = 'active-category';
@@ -340,7 +341,7 @@ function goBack(event) {
       $front.className = 'front-page';
       removeChildren($ul);
       $back.className = 'hidden';
-      count = 0;
+      entryCounter = 0;
       $arrows.className = 'hidden';
       $seriesButtons.className = 'hidden';
       data.series = 'Breaking Bad';
@@ -354,20 +355,20 @@ window.addEventListener('click', goBack);
 
 function switchList(event) {
   if (event.target.getAttribute('id') === 'right' || event.target.getAttribute('id') === 'right-arrow') {
-    if (count !== 44) {
-      count += 22;
+    if (entryCounter !== 44) {
+      entryCounter += maxEntries;
     }
   }
   if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
-    if (count !== 0) {
-      count -= 22;
+    if (entryCounter !== 0) {
+      entryCounter -= maxEntries;
     }
   }
   for (var i = 0; i < $ul.children.length; i++) {
-    if (count === 0) {
+    if (entryCounter === 0) {
       $ul.children[0].className = 'list-item';
     }
-    if (i < count || i >= (count + 22)) {
+    if (i < entryCounter || i >= (entryCounter + 22)) {
       $ul.children[i].className = 'hidden';
     } else {
       $ul.children[i].className = 'list-item';
