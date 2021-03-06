@@ -55,7 +55,7 @@ function loadDOM(event) {
 
 function createDOM(object) {
   var $li = document.createElement('li');
-  if (object.char_id > 21) {
+  if (object.char_id > 22) {
     $li.className = 'list-item hidden';
   } else {
     $li.className = 'list-item';
@@ -354,20 +354,20 @@ window.addEventListener('click', goBack);
 
 function switchList(event) {
   if (event.target.getAttribute('id') === 'right' || event.target.getAttribute('id') === 'right-arrow') {
-    if (count !== 42) {
-      count += 21;
+    if (count !== 44) {
+      count += 22;
     }
   }
   if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
     if (count !== 0) {
-      count -= 21;
+      count -= 22;
     }
   }
   for (var i = 0; i < $ul.children.length; i++) {
     if (count === 0) {
       $ul.children[0].className = 'list-item';
     }
-    if (i <= count || i > (count + 20)) {
+    if (i < count || i >= (count + 22)) {
       $ul.children[i].className = 'hidden';
     } else {
       $ul.children[i].className = 'list-item';
@@ -525,10 +525,12 @@ function loadCharEntry(category) {
     }
     $searchInput.value = '';
     removeChildren($entryPage);
+    removeChildren($ul);
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
     $entryPage.appendChild(entryTree);
     $front.className = 'hidden';
+    $arrows.className = 'hidden';
   });
 
   xhr.send();
@@ -548,9 +550,12 @@ function loadEpEntry(series, episode) {
     }
     $searchInput.value = '';
     removeChildren($entryPage);
+    removeChildren($ul);
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
     $front.className = 'hidden';
+    $arrows.className = 'hidden';
+    $seriesButtons.className = 'hidden';
     if (entryTree) {
       $entryPage.appendChild(entryTree);
     } else {
