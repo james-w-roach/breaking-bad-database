@@ -167,14 +167,14 @@ function createEntryDOM(object) {
     $charList.appendChild($nickname);
 
     var $appears = document.createElement('li');
-    $appears.textContent = 'Appearances:';
+    $appears.textContent = 'Season Appearances:';
     $appears.className = 'appearances';
     $charList.appendChild($appears);
 
     if (object.appearance) {
       var $breakingBad = document.createElement('li');
       $breakingBad.className = 'series';
-      $breakingBad.textContent = '- Breaking Bad: Seasons ';
+      $breakingBad.textContent = '- Breaking Bad: ';
       for (var j = 0; j < object.appearance.length; j++) {
         if (j !== object.appearance.length - 1) {
           $breakingBad.textContent += object.appearance[j] + ', ';
@@ -188,7 +188,7 @@ function createEntryDOM(object) {
     if (object.better_call_saul_appearance[0]) {
       var $betterCallSaul = document.createElement('li');
       $betterCallSaul.className = 'series';
-      $betterCallSaul.textContent = '- Better Call Saul: Seasons ';
+      $betterCallSaul.textContent = '- Better Call Saul: ';
       for (var k = 0; k < object.better_call_saul_appearance.length; k++) {
         if (k !== object.better_call_saul_appearance.length - 1) {
           $betterCallSaul.textContent += object.better_call_saul_appearance[k] + ', ';
@@ -201,7 +201,7 @@ function createEntryDOM(object) {
 
     var $actor = document.createElement('li');
     $actor.className = 'char-actor';
-    $actor.textContent = 'Protrayed by: ' + object.portrayed;
+    $actor.textContent = 'Portrayed by: ' + object.portrayed;
     $charList.appendChild($actor);
 
     var $status = document.createElement('li');
@@ -216,19 +216,24 @@ function createEntryDOM(object) {
     $epList.className = 'episode-entry';
     $details.appendChild($epList);
 
+    var $season = document.createElement('li');
+    $season.className = 'season';
+    $season.textContent = 'Season: ' + object.season;
+    $epList.appendChild($season);
+
+    var $episode = document.createElement('li');
+    $episode.className = 'episode';
+    $episode.textContent = 'Episode: ' + object.episode;
+    $epList.appendChild($episode);
+
     var $date = document.createElement('li');
     $date.className = 'episode-date';
     $date.textContent = 'Air date: ' + object.air_date;
     $epList.appendChild($date);
 
-    var $episode = document.createElement('li');
-    $episode.className = 'episode';
-    $episode.textContent = 'Episode #: ' + object.episode;
-    $epList.appendChild($episode);
-
     var $characters = document.createElement('li');
     $characters.className = 'characters';
-    $characters.textContent = 'Characters involved: ';
+    $characters.textContent = 'Characters featured: ';
     for (var m = 0; m < object.characters.length; m++) {
       if (m !== object.characters.length - 1) {
         $characters.textContent += object.characters[m] + ', ';
@@ -324,10 +329,10 @@ function goBack(event) {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
-      if ($ajaxList.getAttribute('data-view') === 'favorites') {
-        $arrows.className = 'hidden';
-      } else {
+      if ($ajaxList.getAttribute('data-view') === 'character') {
         $arrows.className = 'arrow-row';
+      } else {
+        $arrows.className = 'hidden';
       }
       $searchAndBack.className = 'row nav-row';
       data.current = {};
