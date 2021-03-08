@@ -20,7 +20,6 @@ ul {
 }
 
 .ajax-ul {
-  margin-top: -1rem;
   margin-bottom: 0;
 }
 
@@ -88,6 +87,14 @@ ul {
   background-color: rgb(171, 43, 43);
 }
 
+.series {
+  padding-left: 0.5rem;
+}
+
+.column {
+  transition: transform 0.3s;
+}
+
 .main-img:hover,
 .list-img:hover,
 .character-name:hover,
@@ -97,6 +104,21 @@ ul {
 .la:hover,
 .list-arrow:hover,
 #back-button:hover,
-button:hover {
+button:hover,
+select:hover {
   cursor: pointer;
+}
+
+.inactive:hover,
+#back-button:hover {
+  background-color: lightgray;
+}
+
+.column:hover,
+.list-item:hover {
+  transform: scale(1.04);
+}
+
+.main-img:active {
+  color: rgba(88, 87, 87, 0.3);
 }

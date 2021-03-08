@@ -167,32 +167,33 @@ function createEntryDOM(object) {
     $charList.appendChild($nickname);
 
     var $appears = document.createElement('li');
-    $appears.textContent = 'Appears in:';
+    $appears.textContent = 'Appearances:';
+    $appears.className = 'appearances';
     $charList.appendChild($appears);
 
     if (object.appearance) {
       var $breakingBad = document.createElement('li');
       $breakingBad.className = 'series';
-      $breakingBad.textContent = 'Breaking Bad: Seasons ';
+      $breakingBad.textContent = '- Breaking Bad: Seasons ';
       for (var j = 0; j < object.appearance.length; j++) {
         if (j !== object.appearance.length - 1) {
           $breakingBad.textContent += object.appearance[j] + ', ';
         } else {
-          $breakingBad.textContent += ' and ' + object.appearance[j];
+          $breakingBad.textContent += object.appearance[j];
         }
       }
       $charList.appendChild($breakingBad);
     }
 
-    if (!object.better_call_saul_appearance) {
+    if (object.better_call_saul_appearance[0]) {
       var $betterCallSaul = document.createElement('li');
       $betterCallSaul.className = 'series';
-      $betterCallSaul.textContent = 'Better Call Saul: Seasons ';
+      $betterCallSaul.textContent = '- Better Call Saul: Seasons ';
       for (var k = 0; k < object.better_call_saul_appearance.length; k++) {
         if (k !== object.better_call_saul_appearance.length - 1) {
           $betterCallSaul.textContent += object.better_call_saul_appearance[k] + ', ';
         } else {
-          $betterCallSaul.textContent += ', and ' + object.better_call_saul_appearance[k];
+          $betterCallSaul.textContent += object.better_call_saul_appearance[k];
         }
       }
       $charList.appendChild($betterCallSaul);
@@ -530,8 +531,10 @@ function loadCharEntry(category) {
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
     $entryPage.appendChild(entryTree);
+    data.current = xhr.response[0];
     $front.className = 'hidden';
     $arrows.className = 'hidden';
+    $seriesButtons.className = 'hidden';
   });
 
   xhr.send();
