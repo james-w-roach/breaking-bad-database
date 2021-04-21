@@ -8,7 +8,7 @@ This site contains major spoilers for both Breaking Bad and Better Call Saul. If
 
 ## Demo
 
-The site can be accessed using this link: https://james-w-roach.github.io/ajax-project/
+The site can be accessed using this link: https://james-w-roach.github.io/breaking-bad-database/
 
 ## Features
 - User can view a list of API data entries by choosing a category (characters or episodes) from the main page
