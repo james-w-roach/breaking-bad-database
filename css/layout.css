@@ -166,10 +166,25 @@ select {
   height: 100%;
 }
 
+.loader {
+  margin: auto;
+  border: 15px solid white;
+  border-top: 15px solid rgb(39, 77, 33);
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media screen and (min-width: 350px) {
   .container {
     width: 22rem;
-    padding: 0.2rem;
+    padding: 0 0.2rem;
   }
 
   .main-img {
@@ -268,7 +283,7 @@ select {
   form {
     width: 30rem;
     position: absolute;
-    top: -4rem;
+    top: -5.5rem;
     right: 1.5rem;
   }
 
