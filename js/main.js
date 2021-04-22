@@ -18,16 +18,19 @@ function categorySelect(event) {
   }
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $ajaxList.setAttribute('data-view', 'character');
+    appendLoader();
     getAPIData('characters');
-    $arrows.className = 'arrow-row';
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
     $seriesButtons.className = 'series-button-row';
+    appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
-    $arrows.className = 'hidden';
     loadFavorites();
+  } else if (event.target.getAttribute('id') === 'about-img' || event.target.getAttribute('id') === 'about') {
+    $ajaxList.setAttribute('data-view', 'about');
+    showAbout();
   }
 }
 
@@ -42,12 +45,41 @@ function getAPIData(category) {
 
   xhr.addEventListener('load', function () {
     loadDOM();
+    if (category === 'characters') {
+      $arrows.className = 'arrow-row';
+    }
+  });
+
+  xhr.addEventListener('error', () => {
+    loadFailed();
   });
 
   xhr.send();
 }
 
+function appendLoader() {
+  var $loader = document.createElement('div');
+  $loader.className = 'loader';
+  $ul.appendChild($loader);
+}
+
+function loadFailed() {
+  removeChildren($ul);
+  var $li = document.createElement('li');
+  $li.className = 'entry';
+  var $h2 = document.createElement('h2');
+  $h2.textContent = 'Failed to load';
+  $h2.className = 'entry-name';
+  $li.appendChild($h2);
+  var $p = document.createElement('p');
+  $p.textContent = 'Please make sure you are connected to the internet.';
+  $p.className = 'message';
+  $li.appendChild($p);
+  $ul.appendChild($li);
+}
+
 function loadDOM(event) {
+  removeChildren($ul);
   for (var i = 0; i < xhr.response.length; i++) {
     var tree = createDOM(xhr.response[i]);
     $ul.appendChild(tree);
@@ -305,6 +337,7 @@ function showFrontPage(event) {
     removeChildren($ul);
     removeChildren($entryPage);
     $entryPage.className = 'entry-page hidden';
+    $seriesButtons.className = 'hidden';
     $back.className = 'hidden';
     $arrows.className = 'hidden';
     entryCounter = 0;
@@ -397,6 +430,33 @@ function saveEntry(event) {
 
 $entryPage.addEventListener('click', saveEntry);
 
+function showAbout() {
+  var $li = document.createElement('li');
+  $li.className = 'entry';
+
+  var $title = document.createElement('h1');
+  $title.className = 'entry-name';
+  $title.textContent = 'About';
+  $li.appendChild($title);
+
+  var $message = document.createElement('p');
+  $message.className = 'message';
+  $message.textContent = `A database including all of the characters and episodes
+  from the hit TV shows Breaking Bad and Better Call Saul. Each episode and character
+   has its own page containing various tidbits of information. Pages can be accessed by clicking
+   on a category from the home page or by using the search bar. Every page can be saved to your
+   Favorites list for future reference. All of the information and most of the images on this site
+   are provided by the Breaking Bad API.`;
+  $li.appendChild($message);
+
+  var $link = document.createElement('a');
+  $link.textContent = 'Breaking Bad API';
+  $link.setAttribute('href', 'https://breakingbadapi.com/');
+  $li.appendChild($link);
+
+  $ul.appendChild($li);
+}
+
 function loadFavorites() {
   for (var key in data) {
     if (key !== 'current' && key !== 'series') {
@@ -476,12 +536,14 @@ function changeSeries(event) {
     $seriesButtons.children[0].className = 'inactive';
     data.series = 'Better Call Saul';
     removeChildren($ul);
+    appendLoader();
     getAPIData('episodes?series=Better+Call+Saul');
   } else if (event.target.className === 'inactive' && event.target.textContent === 'Breaking Bad') {
     event.target.className = 'active-category';
     $seriesButtons.children[1].className = 'inactive';
     data.series = 'Breaking Bad';
     removeChildren($ul);
+    appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
   }
 }
