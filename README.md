@@ -30,9 +30,6 @@ The site can be accessed using this link: https://james-w-roach.github.io/breaki
 
 ## Sceenshots
 
-![Front Page](https://user-images.githubusercontent.com/76799878/112213085-f7b68f00-8bda-11eb-8a29-4aa4c07738b9.png)
+![Front-Page](https://user-images.githubusercontent.com/76799878/115782391-7b959f80-a370-11eb-8258-af723205008b.png)
 
-![Episode List](https://user-images.githubusercontent.com/76799878/112213102-fbe2ac80-8bda-11eb-81c9-43bc62c9c20a.png)
-
-![Character List](https://user-images.githubusercontent.com/76799878/112213117-fe450680-8bda-11eb-9665-41b683d5ad9a.png)
 
