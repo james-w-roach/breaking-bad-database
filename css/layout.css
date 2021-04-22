@@ -1,5 +1,5 @@
 header {
-  background-color: rgb(39, 77, 33);
+  background-color: #3f8748;
   width: 100vw;
   height: 5rem;
   margin: 0 auto;
@@ -169,7 +169,7 @@ select {
 .loader {
   margin: auto;
   border: 15px solid white;
-  border-top: 15px solid rgb(39, 77, 33);
+  border-top: 15px solid #3f8748;
   border-radius: 50%;
   width: 150px;
   height: 150px;
