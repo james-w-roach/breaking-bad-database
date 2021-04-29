@@ -31,11 +31,13 @@ function categorySelect(event) {
     getAPIData('episodes?series=Breaking+Bad');
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
-    $searchBar.className = 'row nav-row fav';
+    $searchBar.className = 'row nav-row dynamic';
     showPageTitle();
     loadFavorites();
   } else if (event.target.getAttribute('id') === 'about-img' || event.target.getAttribute('id') === 'about') {
     $ajaxList.setAttribute('data-view', 'about');
+    $searchBar.className = 'row nav-row dynamic';
+    showPageTitle();
     showAbout();
   }
 }
@@ -73,10 +75,9 @@ function showPageTitle() {
   $titleRow.className = 'title-row';
   $pageTitle.className = 'page-title';
   var dataView = $ajaxList.getAttribute('data-view');
-  if (dataView !== 'favorites') {
-    $pageTitle.textContent = `${dataView[0].toUpperCase()}${dataView.slice(1)}s`;
-  } else {
-    $pageTitle.textContent = 'Favorites';
+  $pageTitle.textContent = `${dataView[0].toUpperCase()}${dataView.slice(1)}`;
+  if (dataView === 'character' || dataView === 'episode') {
+    $pageTitle.textContent += 's';
   }
 }
 
@@ -476,17 +477,6 @@ $entryPage.addEventListener('click', saveEntry);
 function showAbout() {
   var $li = document.createElement('li');
   $li.className = 'entry';
-
-  var $entryTitle = document.createElement('div');
-  $entryTitle.className = 'entry-title';
-  $li.appendChild($entryTitle);
-
-  $entryTitle.appendChild(createEntryBack());
-
-  var $title = document.createElement('h1');
-  $title.className = 'entry-name';
-  $title.textContent = 'About';
-  $entryTitle.appendChild($title);
 
   var $message = document.createElement('p');
   $message.className = 'message';

@@ -32,6 +32,7 @@ header {
 
 form {
   width: 100%;
+  -webkit-appearance: none;
 }
 
 input {
@@ -143,7 +144,7 @@ select {
   text-align: center;
 }
 
-.fav {
+.dynamic {
   display: none;
 }
 
@@ -177,7 +178,7 @@ select {
   display: flex;
   align-items: center;
   max-height: min-content;
-  margin: 1rem 0;
+  margin: 1.4rem 0 1rem 0;
 }
 
 h1#page-title {
@@ -325,7 +326,7 @@ h1#page-title {
   }
 
   .entry-page {
-    margin: 1.5rem 0;
+    margin: 1.4rem 0;
   }
 
   .row {
@@ -355,11 +356,11 @@ h1#page-title {
   #search-bar {
     margin: 0;
     position: absolute;
-    top: -5rem;
+    top: -5.4rem;
     right: 1rem;
   }
 
-  .fav {
+  .dynamic {
     display: initial;
   }
 }

@@ -99,6 +99,10 @@ ul {
   transition: transform 0.3s;
 }
 
+.message {
+  margin-top: 0;
+}
+
 .main-img:hover,
 .list-img:hover,
 .character-name:hover,
