@@ -68,6 +68,9 @@ select {
   height: 2rem;
   outline: none;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.2rem;
   border-bottom-right-radius: 0.2rem;
   border-bottom-left-radius: 0.2rem;
@@ -170,6 +173,10 @@ select {
 .active-category {
   background-color: #3f8748;
   color: white;
+}
+
+.inactive {
+  background-color: white;
 }
 
 .list-img {

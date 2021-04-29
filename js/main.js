@@ -384,7 +384,7 @@ function removeChildren(element) {
 }
 
 function createEntryBack() {
-  var $entryBack = document.createElement('i');
+  var $entryBack = document.createElement('button');
   $entryBack.setAttribute('id', 'entry-back');
   $entryBack.className = 'fas fa-arrow-left';
   return $entryBack;
