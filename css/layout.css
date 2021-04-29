@@ -143,6 +143,10 @@ select {
   text-align: center;
 }
 
+.fav {
+  display: none;
+}
+
 .series-button-row {
   display: flex;
   justify-content: space-around;
@@ -286,6 +290,10 @@ h1#page-title {
   #back-button {
     padding: 0.5rem 0.6rem;
   }
+
+  .row {
+    max-height: 210px;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -297,9 +305,6 @@ h1#page-title {
 
   form {
     width: 30rem;
-    position: absolute;
-    top: -5.5rem;
-    right: 1.5rem;
   }
 
   select {
@@ -319,8 +324,13 @@ h1#page-title {
     margin: auto;
   }
 
+  .entry-page {
+    margin: 1.5rem 0;
+  }
+
   .row {
     justify-content: flex-start;
+    max-height: 250px;
   }
 
   .ajax-ul {
@@ -340,6 +350,17 @@ h1#page-title {
 
   .list-img {
     height: 9rem;
+  }
+
+  #search-bar {
+    margin: 0;
+    position: absolute;
+    top: -5rem;
+    right: 1rem;
+  }
+
+  .fav {
+    display: initial;
   }
 }
 

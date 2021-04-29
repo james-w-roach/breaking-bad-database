@@ -31,6 +31,7 @@ function categorySelect(event) {
     getAPIData('episodes?series=Breaking+Bad');
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
+    $searchBar.className = 'row nav-row fav';
     showPageTitle();
     loadFavorites();
   } else if (event.target.getAttribute('id') === 'about-img' || event.target.getAttribute('id') === 'about') {
@@ -159,6 +160,12 @@ function createEntryDOM(object) {
   var $entry = document.createElement('div');
   $entry.className = 'entry';
 
+  var $entryTitle = document.createElement('div');
+  $entryTitle.className = 'entry-title';
+  $entry.appendChild($entryTitle);
+
+  $entryTitle.appendChild(createEntryBack());
+
   var $title = document.createElement('h1');
   $title.className = 'entry-name';
   if (object.name) {
@@ -166,7 +173,7 @@ function createEntryDOM(object) {
   } else {
     $title.textContent = object.title;
   }
-  $entry.appendChild($title);
+  $entryTitle.appendChild($title);
 
   var $content = document.createElement('div');
   $content.className = 'content';
@@ -341,6 +348,7 @@ function showEntry(event) {
     $entryPage.className = 'entry-page';
     $arrows.className = 'hidden';
     $searchBar.className = 'row entry-back';
+    $titleRow.className = 'hidden';
   }
 }
 
@@ -353,6 +361,7 @@ function showFrontPage(event) {
     removeChildren($ul);
     removeChildren($entryPage);
     $entryPage.className = 'entry-page hidden';
+    $searchBar.className = 'row nav-row';
     $seriesButtons.className = 'hidden';
     $back.className = 'hidden';
     $titleRow.className = 'hidden';
@@ -373,8 +382,32 @@ function removeChildren(element) {
   }
 }
 
+function createEntryBack() {
+  var $entryBack = document.createElement('i');
+  $entryBack.setAttribute('id', 'entry-back');
+  $entryBack.className = 'fas fa-arrow-left';
+  return $entryBack;
+}
+
 function goBack(event) {
-  if (event.target.getAttribute('id') === 'back-button') {
+  var id = event.target.getAttribute('id');
+  if (id === 'back-button') {
+    if ($ajaxList.className === 'ajax-list') {
+      $entryPage.className = 'entry-page hidden';
+      $ajaxList.className = 'ajax-list hidden';
+      $front.className = 'front-page';
+      removeChildren($ul);
+      $back.className = 'hidden';
+      $titleRow.className = 'hidden';
+      entryCounter = 0;
+      $arrows.className = 'hidden';
+      $seriesButtons.className = 'hidden';
+      data.series = 'Breaking Bad';
+      $seriesButtons.children[0].className = 'active-category';
+      $seriesButtons.children[1].className = 'inactive';
+      $searchBar.className = 'row nav-row';
+    }
+  } else if (id === 'entry-back') {
     if ($entryPage.className === 'entry-page') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list';
@@ -392,19 +425,10 @@ function goBack(event) {
       $entryPage.className = 'entry-page hidden';
       removeChildren($entryPage);
       $back.className = 'hidden';
-    } else if ($ajaxList.className === 'ajax-list') {
-      $entryPage.className = 'entry-page hidden';
+    } else if ($ajaxList.getAttribute('data-view') === 'about') {
       $ajaxList.className = 'ajax-list hidden';
       $front.className = 'front-page';
       removeChildren($ul);
-      $back.className = 'hidden';
-      $titleRow.className = 'hidden';
-      entryCounter = 0;
-      $arrows.className = 'hidden';
-      $seriesButtons.className = 'hidden';
-      data.series = 'Breaking Bad';
-      $seriesButtons.children[0].className = 'active-category';
-      $seriesButtons.children[1].className = 'inactive';
     }
   }
 }
@@ -453,10 +477,16 @@ function showAbout() {
   var $li = document.createElement('li');
   $li.className = 'entry';
 
+  var $entryTitle = document.createElement('div');
+  $entryTitle.className = 'entry-title';
+  $li.appendChild($entryTitle);
+
+  $entryTitle.appendChild(createEntryBack());
+
   var $title = document.createElement('h1');
   $title.className = 'entry-name';
   $title.textContent = 'About';
-  $li.appendChild($title);
+  $entryTitle.appendChild($title);
 
   var $message = document.createElement('p');
   $message.className = 'message';
