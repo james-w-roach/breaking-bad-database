@@ -4,8 +4,10 @@ var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
 var $arrows = document.querySelector('#arrow-row');
-var $searchAndBack = document.querySelector('#searchAndBack');
+var $searchBar = document.querySelector('#search-bar');
 var $seriesButtons = document.querySelector('#series-button-row');
+var $titleRow = document.querySelector('#title-row');
+var $pageTitle = document.querySelector('#page-title');
 
 var entryCounter = 0;
 var maxEntries = 22;
@@ -18,15 +20,18 @@ function categorySelect(event) {
   }
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $ajaxList.setAttribute('data-view', 'character');
+    showPageTitle();
     appendLoader();
     getAPIData('characters');
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
     $seriesButtons.className = 'series-button-row';
+    showPageTitle();
     appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
+    showPageTitle();
     loadFavorites();
   } else if (event.target.getAttribute('id') === 'about-img' || event.target.getAttribute('id') === 'about') {
     $ajaxList.setAttribute('data-view', 'about');
@@ -61,6 +66,17 @@ function appendLoader() {
   var $loader = document.createElement('div');
   $loader.className = 'loader';
   $ul.appendChild($loader);
+}
+
+function showPageTitle() {
+  $titleRow.className = 'title-row';
+  $pageTitle.className = 'page-title';
+  var dataView = $ajaxList.getAttribute('data-view');
+  if (dataView !== 'favorites') {
+    $pageTitle.textContent = `${dataView[0].toUpperCase()}${dataView.slice(1)}s`;
+  } else {
+    $pageTitle.textContent = 'Favorites';
+  }
 }
 
 function loadFailed() {
@@ -324,7 +340,7 @@ function showEntry(event) {
     $ajaxList.className = 'ajax-list hidden';
     $entryPage.className = 'entry-page';
     $arrows.className = 'hidden';
-    $searchAndBack.className = 'row entry-back';
+    $searchBar.className = 'row entry-back';
   }
 }
 
@@ -339,6 +355,7 @@ function showFrontPage(event) {
     $entryPage.className = 'entry-page hidden';
     $seriesButtons.className = 'hidden';
     $back.className = 'hidden';
+    $titleRow.className = 'hidden';
     $arrows.className = 'hidden';
     entryCounter = 0;
     data.current = {};
@@ -367,8 +384,9 @@ function goBack(event) {
       } else {
         $arrows.className = 'hidden';
       }
-      $searchAndBack.className = 'row nav-row';
+      $searchBar.className = 'row nav-row';
       data.current = {};
+      showPageTitle();
     } else if ($entryPage.className === 'entry-page search') {
       $front.className = 'front-page';
       $entryPage.className = 'entry-page hidden';
@@ -380,6 +398,7 @@ function goBack(event) {
       $front.className = 'front-page';
       removeChildren($ul);
       $back.className = 'hidden';
+      $titleRow.className = 'hidden';
       entryCounter = 0;
       $arrows.className = 'hidden';
       $seriesButtons.className = 'hidden';
@@ -597,6 +616,7 @@ function loadCharEntry(category) {
     removeChildren($ul);
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
+    $titleRow.className = 'hidden';
     $entryPage.appendChild(entryTree);
     data.current = xhr.response[0];
     $front.className = 'hidden';
@@ -624,6 +644,7 @@ function loadEpEntry(series, episode) {
     removeChildren($ul);
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
+    $titleRow.className = 'hidden';
     $front.className = 'hidden';
     $arrows.className = 'hidden';
     $seriesButtons.className = 'hidden';
