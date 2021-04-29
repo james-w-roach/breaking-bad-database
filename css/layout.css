@@ -32,7 +32,7 @@ header {
 
 form {
   width: 100%;
-  -webkit-appearance: none;
+  max-height: min-content;
 }
 
 input {
