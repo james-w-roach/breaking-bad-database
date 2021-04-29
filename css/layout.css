@@ -69,6 +69,7 @@ select {
   font-size: 1.2rem;
   border-bottom-right-radius: 0.2rem;
   border-bottom-left-radius: 0.2rem;
+  background-color: white;
 }
 
 .main-img {
