@@ -67,6 +67,10 @@ ul {
   border: none;
 }
 
+#entry-back {
+  width: min-content;
+}
+
 .arrow-row {
   display: flex;
   justify-content: center;
