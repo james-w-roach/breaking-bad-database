@@ -43,7 +43,7 @@ ul {
 
 .entry {
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   padding: 1rem 1rem;
   margin-bottom: 2rem;
 }
@@ -111,6 +111,10 @@ ul {
 
 .message {
   margin-top: 0;
+}
+
+.fav-entry {
+  margin-top: 1.4rem;
 }
 
 .main-img:hover,

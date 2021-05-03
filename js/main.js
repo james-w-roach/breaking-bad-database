@@ -106,7 +106,7 @@ function loadDOM(event) {
 
 function createDOM(object) {
   var $li = document.createElement('li');
-  if (object.char_id > 22) {
+  if ($ajaxList.getAttribute('data-view') !== 'favorites' && object.char_id > 22) {
     $li.className = 'list-item hidden';
   } else {
     $li.className = 'list-item';
@@ -327,9 +327,15 @@ function showEntry(event) {
         var entryTree = createEntryDOM(xhr.response[id - 63]);
         data.current = xhr.response[id - 63];
       } else {
-        entryTree = createEntryDOM(xhr.response[(id - 1)]);
-        data.current = xhr.response[id - 1];
+        if (id > 100) {
+          entryTree = createEntryDOM(xhr.response[(id - 55)]);
+          data.current = xhr.response[id - 55];
+        } else {
+          entryTree = createEntryDOM(xhr.response[(id - 1)]);
+          data.current = xhr.response[id - 1];
+        }
       }
+      $searchBar.className = 'row entry-back';
     } else {
       var category = event.target.getAttribute('data-category');
       if (category === 'episodes') {
@@ -344,11 +350,14 @@ function showEntry(event) {
         }
       }
     }
+    if ($ajaxList.getAttribute('data-view') === 'favorites') {
+      $entryPage.className = 'entry-page fav-entry';
+    } else {
+      $entryPage.className = 'entry-page';
+    }
     $entryPage.appendChild(entryTree);
     $ajaxList.className = 'ajax-list hidden';
-    $entryPage.className = 'entry-page';
     $arrows.className = 'hidden';
-    $searchBar.className = 'row entry-back';
     $titleRow.className = 'hidden';
   }
 }
@@ -409,7 +418,7 @@ function goBack(event) {
       $searchBar.className = 'row nav-row';
     }
   } else if (id === 'entry-back') {
-    if ($entryPage.className === 'entry-page') {
+    if ($entryPage.className === 'entry-page' || $entryPage.className === 'entry-page fav-entry') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
@@ -418,7 +427,9 @@ function goBack(event) {
       } else {
         $arrows.className = 'hidden';
       }
-      $searchBar.className = 'row nav-row';
+      if ($ajaxList.getAttribute('data-view') !== 'favorites') {
+        $searchBar.className = 'row nav-row';
+      }
       data.current = {};
       showPageTitle();
     } else if ($entryPage.className === 'entry-page search') {
@@ -554,6 +565,7 @@ function deleteEntry(event) {
     loadFavorites();
     $entryPage.className = 'hidden';
     $ajaxList.className = 'ajax-list';
+    showPageTitle();
   }
 }
 
