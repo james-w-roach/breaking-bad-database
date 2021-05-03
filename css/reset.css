@@ -8,6 +8,7 @@ body {
 
 form,
 input,
-select {
+select,
+#entry-back {
   -webkit-appearance: none;
 }
