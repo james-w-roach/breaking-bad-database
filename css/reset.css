@@ -5,3 +5,10 @@
 body {
   margin: 0;
 }
+
+form,
+input,
+select,
+#entry-back {
+  -webkit-appearance: none;
+}

@@ -43,20 +43,37 @@ ul {
 
 .entry {
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   padding: 1rem 1rem;
   margin-bottom: 2rem;
 }
 
 .entry-name {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0.5rem;
 }
 
-#back-button {
+.entry-title {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  margin-left: 0;
+}
+
+#back-button,
+#entry-back {
   font-size: 2rem;
   background-color: white;
   border-radius: 0.2rem;
   margin-right: 0.3rem;
+  border: none;
+}
+
+#entry-back {
+  width: 40px;
+  padding: 0;
+  margin-left: 0;
 }
 
 .arrow-row {
@@ -92,6 +109,14 @@ ul {
   transition: transform 0.3s;
 }
 
+.message {
+  margin-top: 0;
+}
+
+.fav-entry {
+  margin-top: 1.4rem;
+}
+
 .main-img:hover,
 .list-img:hover,
 .character-name:hover,
@@ -102,7 +127,8 @@ ul {
 .list-arrow:hover,
 #back-button:hover,
 button:hover,
-select:hover {
+select:hover,
+#entry-back:hover {
   cursor: pointer;
 }
 

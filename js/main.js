@@ -4,8 +4,10 @@ var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
 var $arrows = document.querySelector('#arrow-row');
-var $searchAndBack = document.querySelector('#searchAndBack');
+var $searchBar = document.querySelector('#search-bar');
 var $seriesButtons = document.querySelector('#series-button-row');
+var $titleRow = document.querySelector('#title-row');
+var $pageTitle = document.querySelector('#page-title');
 
 var entryCounter = 0;
 var maxEntries = 22;
@@ -18,18 +20,24 @@ function categorySelect(event) {
   }
   if (event.target.getAttribute('id') === 'chars-img' || event.target.getAttribute('id') === 'chars') {
     $ajaxList.setAttribute('data-view', 'character');
+    showPageTitle();
     appendLoader();
     getAPIData('characters');
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
     $seriesButtons.className = 'series-button-row';
+    showPageTitle();
     appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
+    $searchBar.className = 'row nav-row dynamic';
+    showPageTitle();
     loadFavorites();
   } else if (event.target.getAttribute('id') === 'about-img' || event.target.getAttribute('id') === 'about') {
     $ajaxList.setAttribute('data-view', 'about');
+    $searchBar.className = 'row nav-row dynamic';
+    showPageTitle();
     showAbout();
   }
 }
@@ -63,6 +71,16 @@ function appendLoader() {
   $ul.appendChild($loader);
 }
 
+function showPageTitle() {
+  $titleRow.className = 'title-row';
+  $pageTitle.className = 'page-title';
+  var dataView = $ajaxList.getAttribute('data-view');
+  $pageTitle.textContent = `${dataView[0].toUpperCase()}${dataView.slice(1)}`;
+  if (dataView === 'character' || dataView === 'episode') {
+    $pageTitle.textContent += 's';
+  }
+}
+
 function loadFailed() {
   removeChildren($ul);
   var $li = document.createElement('li');
@@ -88,7 +106,7 @@ function loadDOM(event) {
 
 function createDOM(object) {
   var $li = document.createElement('li');
-  if (object.char_id > 22) {
+  if ($ajaxList.getAttribute('data-view') !== 'favorites' && object.char_id > 22) {
     $li.className = 'list-item hidden';
   } else {
     $li.className = 'list-item';
@@ -143,6 +161,12 @@ function createEntryDOM(object) {
   var $entry = document.createElement('div');
   $entry.className = 'entry';
 
+  var $entryTitle = document.createElement('div');
+  $entryTitle.className = 'entry-title';
+  $entry.appendChild($entryTitle);
+
+  $entryTitle.appendChild(createEntryBack());
+
   var $title = document.createElement('h1');
   $title.className = 'entry-name';
   if (object.name) {
@@ -150,7 +174,7 @@ function createEntryDOM(object) {
   } else {
     $title.textContent = object.title;
   }
-  $entry.appendChild($title);
+  $entryTitle.appendChild($title);
 
   var $content = document.createElement('div');
   $content.className = 'content';
@@ -303,9 +327,15 @@ function showEntry(event) {
         var entryTree = createEntryDOM(xhr.response[id - 63]);
         data.current = xhr.response[id - 63];
       } else {
-        entryTree = createEntryDOM(xhr.response[(id - 1)]);
-        data.current = xhr.response[id - 1];
+        if (id > 100) {
+          entryTree = createEntryDOM(xhr.response[(id - 55)]);
+          data.current = xhr.response[id - 55];
+        } else {
+          entryTree = createEntryDOM(xhr.response[(id - 1)]);
+          data.current = xhr.response[id - 1];
+        }
       }
+      $searchBar.className = 'row entry-back';
     } else {
       var category = event.target.getAttribute('data-category');
       if (category === 'episodes') {
@@ -320,11 +350,15 @@ function showEntry(event) {
         }
       }
     }
+    if ($ajaxList.getAttribute('data-view') === 'favorites') {
+      $entryPage.className = 'entry-page fav-entry';
+    } else {
+      $entryPage.className = 'entry-page';
+    }
     $entryPage.appendChild(entryTree);
     $ajaxList.className = 'ajax-list hidden';
-    $entryPage.className = 'entry-page';
     $arrows.className = 'hidden';
-    $searchAndBack.className = 'row entry-back';
+    $titleRow.className = 'hidden';
   }
 }
 
@@ -337,8 +371,10 @@ function showFrontPage(event) {
     removeChildren($ul);
     removeChildren($entryPage);
     $entryPage.className = 'entry-page hidden';
+    $searchBar.className = 'row nav-row';
     $seriesButtons.className = 'hidden';
     $back.className = 'hidden';
+    $titleRow.className = 'hidden';
     $arrows.className = 'hidden';
     entryCounter = 0;
     data.current = {};
@@ -356,9 +392,33 @@ function removeChildren(element) {
   }
 }
 
+function createEntryBack() {
+  var $entryBack = document.createElement('button');
+  $entryBack.setAttribute('id', 'entry-back');
+  $entryBack.className = 'fas fa-arrow-left';
+  return $entryBack;
+}
+
 function goBack(event) {
-  if (event.target.getAttribute('id') === 'back-button') {
-    if ($entryPage.className === 'entry-page') {
+  var id = event.target.getAttribute('id');
+  if (id === 'back-button') {
+    if ($ajaxList.className === 'ajax-list') {
+      $entryPage.className = 'entry-page hidden';
+      $ajaxList.className = 'ajax-list hidden';
+      $front.className = 'front-page';
+      removeChildren($ul);
+      $back.className = 'hidden';
+      $titleRow.className = 'hidden';
+      entryCounter = 0;
+      $arrows.className = 'hidden';
+      $seriesButtons.className = 'hidden';
+      data.series = 'Breaking Bad';
+      $seriesButtons.children[0].className = 'active-category';
+      $seriesButtons.children[1].className = 'inactive';
+      $searchBar.className = 'row nav-row';
+    }
+  } else if (id === 'entry-back') {
+    if ($entryPage.className === 'entry-page' || $entryPage.className === 'entry-page fav-entry') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
@@ -367,25 +427,20 @@ function goBack(event) {
       } else {
         $arrows.className = 'hidden';
       }
-      $searchAndBack.className = 'row nav-row';
+      if ($ajaxList.getAttribute('data-view') !== 'favorites') {
+        $searchBar.className = 'row nav-row';
+      }
       data.current = {};
+      showPageTitle();
     } else if ($entryPage.className === 'entry-page search') {
       $front.className = 'front-page';
       $entryPage.className = 'entry-page hidden';
       removeChildren($entryPage);
       $back.className = 'hidden';
-    } else if ($ajaxList.className === 'ajax-list') {
-      $entryPage.className = 'entry-page hidden';
+    } else if ($ajaxList.getAttribute('data-view') === 'about') {
       $ajaxList.className = 'ajax-list hidden';
       $front.className = 'front-page';
       removeChildren($ul);
-      $back.className = 'hidden';
-      entryCounter = 0;
-      $arrows.className = 'hidden';
-      $seriesButtons.className = 'hidden';
-      data.series = 'Breaking Bad';
-      $seriesButtons.children[0].className = 'active-category';
-      $seriesButtons.children[1].className = 'inactive';
     }
   }
 }
@@ -433,11 +488,6 @@ $entryPage.addEventListener('click', saveEntry);
 function showAbout() {
   var $li = document.createElement('li');
   $li.className = 'entry';
-
-  var $title = document.createElement('h1');
-  $title.className = 'entry-name';
-  $title.textContent = 'About';
-  $li.appendChild($title);
 
   var $message = document.createElement('p');
   $message.className = 'message';
@@ -515,6 +565,7 @@ function deleteEntry(event) {
     loadFavorites();
     $entryPage.className = 'hidden';
     $ajaxList.className = 'ajax-list';
+    showPageTitle();
   }
 }
 
@@ -597,6 +648,7 @@ function loadCharEntry(category) {
     removeChildren($ul);
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
+    $titleRow.className = 'hidden';
     $entryPage.appendChild(entryTree);
     data.current = xhr.response[0];
     $front.className = 'hidden';
@@ -624,6 +676,7 @@ function loadEpEntry(series, episode) {
     removeChildren($ul);
     $entryPage.className = 'entry-page search';
     $back.className = 'fas fa-arrow-left';
+    $titleRow.className = 'hidden';
     $front.className = 'hidden';
     $arrows.className = 'hidden';
     $seriesButtons.className = 'hidden';

@@ -31,7 +31,8 @@ header {
 }
 
 form {
-  width: 95%;
+  width: 100%;
+  max-height: min-content;
 }
 
 input {
@@ -46,6 +47,8 @@ input {
 
 select {
   width: 100%;
+  min-height: 35px;
+  background-color: white;
   padding: 0.5rem;
   outline: none;
   border: none;
@@ -54,7 +57,10 @@ select {
 }
 
 #back-button {
-  padding: 1.6rem 0.6rem;
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  align-items: center;
+  height: min-content;
 }
 
 .button {
@@ -62,9 +68,13 @@ select {
   height: 2rem;
   outline: none;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.2rem;
   border-bottom-right-radius: 0.2rem;
   border-bottom-left-radius: 0.2rem;
+  background-color: white;
 }
 
 .main-img {
@@ -140,10 +150,15 @@ select {
   text-align: center;
 }
 
+.dynamic {
+  display: none;
+}
+
 .series-button-row {
   display: flex;
   justify-content: space-around;
   margin: 0 auto 2rem auto;
+  padding: 0 0.9rem;
 }
 
 .inactive,
@@ -161,9 +176,25 @@ select {
   color: white;
 }
 
+.inactive {
+  background-color: white;
+}
+
 .list-img {
   width: 100%;
   height: 100%;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  max-height: min-content;
+  margin: 1.4rem 0 1rem 0;
+}
+
+h1#page-title {
+  margin: 0 0.5rem;
+  color: white;
 }
 
 .loader {
@@ -271,6 +302,10 @@ select {
   #back-button {
     padding: 0.5rem 0.6rem;
   }
+
+  .row {
+    max-height: 210px;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -282,9 +317,6 @@ select {
 
   form {
     width: 30rem;
-    position: absolute;
-    top: -5.5rem;
-    right: 1.5rem;
   }
 
   select {
@@ -304,8 +336,17 @@ select {
     margin: auto;
   }
 
+  .entry-page {
+    margin: 1.4rem 0;
+  }
+
+  .title-row {
+    padding-left: 0.7rem;
+  }
+
   .row {
     justify-content: flex-start;
+    max-height: 250px;
   }
 
   .ajax-ul {
@@ -326,6 +367,17 @@ select {
   .list-img {
     height: 9rem;
   }
+
+  #search-bar {
+    margin: 0;
+    position: absolute;
+    top: -5.4rem;
+    right: 1rem;
+  }
+
+  .dynamic {
+    display: initial;
+  }
 }
 
 @media screen and (min-width: 1040px) {
@@ -336,6 +388,10 @@ select {
 
   .main-img {
     width: 28rem;
+  }
+
+  .title-row {
+    padding-left: 0.9rem;
   }
 
   .button {

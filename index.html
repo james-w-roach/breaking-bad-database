@@ -20,8 +20,11 @@
   </header>
   <main>
     <div class="container">
-      <div id="searchAndBack" class="row nav-row">
-        <i id="back-button" class="hidden"></i>
+      <div id="title-row" class="hidden">
+        <button id="back-button" class="fas fa-arrow-left"></button>
+        <h1 id="page-title" class="page-title"></h1>
+      </div>
+      <div id="search-bar" class="row nav-row">
         <form action="index.html" method="get">
           <select name="category" id="category-selector" required>
             <option value="" selected="selected">Category</option>
