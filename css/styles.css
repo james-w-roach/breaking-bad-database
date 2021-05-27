@@ -128,7 +128,8 @@ ul {
 #back-button:hover,
 button:hover,
 select:hover,
-#entry-back:hover {
+#entry-back:hover,
+.spoiler-button-container {
   cursor: pointer;
 }
 

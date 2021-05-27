@@ -8,6 +8,8 @@ var $searchBar = document.querySelector('#search-bar');
 var $seriesButtons = document.querySelector('#series-button-row');
 var $titleRow = document.querySelector('#title-row');
 var $pageTitle = document.querySelector('#page-title');
+var $spoilerSwitch = document.querySelector('#spoiler-switch');
+var $spoilerButton = document.querySelector('#spoiler-button');
 
 var entryCounter = 0;
 var maxEntries = 22;
@@ -23,20 +25,24 @@ function categorySelect(event) {
     showPageTitle();
     appendLoader();
     getAPIData('characters');
+    $spoilerSwitch.className = 'spoiler-switch';
   } else if (event.target.getAttribute('id') === 'episodes-img' || event.target.getAttribute('id') === 'episodes') {
     $ajaxList.setAttribute('data-view', 'episode');
     $seriesButtons.className = 'series-button-row';
     showPageTitle();
     appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
+    $spoilerSwitch.className = 'spoiler-switch';
   } else if (event.target.getAttribute('id') === 'favs-img' || event.target.getAttribute('id') === 'favs') {
     $ajaxList.setAttribute('data-view', 'favorites');
     $searchBar.className = 'row nav-row dynamic';
     showPageTitle();
     loadFavorites();
+    $spoilerSwitch.className = 'spoiler-switch';
   } else if (event.target.getAttribute('id') === 'about-img' || event.target.getAttribute('id') === 'about') {
     $ajaxList.setAttribute('data-view', 'about');
     $searchBar.className = 'row nav-row dynamic';
+    $spoilerSwitch.className = 'hidden';
     showPageTitle();
     showAbout();
   }
@@ -95,6 +101,22 @@ function loadFailed() {
   $li.appendChild($p);
   $ul.appendChild($li);
 }
+
+function spoilerSwitch(event) {
+  var container = event.target.getAttribute('id') === 'spoiler-button-container';
+  var button = event.target.getAttribute('id') === 'spoiler-button';
+  if ((button || container) && data.spoilers === 'off') {
+    $spoilerButton.className = 'spoiler-button on';
+    $spoilerButton.textContent = 'On';
+    data.spoilers = 'on';
+  } else if ((button || container)) {
+    $spoilerButton.className = 'spoiler-button';
+    $spoilerButton.textContent = 'Off';
+    data.spoilers = 'off';
+  }
+}
+
+window.addEventListener('click', spoilerSwitch);
 
 function loadDOM(event) {
   removeChildren($ul);
@@ -224,12 +246,20 @@ function createEntryDOM(object) {
 
     var $appears = document.createElement('li');
     $appears.textContent = 'Season Appearances:';
-    $appears.className = 'appearances';
+    if (data.spoilers === 'off') {
+      $appears.className = 'hidden';
+    } else {
+      $appears.className = 'appearances';
+    }
     $charList.appendChild($appears);
 
-    if (object.appearance) {
+    if (object.appearance[0]) {
       var $breakingBad = document.createElement('li');
-      $breakingBad.className = 'series';
+      if (data.spoilers === 'on') {
+        $breakingBad.className = 'series';
+      } else {
+        $breakingBad.className = 'hidden';
+      }
       $breakingBad.textContent = '- Breaking Bad: ';
       for (var j = 0; j < object.appearance.length; j++) {
         if (j !== object.appearance.length - 1) {
@@ -243,7 +273,11 @@ function createEntryDOM(object) {
 
     if (object.better_call_saul_appearance[0]) {
       var $betterCallSaul = document.createElement('li');
-      $betterCallSaul.className = 'series';
+      if (data.spoilers === 'on') {
+        $betterCallSaul.className = 'series';
+      } else {
+        $betterCallSaul.className = 'hidden';
+      }
       $betterCallSaul.textContent = '- Better Call Saul: ';
       for (var k = 0; k < object.better_call_saul_appearance.length; k++) {
         if (k !== object.better_call_saul_appearance.length - 1) {
@@ -261,7 +295,11 @@ function createEntryDOM(object) {
     $charList.appendChild($actor);
 
     var $status = document.createElement('li');
-    $status.className = 'char-status';
+    if (data.spoilers === 'on') {
+      $status.className = 'char-status';
+    } else {
+      $status.className = 'hidden';
+    }
     $status.textContent = 'Status: ' + object.status;
     $charList.appendChild($status);
   } else {
@@ -509,7 +547,7 @@ function showAbout() {
 
 function loadFavorites() {
   for (var key in data) {
-    if (key !== 'current' && key !== 'series') {
+    if (key !== 'current' && key !== 'series' && key !== 'spoilers') {
       var cat = document.createElement('li');
       cat.textContent = keyToString(key);
       cat.className = 'fav-category';
