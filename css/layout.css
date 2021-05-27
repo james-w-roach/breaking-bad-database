@@ -190,7 +190,6 @@ select {
   align-items: center;
   max-height: min-content;
   margin: 1.4rem 0 1rem 0;
-  padding-left: 0.9rem;
 }
 
 h1#page-title {
@@ -341,6 +340,10 @@ h1#page-title {
     margin: 1.4rem 0;
   }
 
+  .title-row {
+    padding-left: 0.7rem;
+  }
+
   .row {
     justify-content: flex-start;
     max-height: 250px;
@@ -385,6 +388,10 @@ h1#page-title {
 
   .main-img {
     width: 28rem;
+  }
+
+  .title-row {
+    padding-left: 0.9rem;
   }
 
   .button {
