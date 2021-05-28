@@ -158,7 +158,6 @@ select {
   display: flex;
   justify-content: space-around;
   margin: 0 auto 2rem auto;
-  padding: 0 0.9rem;
 }
 
 .inactive,
@@ -324,7 +323,7 @@ h1#page-title {
   select {
     width: 57%;
     height: 3rem;
-    margin: 0 0.2rem;
+    margin: 0 0.3rem 0 0;
   }
 
   #back-button {
@@ -368,7 +367,8 @@ h1#page-title {
     margin: 1.4rem 0;
   }
 
-  .title-row {
+  .title-row,
+  .series-button-row {
     padding: 0 0.7rem;
   }
 
@@ -418,7 +418,8 @@ h1#page-title {
     width: 28rem;
   }
 
-  .title-row {
+  .title-row,
+  .series-button-row {
     padding: 0 0.9rem;
   }
 
