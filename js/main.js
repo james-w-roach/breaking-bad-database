@@ -533,8 +533,9 @@ function showAbout() {
   from the hit TV shows Breaking Bad and Better Call Saul. Each episode and character
    has its own page containing various tidbits of information. Pages can be accessed by clicking
    on a category from the home page or by using the search bar. Every page can be saved to your
-   Favorites list for future reference. All of the information and most of the images on this site
-   are provided by the Breaking Bad API.`;
+   Favorites list for future reference. To prevent plot details such as character status and season
+   appearances from being spoiled, set the Spoilers button to 'Off' in the top right corner. All of
+   the information and most of the images on this site are provided by the Breaking Bad API.`;
   $li.appendChild($message);
 
   var $link = document.createElement('a');
