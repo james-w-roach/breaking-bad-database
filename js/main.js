@@ -107,11 +107,11 @@ function spoilerSwitch(event) {
   var button = event.target.getAttribute('id') === 'spoiler-button';
   if ((button || container) && data.spoilers === 'off') {
     $spoilerButton.className = 'spoiler-button on';
-    $spoilerButton.textContent = 'On';
+    $spoilerButton.textContent = 'ON';
     data.spoilers = 'on';
   } else if ((button || container)) {
     $spoilerButton.className = 'spoiler-button';
-    $spoilerButton.textContent = 'Off';
+    $spoilerButton.textContent = 'OFF';
     data.spoilers = 'off';
   }
 }
