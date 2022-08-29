@@ -20,10 +20,17 @@ ul {
   margin-bottom: 0;
 }
 
+.column100,
+#back-button,
+.inactive {
+  transition: background-color 0.3s;
+}
+
 .column-75 {
   border-top-right-radius: 0.2rem;
   border-bottom-right-radius: 0.2rem;
   background-color: white;
+  transition: background-color 0.3s;
 }
 
 .column-25 {
@@ -133,14 +140,16 @@ select:hover,
   cursor: pointer;
 }
 
-.inactive:hover,
-#back-button:hover {
-  background-color: lightgray;
+.column:hover {
+  transform: scale(1.04);
 }
 
-.column:hover,
-.list-item:hover {
-  transform: scale(1.04);
+.list-item:hover .column-75,
+.column100:hover,
+.inactive:hover,
+#back-button:hover {
+  background-color: black;
+  color: white;
 }
 
 .main-img:active {
