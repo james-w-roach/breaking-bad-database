@@ -89,6 +89,7 @@ select {
   width: 8rem;
   height: 12rem;
   object-fit: cover;
+  transition: opacity 0.5s;
 }
 
 .list-item {
@@ -407,6 +408,15 @@ h1#page-title {
   .main-img {
     width: 100%;
     height: 100%;
+    opacity: 0.7;
+  }
+
+  .front-page-visible {
+    background-color: black;
+  }
+
+  .front-page-category:hover .main-img {
+    opacity: 1;
   }
 
   .category-select {
