@@ -1,4 +1,4 @@
-var $front = document.querySelector('#front-page');
+var $front = document.querySelector('#front-page-grid');
 var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
@@ -15,7 +15,7 @@ var entryCounter = 0;
 var maxEntries = 22;
 
 function categorySelect(event) {
-  if (event.target.className === 'main-img' || event.target.className === 'button') {
+  if (event.target.className === 'main-img' || event.target.className === 'category-select') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
@@ -404,7 +404,7 @@ $ul.addEventListener('click', showEntry);
 
 function showFrontPage(event) {
   if (event.target.className === 'main-header') {
-    $front.className = 'front-page';
+    $front.className = 'front-page-visible';
     $ajaxList.className = 'ajax-list hidden';
     removeChildren($ul);
     removeChildren($entryPage);
@@ -443,7 +443,7 @@ function goBack(event) {
     if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';
-      $front.className = 'front-page';
+      $front.className = 'front-page-visible';
       removeChildren($ul);
       $back.className = 'hidden';
       $titleRow.className = 'hidden';
@@ -471,13 +471,13 @@ function goBack(event) {
       data.current = {};
       showPageTitle();
     } else if ($entryPage.className === 'entry-page search') {
-      $front.className = 'front-page';
+      $front.className = 'front-page-visible';
       $entryPage.className = 'entry-page hidden';
       removeChildren($entryPage);
       $back.className = 'hidden';
     } else if ($ajaxList.getAttribute('data-view') === 'about') {
       $ajaxList.className = 'ajax-list hidden';
-      $front.className = 'front-page';
+      $front.className = 'front-page-visible';
       removeChildren($ul);
     }
   }

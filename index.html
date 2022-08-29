@@ -14,9 +14,7 @@
 </head>
 <body>
   <header>
-    <div class="container">
-      <img class="main-header" src="images/BrBaDb-logoV4@2x.png">
-    </div>
+    <img class="main-header" src="images/BrBaDb-logoV4@2x.png">
   </header>
   <main>
     <div class="container">
@@ -43,29 +41,6 @@
           <input type="search" name="search" id="search" placeholder="Search">
         </form>
       </div>
-      <div id="front-page">
-        <div class="row">
-          <div class="column">
-            <img class="main-img" id="chars-img" src="https://img1.looper.com/img/gallery/the-real-reason-walter-white-had-to-die-in-breaking-bad/intro-1588169156.jpg">
-            <button class="button" id="chars">Characters</button>
-          </div>
-          <div class="column">
-            <img class="main-img" id="episodes-img"
-              src="https://images5.alphacoders.com/287/287897.jpg">
-            <button class="button" id="episodes">Episodes</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <img class="main-img" id="favs-img" src="images/favorites_img.png">
-            <button class="button" id="favs">Favorites</button>
-          </div>
-          <div class="column">
-            <img class="main-img" id="about-img" src="images/about_img.png">
-            <button class="button" id="about">About</button>
-          </div>
-        </div>
-      </div>
       <div id="ajax-list" class="ajax-list hidden">
         <div id="series-button-row" class="series-button-row hidden">
           <button id="breaking-bad" class="active-category">Breaking Bad</button>
@@ -85,6 +60,25 @@
         <div id="right" class="list-arrow">
           <i id="right-arrow" class="fas fa-long-arrow-alt-right la"></i>
         </div>
+      </div>
+    </div>
+    <div id="front-page-grid" class="front-page-visible">
+      <div class="front-page-category">
+        <img class="main-img" id="chars-img"
+          src="https://img1.looper.com/img/gallery/the-real-reason-walter-white-had-to-die-in-breaking-bad/intro-1588169156.jpg">
+        <button class="category-select" id="chars">CHARACTERS</button>
+      </div>
+      <div class="front-page-category">
+        <img class="main-img" id="episodes-img" src="https://images5.alphacoders.com/287/287897.jpg">
+        <button class="category-select" id="episodes">EPISODES</button>
+      </div>
+      <div class="front-page-category">
+        <img class="main-img" id="favs-img" src="images/favorites_img.png">
+        <button class="category-select" id="favs">FAVORITES</button>
+      </div>
+      <div class="front-page-category">
+        <img class="main-img" id="about-img" src="images/about_img.png">
+        <button class="category-select" id="about">ABOUT</button>
       </div>
     </div>
   </main>
