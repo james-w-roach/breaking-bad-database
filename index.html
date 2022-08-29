@@ -15,6 +15,16 @@
 <body>
   <header>
     <img class="main-header" src="images/BrBaDb-logoV4@2x.png">
+    <div id="search-bar" class="row nav-row">
+      <form class="search-form" action="index.html" method="get">
+        <select name="category" id="category-selector" required>
+          <option value="characters" selected="selected">Characters</option>
+          <option value="breaking-bad-episodes">Breaking Bad Episodes</option>
+          <option value="better-call-saul-episodes">Better Call Saul Episodes</option>
+        </select>
+        <input type="search" name="search" id="search" placeholder="Search">
+      </form>
+    </div>
   </header>
   <main>
     <div class="container">
@@ -29,17 +39,6 @@
             <button class="spoiler-button" id="spoiler-button">Off</button>
           </div>
         </div>
-      </div>
-      <div id="search-bar" class="row nav-row">
-        <form action="index.html" method="get">
-          <select name="category" id="category-selector" required>
-            <option value="" selected="selected">Category</option>
-            <option value="characters">Characters</option>
-            <option value="breaking-bad-episodes">Breaking Bad Episodes</option>
-            <option value="better-call-saul-episodes">Better Call Saul Episodes</option>
-          </select>
-          <input type="search" name="search" id="search" placeholder="Search">
-        </form>
       </div>
       <div id="ajax-list" class="ajax-list hidden">
         <div id="series-button-row" class="series-button-row hidden">

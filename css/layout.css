@@ -4,12 +4,14 @@ header {
   height: 5rem;
   margin: 0 auto;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .container {
   margin: 0 auto;
   padding: 0.2rem 0.5rem;
+  padding: 0 0.5rem;
 }
 
 #front-page-grid {
@@ -22,12 +24,6 @@ header {
   display: grid;
 }
 
-.row {
-  display: flex;
-  margin: 1.4rem auto;
-  justify-content: center;
-}
-
 .front-page-category {
   display: flex;
   flex-direction: column;
@@ -36,8 +32,18 @@ header {
 }
 
 .main-header {
-  padding-left: 0.3rem;
+  padding-left: 1rem;
   width: 9rem;
+}
+
+#search-bar {
+  height: 2.5rem;
+  margin-right: 1rem;
+  width: 50%;
+}
+
+.search-form {
+  display: flex;
 }
 
 form {
@@ -47,23 +53,28 @@ form {
 
 input {
   width: 100%;
-  height: 3rem;
+  height: 2.5rem;
   border: none;
   outline: none;
   padding: 0 1rem 0 1rem;
-  font-size: 1.2rem;
+  font-size: 14px;
   border-radius: 0.2rem;
 }
 
+input::placeholder {
+  color: black;
+  font-size: 14px;
+}
+
 select {
-  width: 100%;
-  min-height: 35px;
+  width: 33%;
+  height: 2.5rem;
   background-color: white;
   padding: 0.5rem;
   outline: none;
   border: none;
   border-radius: 0.2rem;
-  margin-bottom: 0.5rem;
+  margin-right: 0.3rem;
 }
 
 #back-button {
@@ -258,11 +269,13 @@ h1#page-title {
   }
 }
 
-@media screen and (min-width: 568px) {
-  .main-header {
-    padding-left: 1rem;
+@media screen and (min-width: 450px) {
+  #search-bar {
+    width: 60%;
   }
+}
 
+@media screen and (min-width: 568px) {
   #front-page-grid {
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: repeat(2, 50%);
@@ -325,8 +338,6 @@ h1#page-title {
   }
 
   select {
-    width: 57%;
-    height: 3rem;
     margin: 0 0.3rem 0 0;
   }
 
@@ -349,8 +360,8 @@ h1#page-title {
     width: 30rem;
   }
 
-  select {
-    width: 40%;
+  #search-bar {
+    width: unset;
   }
 
   .entry {
@@ -389,13 +400,6 @@ h1#page-title {
 
   .list-img {
     height: 9rem;
-  }
-
-  #search-bar {
-    margin: 0;
-    position: absolute;
-    right: 1rem;
-    top: calc(2.5rem - 24px);
   }
 
   .dynamic {
@@ -442,9 +446,5 @@ h1#page-title {
 
   form {
     width: 35rem;
-  }
-
-  select {
-    width: 55%;
   }
 }
