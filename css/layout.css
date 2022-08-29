@@ -49,6 +49,7 @@ header {
 form {
   width: 100%;
   max-height: min-content;
+  position: relative;
 }
 
 input {
@@ -75,6 +76,26 @@ select {
   border: none;
   border-radius: 0.2rem;
   margin-right: 0.3rem;
+}
+
+.select-arrow-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(25% - 30px);
+  border-radius: 0 0.2rem 0.2rem 0;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.select-arrow {
+  color: black;
+  font-size: 12px;
 }
 
 #back-button {
