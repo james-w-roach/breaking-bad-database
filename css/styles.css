@@ -28,8 +28,8 @@ ul {
 }
 
 .column-75 {
-  border-top-right-radius: 0.2rem;
-  border-bottom-right-radius: 0.2rem;
+  border-top-right-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
   background-color: white;
   transition: background-color 0.3s;
 }
@@ -41,8 +41,8 @@ ul {
 
 .list-img {
   object-fit: cover;
-  border-top-left-radius: 0.2rem;
-  border-bottom-left-radius: 0.2rem;
+  border-top-left-radius: 0.6rem;
+  border-bottom-left-radius: 0.6rem;
 }
 
 .character-name {
@@ -51,7 +51,7 @@ ul {
 
 .entry {
   background-color: white;
-  border-radius: 0.3rem;
+  border-radius: 0.6rem;
   padding: 1rem 1rem;
   margin-bottom: 2rem;
 }
@@ -73,7 +73,7 @@ ul {
 #entry-back {
   font-size: 2rem;
   background-color: white;
-  border-radius: 0.2rem;
+  border-radius: 0.6rem;
   margin-right: 0.3rem;
   border: none;
 }
@@ -92,7 +92,7 @@ ul {
 
 .list-arrow {
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   padding: 0 1rem;
   margin: 0 0.5rem;
 }
