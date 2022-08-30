@@ -23,7 +23,8 @@ ul {
 
 .column100,
 #back-button,
-.inactive {
+.inactive,
+.list-arrow {
   transition: background-color 0.3s;
 }
 
@@ -87,7 +88,11 @@ ul {
 .arrow-row {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin: 1rem 0 1rem 1rem;
+}
+
+#lower-arrow-row {
+  margin: 1rem;
 }
 
 .list-arrow {
@@ -95,6 +100,10 @@ ul {
   border-radius: 0.6rem;
   padding: 0 1rem;
   margin: 0 0.5rem;
+}
+
+#upper-right {
+  margin-right: 0;
 }
 
 .la {
@@ -148,7 +157,8 @@ select:hover,
 .list-item:hover .column-75,
 .column100:hover,
 .inactive:hover,
-#back-button:hover {
+#back-button:hover,
+.list-arrow:hover {
   background-color: black;
   color: white;
 }

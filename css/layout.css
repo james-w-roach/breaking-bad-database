@@ -237,7 +237,7 @@ select {
 
 .title-row {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   max-height: min-content;
   margin: 1.4rem 0 1rem 0;
@@ -245,6 +245,12 @@ select {
 
 .title {
   display: flex;
+}
+
+.arrow-spoiler-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
 
 .spoiler-switch {
@@ -324,6 +330,15 @@ h1#page-title {
 
   .category-select {
     font-size: 1.8rem;
+  }
+
+  .title-row {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .arrow-spoiler-container {
+    margin-top: unset;
   }
 
   .container {

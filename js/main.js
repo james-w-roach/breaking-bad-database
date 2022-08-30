@@ -3,13 +3,14 @@ var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
-var $arrows = document.querySelector('#arrow-row');
 var $searchBar = document.querySelector('#search-bar');
 var $seriesButtons = document.querySelector('#series-button-row');
 var $titleRow = document.querySelector('#title-row');
 var $pageTitle = document.querySelector('#page-title');
 var $spoilerSwitch = document.querySelector('#spoiler-switch');
 var $spoilerButton = document.querySelector('#spoiler-button');
+var $upperArrows = document.querySelector('#upper-arrow-row');
+var $lowerArrows = document.querySelector('#lower-arrow-row');
 
 var entryCounter = 0;
 var maxEntries = 22;
@@ -60,7 +61,8 @@ function getAPIData(category) {
   xhr.addEventListener('load', function () {
     loadDOM();
     if (category === 'characters') {
-      $arrows.className = 'arrow-row';
+      $upperArrows.className = 'arrow-row';
+      $lowerArrows.className = 'arrow-row';
     }
   });
 
@@ -395,7 +397,8 @@ function showEntry(event) {
     }
     $entryPage.appendChild(entryTree);
     $ajaxList.className = 'ajax-list hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     $titleRow.className = 'hidden';
   }
 }
@@ -413,7 +416,8 @@ function showFrontPage(event) {
     $seriesButtons.className = 'hidden';
     $back.className = 'hidden';
     $titleRow.className = 'hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     entryCounter = 0;
     data.current = {};
     data.series = 'Breaking Bad';
@@ -448,7 +452,8 @@ function goBack(event) {
       $back.className = 'hidden';
       $titleRow.className = 'hidden';
       entryCounter = 0;
-      $arrows.className = 'hidden';
+      $upperArrows.className = 'hidden';
+      $lowerArrows.className = 'hidden';
       $seriesButtons.className = 'hidden';
       data.series = 'Breaking Bad';
       $seriesButtons.children[0].className = 'active-category';
@@ -461,9 +466,11 @@ function goBack(event) {
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
       if ($ajaxList.getAttribute('data-view') === 'character') {
-        $arrows.className = 'arrow-row';
+        $upperArrows.className = 'arrow-row';
+        $lowerArrows.className = 'arrow-row';
       } else {
-        $arrows.className = 'hidden';
+        $upperArrows.className = 'hidden';
+        $lowerArrows.className = 'hidden';
       }
       if ($ajaxList.getAttribute('data-view') !== 'favorites') {
         $searchBar.className = 'row nav-row';
@@ -486,14 +493,16 @@ function goBack(event) {
 window.addEventListener('click', goBack);
 
 function switchList(event) {
-  if (event.target.getAttribute('id') === 'right' || event.target.getAttribute('id') === 'right-arrow') {
+  if (event.target.getAttribute('id') === 'upper-right' || event.target.getAttribute('id') === 'upper-right-arrow' || event.target.getAttribute('id') === 'lower-right' || event.target.getAttribute('id') === 'lower-right-arrow') {
     if (entryCounter !== 44) {
       entryCounter += maxEntries;
+      window.scrollTo(0, 0);
     }
   }
-  if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
+  if (event.target.getAttribute('id') === 'upper-left' || event.target.getAttribute('id') === 'upper-left-arrow' || event.target.getAttribute('id') === 'lower-left' || event.target.getAttribute('id') === 'lower-left-arrow') {
     if (entryCounter !== 0) {
       entryCounter -= maxEntries;
+      window.scrollTo(0, 0);
     }
   }
   for (var i = 0; i < $ul.children.length; i++) {
@@ -508,7 +517,7 @@ function switchList(event) {
   }
 }
 
-$arrows.addEventListener('click', switchList);
+document.addEventListener('click', switchList);
 
 function saveEntry(event) {
   if (event.target.getAttribute('id') === 'save-button') {
@@ -691,7 +700,8 @@ function loadCharEntry(category) {
     $entryPage.appendChild(entryTree);
     data.current = xhr.response[0];
     $front.className = 'hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     $seriesButtons.className = 'hidden';
   });
 
@@ -717,7 +727,8 @@ function loadEpEntry(series, episode) {
     $back.className = 'fas fa-arrow-left';
     $titleRow.className = 'hidden';
     $front.className = 'hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     $seriesButtons.className = 'hidden';
     if (entryTree) {
       $entryPage.appendChild(entryTree);
