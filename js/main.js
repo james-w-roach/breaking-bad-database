@@ -1,4 +1,5 @@
 var $front = document.querySelector('#front-page-grid');
+var $container = document.querySelector('.container');
 var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
@@ -45,7 +46,8 @@ function categorySelect(event) {
     $searchBar.className = 'row nav-row dynamic';
     $spoilerSwitch.className = 'hidden';
     showPageTitle();
-    showAbout();
+    var $aboutContainer = document.getElementById('about-container');
+    $aboutContainer.className = 'about-container';
   }
 }
 
@@ -423,6 +425,10 @@ function showFrontPage(event) {
     data.series = 'Breaking Bad';
     $seriesButtons.children[0].className = 'active-category';
     $seriesButtons.children[1].className = 'inactive';
+    var $aboutContainer = document.getElementById('about-container');
+    if ($aboutContainer.className === 'about-container') {
+      $aboutContainer.className = 'hidden';
+    }
   }
 }
 
@@ -459,6 +465,10 @@ function goBack(event) {
       $seriesButtons.children[0].className = 'active-category';
       $seriesButtons.children[1].className = 'inactive';
       $searchBar.className = 'row nav-row';
+    }
+    var $aboutContainer = document.getElementById('about-container');
+    if ($aboutContainer.className === 'about-container') {
+      $aboutContainer.className = 'hidden';
     }
   } else if (id === 'entry-back') {
     if ($entryPage.className === 'entry-page' || $entryPage.className === 'entry-page fav-entry') {
@@ -531,29 +541,6 @@ function saveEntry(event) {
 }
 
 $entryPage.addEventListener('click', saveEntry);
-
-function showAbout() {
-  var $li = document.createElement('li');
-  $li.className = 'entry';
-
-  var $message = document.createElement('p');
-  $message.className = 'message';
-  $message.textContent = `A database including all of the characters and episodes
-  from the hit TV shows Breaking Bad and Better Call Saul. Each episode and character
-   has its own page containing various tidbits of information. Pages can be accessed by clicking
-   on a category from the home page or by using the search bar. Every page can be saved to your
-   Favorites list for future reference. To prevent plot details such as character status and season
-   appearances from being spoiled, set the Spoilers button to 'Off' in the top right corner. All of
-   the information and most of the images on this site are provided by the Breaking Bad API.`;
-  $li.appendChild($message);
-
-  var $link = document.createElement('a');
-  $link.textContent = 'Breaking Bad API';
-  $link.setAttribute('href', 'https://breakingbadapi.com/');
-  $li.appendChild($link);
-
-  $ul.appendChild($li);
-}
 
 function loadFavorites() {
   for (var key in data) {
@@ -654,6 +641,10 @@ var $categoryInput = document.querySelector('#category-selector');
 
 function searchAPI(event) {
   event.preventDefault();
+  var $aboutContainer = document.getElementById('about-container');
+  if ($aboutContainer.className === 'about-container') {
+    $aboutContainer.className = 'hidden';
+  }
   var newString = convertStringToAPI($searchInput.value);
   if ($categoryInput.value === 'characters') {
     loadCharEntry('characters?name=' + newString);

@@ -134,6 +134,16 @@ ul {
   margin-top: 1.4rem;
 }
 
+.about-container {
+  padding: 0.2rem 1rem 1rem;
+  font-size: 18px;
+}
+
+.about {
+  color: white;
+  line-height: 2.2rem;
+}
+
 .main-img:hover,
 .list-img:hover,
 .character-name:hover,
