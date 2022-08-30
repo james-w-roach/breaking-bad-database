@@ -362,6 +362,7 @@ function createEntryDOM(object) {
 }
 
 function showEntry(event) {
+  console.log($ajaxList.getAttribute('data-view'));
   if (event.target.getAttribute('id') !== null) {
     if ($ajaxList.getAttribute('data-view') !== 'favorites') {
       var id = event.target.getAttribute('id');
@@ -527,7 +528,8 @@ function switchList(event) {
   }
 }
 
-document.addEventListener('click', switchList);
+$upperArrows.addEventListener('click', switchList);
+$lowerArrows.addEventListener('click', switchList);
 
 function saveEntry(event) {
   if (event.target.getAttribute('id') === 'save-button') {
