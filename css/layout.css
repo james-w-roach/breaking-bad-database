@@ -237,13 +237,16 @@ select {
 
 .title-row {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   max-height: min-content;
   height: 5rem;
   padding: 1rem;
   background-color: white;
   color: black;
+}
+
+#upper-arrow-row {
+  display: none;
 }
 
 .title {
@@ -255,7 +258,6 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
 }
 
 .spoiler-switch {
@@ -335,15 +337,6 @@ h1#page-title {
 
   .category-select {
     font-size: 1.8rem;
-  }
-
-  .title-row {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .arrow-spoiler-container {
-    margin-top: unset;
   }
 
   .container {
@@ -432,6 +425,10 @@ h1#page-title {
   .title-row,
   .series-button-row {
     padding: 0 0.7rem;
+  }
+
+   #upper-arrow-row {
+    display: flex;
   }
 
   .row {
