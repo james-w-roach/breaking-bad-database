@@ -378,6 +378,7 @@ h1#page-title {
   .entry-img {
     width: 20rem;
     height: 100%;
+    border-radius: 0.5rem;
   }
 
   .list-img {
