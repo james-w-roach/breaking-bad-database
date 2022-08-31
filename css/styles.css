@@ -23,6 +23,7 @@ ul {
 
 .column100,
 #back-button,
+#entry-back,
 .inactive,
 .list-arrow {
   transition: background-color 0.3s;
@@ -78,12 +79,8 @@ ul {
   margin-right: 0.3rem;
   border: none;
   box-shadow: 0 1px 3px gray;
-}
-
-#entry-back {
   width: 40px;
-  padding: 0;
-  margin-left: 0;
+  height: 40px;
 }
 
 .arrow-row {
@@ -166,6 +163,7 @@ select:hover,
 .column100:hover,
 .inactive:hover,
 #back-button:hover,
+#entry-back:hover,
 .list-arrow:hover {
   background-color: black;
   color: white;

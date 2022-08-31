@@ -98,11 +98,11 @@ select {
   font-size: 12px;
 }
 
-#back-button {
-  padding: 0.5rem 0.5rem;
+#back-button,
+#entry-back {
   display: flex;
   align-items: center;
-  height: min-content;
+  justify-content: center;
 }
 
 .category-select {
@@ -399,10 +399,6 @@ h1#page-title {
 
   select {
     margin: 0 0.3rem 0 0;
-  }
-
-  #back-button {
-    padding: 0.5rem 0.6rem;
   }
 
   .row {
