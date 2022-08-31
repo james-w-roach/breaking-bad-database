@@ -299,6 +299,16 @@ h1#page-title {
   color: black;
 }
 
+.about-header-img {
+  display: block;
+  width: 150px;
+}
+
+.about-header {
+  color: white;
+  margin: 1rem 0;
+}
+
 .loader {
   margin: auto;
   border: 15px solid white;
@@ -470,6 +480,14 @@ h1#page-title {
     opacity: 1;
   }
 
+  .about-header-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .about-header {
+    margin: 1rem;
+  }
 }
 
 @media screen and (min-width: 1040px) {
