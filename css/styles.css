@@ -72,11 +72,12 @@ ul {
 
 #back-button,
 #entry-back {
-  font-size: 2rem;
+  font-size: 1.5rem;
   background-color: white;
   border-radius: 0.6rem;
   margin-right: 0.3rem;
   border: none;
+  box-shadow: 0 1px 3px gray;
 }
 
 #entry-back {
@@ -88,7 +89,7 @@ ul {
 .arrow-row {
   display: flex;
   justify-content: center;
-  margin: 1rem 0 1rem 1rem;
+  margin: 1rem 2rem 1rem 1rem;
 }
 
 #lower-arrow-row {
@@ -100,6 +101,7 @@ ul {
   border-radius: 0.6rem;
   padding: 0 1rem;
   margin: 0 0.5rem;
+  box-shadow: 0 1px 3px gray;
 }
 
 #upper-right {
@@ -158,10 +160,6 @@ select:hover,
 #entry-back:hover,
 .spoiler-button-container {
   cursor: pointer;
-}
-
-.column:hover {
-  transform: scale(1.04);
 }
 
 .list-item:hover .column-75,
