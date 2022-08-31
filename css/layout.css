@@ -161,11 +161,12 @@ select {
 }
 
 .char-entry {
+  line-height: 1.8rem;
   margin: 1rem 0;
 }
 
-.location-entry,
 .episode-entry {
+  line-height: 1.8rem;
   margin: 0 0 1rem 0;
 }
 
