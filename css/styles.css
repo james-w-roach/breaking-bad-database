@@ -105,6 +105,11 @@ ul {
   margin-right: 0;
 }
 
+#lower-left,
+#lower-right {
+  box-shadow: 0 1px 3px #383838;
+}
+
 .la {
   font-size: 2.5rem;
 }
