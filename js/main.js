@@ -78,6 +78,26 @@ function getAPIData(category) {
 function appendLoader() {
   var $loader = document.createElement('div');
   $loader.className = 'loader';
+
+  const $loaderBrImage = document.createElement('img');
+  $loaderBrImage.className = 'loader-image';
+  $loaderBrImage.src = 'images/br-single@2x.png';
+  $loaderBrImage.id = 'br-loader';
+
+  const $loaderBaImage = document.createElement('img');
+  $loaderBaImage.className = 'loader-image';
+  $loaderBaImage.src = 'images/ba-single@2x.png';
+  $loaderBaImage.id = 'ba-loader';
+
+  const $loaderDbImage = document.createElement('img');
+  $loaderDbImage.className = 'loader-image';
+  $loaderDbImage.src = 'images/db-single@2x.png';
+  $loaderDbImage.id = 'db-loader';
+
+  $loader.appendChild($loaderBrImage);
+  $loader.appendChild($loaderBaImage);
+  $loader.appendChild($loaderDbImage);
+
   $ul.appendChild($loader);
 }
 

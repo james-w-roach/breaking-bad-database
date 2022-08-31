@@ -310,13 +310,21 @@ h1#page-title {
 }
 
 .loader {
-  margin: auto;
-  border: 15px solid white;
-  border-top: 15px solid #3f8748;
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  animation: spin 1.5s linear infinite;
+  position: absolute;
+  top: calc(50% - 30px);
+  left: calc(50% - 117.5px);
+  border: none;
+  width: 235px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loader-image {
+  width: 60px;
+  height: 60px;
+  animation: spin 1.6s linear infinite;
 }
 
 @keyframes spin {
