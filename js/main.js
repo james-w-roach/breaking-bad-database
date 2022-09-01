@@ -522,6 +522,9 @@ function showFrontPage(event) {
     if ($aboutContainer.className === 'about-container') {
       $aboutContainer.className = 'hidden';
     }
+    if (document.querySelector('.season-selector')) {
+      document.querySelector('.season-selector').remove();
+    }
   }
 }
 
@@ -558,6 +561,9 @@ function goBack(event) {
       $seriesButtons.children[0].className = 'active-category';
       $seriesButtons.children[1].className = 'inactive';
       $searchBar.className = 'row nav-row';
+      if (document.querySelector('.season-selector')) {
+        document.querySelector('.season-selector').remove();
+      }
     }
     var $aboutContainer = document.getElementById('about-container');
     if ($aboutContainer.className === 'about-container') {
@@ -638,7 +644,7 @@ $entryPage.addEventListener('click', saveEntry);
 
 function loadFavorites() {
   for (var key in data) {
-    if (key !== 'current' && key !== 'series' && key !== 'spoilers') {
+    if (key !== 'current' && key !== 'series' && key !== 'spoilers' && key !== 'bbSeason' && key !== 'bcsSeason') {
       var cat = document.createElement('li');
       cat.textContent = keyToString(key);
       cat.className = 'fav-category';
@@ -790,6 +796,9 @@ function loadCharEntry(category) {
     $upperArrows.className = 'hidden';
     $lowerArrows.className = 'hidden';
     $seriesButtons.className = 'hidden';
+    if (document.querySelector('.season-selector')) {
+      document.querySelector('.season-selector').remove();
+    }
   });
 
   xhr.send();
@@ -822,6 +831,9 @@ function loadEpEntry(series, episode) {
     } else {
       entryTree = createErrorMessage();
       $entryPage.appendChild(entryTree);
+    }
+    if (document.querySelector('.season-selector')) {
+      document.querySelector('.season-selector').remove();
     }
   });
 

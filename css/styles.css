@@ -56,7 +56,8 @@ ul {
 }
 
 .ajax-ul {
-  margin-bottom: 0;
+  margin: 0;
+  padding-top: 1rem;
 }
 
 .column100,
