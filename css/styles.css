@@ -14,6 +14,38 @@ body {
   max-width: 100%;
 }
 
+.season-selector {
+  display: flex;
+  align-items: center;
+  padding: 0 0.7rem;
+}
+
+.seasons-label {
+  color: white;
+  margin-right: 10px;
+}
+
+.season-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 0.5rem;
+  margin: 0 5px;
+  background-color: white;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.season-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.season-active {
+  background-color: #3f8748;
+  color: white;
+}
+
 .hidden {
   display: none !important;
 }

@@ -108,9 +108,18 @@ appendSeasonSelector = () => {
     $previousSelector.remove();
   }
 
+  const season = data.series === 'Breaking Bad'
+    ? 'bbSeason'
+    : 'bcsSeason';
+
   var $seasonSelector = document.createElement('div');
   $seasonSelector.className = 'season-selector';
   $seasonSelector.id = 'season-selector';
+
+  $seasonsLabel = document.createElement('h3');
+  $seasonsLabel.textContent = `Season`;
+  $seasonsLabel.className = 'seasons-label';
+  $seasonSelector.appendChild($seasonsLabel);
 
   let seasons = 5;
   if (data.series === 'Better Call Saul') {
@@ -122,7 +131,12 @@ appendSeasonSelector = () => {
   for (let i = 1; i <= seasons; i++) {
     $seasonButton = document.createElement('button');
     $seasonButton.textContent = i;
-    $seasonButton.className = 'season-button';
+    if (i === data[season]) {
+      $seasonButton.className = 'season-button season-active';
+    } else {
+      $seasonButton.className = 'season-button';
+    }
+    $seasonButton.id = `season${i}`;
     $seasonSelector.appendChild($seasonButton);
   }
 
@@ -134,7 +148,16 @@ document.addEventListener('click', event => {
     const season = data.series === 'Breaking Bad'
       ? 'bbSeason'
       : 'bcsSeason';
+
+    const $activeSeason = document.getElementById(`season${data[season]}`);
+    $activeSeason.className = 'season-button';
+
     data[season] = parseInt(event.target.textContent);
+    document.getElementById(`season${data[season]}`).className = 'season-button season-active';
+
+    const $seasonsLabel = document.querySelector('.seasons-label');
+    $seasonsLabel.textContent = `Season`;
+
     loadDOM();
   }
 });
@@ -231,10 +254,10 @@ function createDOM(object) {
       ? data.bbSeason
       : data.bcsSeason;
 
-    if (parseInt(object.season) !== season) {
-      $li.className = 'hidden';
-    } else {
+    if (parseInt(object.season) === season && object.series === series) {
       $li.className = 'list-item';
+    } else {
+      $li.className = 'hidden';
     }
 
     var $column = document.createElement('div');
