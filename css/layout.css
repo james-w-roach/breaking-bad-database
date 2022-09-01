@@ -131,8 +131,9 @@ select {
 
 .list-item {
   display: flex;
-  margin: 1rem auto;
+  margin: 1rem 0;
   transition: transform 0.3s;
+  width: 100%;
 }
 
 .column-75 {
@@ -363,7 +364,6 @@ h1#page-title {
   }
 
   .list-item {
-    width: 34rem;
     height: 12rem;
   }
 
@@ -457,12 +457,13 @@ h1#page-title {
   .ajax-ul {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 0.7rem;
   }
 
   .list-item {
     width: 21rem;
     height: 9rem;
-    margin: 1rem auto;
   }
 
   .fav-category {

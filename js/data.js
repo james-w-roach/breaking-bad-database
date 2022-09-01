@@ -2,6 +2,8 @@
 var data = {
   current: {},
   series: 'Breaking Bad',
+  bbSeason: 1,
+  bcsSeason: 1,
   spoilers: 'off',
   characters: [],
   episodes: []

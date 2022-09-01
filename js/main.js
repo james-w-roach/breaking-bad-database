@@ -32,6 +32,7 @@ function categorySelect(event) {
     $ajaxList.setAttribute('data-view', 'episode');
     $seriesButtons.className = 'series-button-row';
     showPageTitle();
+    appendSeasonSelector();
     appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
     $spoilerSwitch.className = 'spoiler-switch';
@@ -61,11 +62,11 @@ function getAPIData(category) {
   xhr.responseType = 'json';
 
   xhr.addEventListener('load', function () {
-    loadDOM();
     if (category === 'characters') {
       $upperArrows.className = 'arrow-row';
       $lowerArrows.className = 'arrow-row';
     }
+    loadDOM();
   });
 
   xhr.addEventListener('error', () => {
@@ -100,6 +101,43 @@ function appendLoader() {
 
   $ul.appendChild($loader);
 }
+
+appendSeasonSelector = () => {
+  const $previousSelector = document.querySelector('#season-selector');
+  if ($previousSelector) {
+    $previousSelector.remove();
+  }
+
+  var $seasonSelector = document.createElement('div');
+  $seasonSelector.className = 'season-selector';
+  $seasonSelector.id = 'season-selector';
+
+  let seasons = 5;
+  if (data.series === 'Better Call Saul') {
+    seasons = 4;
+  }
+
+  let $seasonButton;
+
+  for (let i = 1; i <= seasons; i++) {
+    $seasonButton = document.createElement('button');
+    $seasonButton.textContent = i;
+    $seasonButton.className = 'season-button';
+    $seasonSelector.appendChild($seasonButton);
+  }
+
+  $ajaxList.insertBefore($seasonSelector, $ajaxList.children[1]);
+};
+
+document.addEventListener('click', event => {
+  if (event.target.className === 'season-button') {
+    const season = data.series === 'Breaking Bad'
+      ? 'bbSeason'
+      : 'bcsSeason';
+    data[season] = parseInt(event.target.textContent);
+    loadDOM();
+  }
+});
 
 function showPageTitle() {
   $titleRow.className = 'title-row';
@@ -186,6 +224,18 @@ function createDOM(object) {
     $column75.appendChild($character);
   } else if (object.air_date) {
     $li.setAttribute('id', object.episode_id);
+
+    const series = data.series;
+
+    const season = series === 'Breaking Bad'
+      ? data.bbSeason
+      : data.bcsSeason;
+
+    if (parseInt(object.season) !== season) {
+      $li.className = 'hidden';
+    } else {
+      $li.className = 'list-item';
+    }
 
     var $column = document.createElement('div');
     $column.className = 'column100';
@@ -643,6 +693,7 @@ function changeSeries(event) {
     $seriesButtons.children[0].className = 'inactive';
     data.series = 'Better Call Saul';
     removeChildren($ul);
+    appendSeasonSelector();
     appendLoader();
     getAPIData('episodes?series=Better+Call+Saul');
   } else if (event.target.className === 'inactive' && event.target.textContent === 'Breaking Bad') {
@@ -650,6 +701,7 @@ function changeSeries(event) {
     $seriesButtons.children[1].className = 'inactive';
     data.series = 'Breaking Bad';
     removeChildren($ul);
+    appendSeasonSelector();
     appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
   }
