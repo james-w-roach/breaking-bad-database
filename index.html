@@ -9,63 +9,50 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" href="images/brbadb_icon.png">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Work+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost&family=Plus+Jakarta+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
   <header>
-    <div class="container">
-      <img class="main-header" src="images/BrBaDb-logoV4@2x.png">
+    <img class="main-header" src="images/BrBaDb-logoV4@2x.png">
+    <div id="search-bar" class="row nav-row">
+      <form class="search-form" action="index.html" method="get">
+        <select name="category" id="category-selector" required>
+          <option value="characters" selected="selected">Characters</option>
+          <option value="breaking-bad-episodes">Breaking Bad Episodes</option>
+          <option value="better-call-saul-episodes">Better Call Saul Episodes</option>
+        </select>
+        <div class="select-arrow-container">
+          <p class="select-arrow">▼</p>
+        </div>
+        <input type="search" name="search" id="search" placeholder="Search">
+      </form>
     </div>
   </header>
   <main>
-    <div class="container">
-      <div id="title-row" class="hidden">
-        <div class="title">
-          <button id="back-button" class="fas fa-arrow-left"></button>
-          <h1 id="page-title" class="page-title"></h1>
+    <div id="title-row" class="hidden">
+      <div class="title">
+        <button id="back-button" class="fas fa-arrow-left"></button>
+        <h1 id="page-title" class="page-title"></h1>
+      </div>
+      <div class="arrow-spoiler-container">
+        <div id="upper-arrow-row" class="hidden">
+          <div id="upper-left" class="list-arrow">
+            <i id="upper-left-arrow" class="fas fa-long-arrow-alt-left la"></i>
+          </div>
+          <div id="upper-right" class="list-arrow">
+            <i id="upper-right-arrow" class="fas fa-long-arrow-alt-right la"></i>
+          </div>
         </div>
         <div id="spoiler-switch" class="spoiler-switch">
           Spoilers
           <div class="spoiler-button-container" id="spoiler-button-container">
-            <button class="spoiler-button" id="spoiler-button">Off</button>
+            <button class="spoiler-button" id="spoiler-button">OFF</button>
           </div>
         </div>
       </div>
-      <div id="search-bar" class="row nav-row">
-        <form action="index.html" method="get">
-          <select name="category" id="category-selector" required>
-            <option value="" selected="selected">Category</option>
-            <option value="characters">Characters</option>
-            <option value="breaking-bad-episodes">Breaking Bad Episodes</option>
-            <option value="better-call-saul-episodes">Better Call Saul Episodes</option>
-          </select>
-          <input type="search" name="search" id="search" placeholder="Search">
-        </form>
-      </div>
-      <div id="front-page">
-        <div class="row">
-          <div class="column">
-            <img class="main-img" id="chars-img" src="https://img1.looper.com/img/gallery/the-real-reason-walter-white-had-to-die-in-breaking-bad/intro-1588169156.jpg">
-            <button class="button" id="chars">Characters</button>
-          </div>
-          <div class="column">
-            <img class="main-img" id="episodes-img"
-              src="https://images5.alphacoders.com/287/287897.jpg">
-            <button class="button" id="episodes">Episodes</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <img class="main-img" id="favs-img" src="images/favorites_img.png">
-            <button class="button" id="favs">Favorites</button>
-          </div>
-          <div class="column">
-            <img class="main-img" id="about-img" src="images/about_img.png">
-            <button class="button" id="about">About</button>
-          </div>
-        </div>
-      </div>
+    </div>
+    <div class="container">
       <div id="ajax-list" class="ajax-list hidden">
         <div id="series-button-row" class="series-button-row hidden">
           <button id="breaking-bad" class="active-category">Breaking Bad</button>
@@ -78,13 +65,45 @@
       <div id="entry-page" class="entry-page hidden">
 
       </div>
-      <div id="arrow-row" class="hidden">
-        <div id="left" class="list-arrow">
-          <i id="left-arrow" class="fas fa-long-arrow-alt-left la"></i>
+      <div id="about-container" class="hidden">
+        <div class="about-header-container">
+          <img src="images/BrBaDb-logoV4@2x.png" class="about-header-img">
+          <h1 class="about-header">Breaking Bad Database</h1>
         </div>
-        <div id="right" class="list-arrow">
-          <i id="right-arrow" class="fas fa-long-arrow-alt-right la"></i>
+        <p class="about">A database including all of the characters and episodes
+          from the hit TV shows Breaking Bad and Better Call Saul. Each episode and character
+          has its own page containing various tidbits of information. Pages can be accessed by clicking
+          on a category from the home page or by using the search bar. Every page can be saved to your
+          Favorites list for future reference. To prevent plot details such as character status and season
+          appearances from being spoiled, set the Spoilers button to 'Off' in the top right corner. All of
+          the information and most of the images on this site are provided by the Breaking Bad API.</p><a
+          href="https://breakingbadapi.com/">Breaking Bad API</a>
+      </div>
+      <div id="lower-arrow-row" class="hidden">
+        <div id="lower-left" class="list-arrow">
+          <i id="lower-left-arrow" class="fas fa-long-arrow-alt-left la"></i>
         </div>
+        <div id="lower-right" class="list-arrow">
+          <i id="lower-right-arrow" class="fas fa-long-arrow-alt-right la"></i>
+        </div>
+      </div>
+    </div>
+    <div id="front-page-grid" class="front-page-visible">
+      <div class="front-page-category">
+        <img class="main-img" id="chars-img" alt="Walter White" src="https://images5.alphacoders.com/114/1144071.jpg">
+        <button class="category-select" id="chars">CHARACTERS</button>
+      </div>
+      <div class="front-page-category">
+        <img class="main-img" id="episodes-img" alt="RV" src="https://images6.alphacoders.com/321/321927.jpg">
+        <button class="category-select" id="episodes">EPISODES</button>
+      </div>
+      <div class="front-page-category">
+        <img class="main-img" id="favs-img" alt="Walter and Jesse" src="https://images5.alphacoders.com/287/287897.jpg">
+        <button class="category-select" id="favs">FAVORITES</button>
+      </div>
+      <div class="front-page-category">
+        <img class="main-img" id="about-img" alt="Walter Close-Up" src="https://images7.alphacoders.com/114/1144068.jpg">
+        <button class="category-select" id="about">ABOUT</button>
       </div>
     </div>
   </main>

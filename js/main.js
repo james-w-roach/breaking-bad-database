@@ -1,21 +1,23 @@
-var $front = document.querySelector('#front-page');
+var $front = document.querySelector('#front-page-grid');
+var $container = document.querySelector('.container');
 var $ajaxList = document.querySelector('#ajax-list');
 var $ul = document.querySelector('.ajax-ul');
 var $entryPage = document.querySelector('#entry-page');
 var $back = document.querySelector('#back-button');
-var $arrows = document.querySelector('#arrow-row');
 var $searchBar = document.querySelector('#search-bar');
 var $seriesButtons = document.querySelector('#series-button-row');
 var $titleRow = document.querySelector('#title-row');
 var $pageTitle = document.querySelector('#page-title');
 var $spoilerSwitch = document.querySelector('#spoiler-switch');
 var $spoilerButton = document.querySelector('#spoiler-button');
+var $upperArrows = document.querySelector('#upper-arrow-row');
+var $lowerArrows = document.querySelector('#lower-arrow-row');
 
 var entryCounter = 0;
 var maxEntries = 22;
 
 function categorySelect(event) {
-  if (event.target.className === 'main-img' || event.target.className === 'button') {
+  if (event.target.className === 'main-img' || event.target.className === 'category-select') {
     $front.className = 'hidden';
     $ajaxList.className = 'ajax-list';
     $back.className = 'fas fa-arrow-left';
@@ -30,6 +32,7 @@ function categorySelect(event) {
     $ajaxList.setAttribute('data-view', 'episode');
     $seriesButtons.className = 'series-button-row';
     showPageTitle();
+    appendSeasonSelector();
     appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
     $spoilerSwitch.className = 'spoiler-switch';
@@ -44,7 +47,8 @@ function categorySelect(event) {
     $searchBar.className = 'row nav-row dynamic';
     $spoilerSwitch.className = 'hidden';
     showPageTitle();
-    showAbout();
+    var $aboutContainer = document.getElementById('about-container');
+    $aboutContainer.className = 'about-container';
   }
 }
 
@@ -58,10 +62,11 @@ function getAPIData(category) {
   xhr.responseType = 'json';
 
   xhr.addEventListener('load', function () {
-    loadDOM();
     if (category === 'characters') {
-      $arrows.className = 'arrow-row';
+      $upperArrows.className = 'arrow-row';
+      $lowerArrows.className = 'arrow-row';
     }
+    loadDOM();
   });
 
   xhr.addEventListener('error', () => {
@@ -74,8 +79,88 @@ function getAPIData(category) {
 function appendLoader() {
   var $loader = document.createElement('div');
   $loader.className = 'loader';
+
+  const $loaderBrImage = document.createElement('img');
+  $loaderBrImage.className = 'loader-image';
+  $loaderBrImage.src = 'images/br-single@2x.png';
+  $loaderBrImage.id = 'br-loader';
+
+  const $loaderBaImage = document.createElement('img');
+  $loaderBaImage.className = 'loader-image';
+  $loaderBaImage.src = 'images/ba-single@2x.png';
+  $loaderBaImage.id = 'ba-loader';
+
+  const $loaderDbImage = document.createElement('img');
+  $loaderDbImage.className = 'loader-image';
+  $loaderDbImage.src = 'images/db-single@2x.png';
+  $loaderDbImage.id = 'db-loader';
+
+  $loader.appendChild($loaderBrImage);
+  $loader.appendChild($loaderBaImage);
+  $loader.appendChild($loaderDbImage);
+
   $ul.appendChild($loader);
 }
+
+appendSeasonSelector = () => {
+  const $previousSelector = document.querySelector('#season-selector');
+  if ($previousSelector) {
+    $previousSelector.remove();
+  }
+
+  const season = data.series === 'Breaking Bad'
+    ? 'bbSeason'
+    : 'bcsSeason';
+
+  var $seasonSelector = document.createElement('div');
+  $seasonSelector.className = 'season-selector';
+  $seasonSelector.id = 'season-selector';
+
+  $seasonsLabel = document.createElement('h3');
+  $seasonsLabel.textContent = `Season`;
+  $seasonsLabel.className = 'seasons-label';
+  $seasonSelector.appendChild($seasonsLabel);
+
+  let seasons = 5;
+  if (data.series === 'Better Call Saul') {
+    seasons = 4;
+  }
+
+  let $seasonButton;
+
+  for (let i = 1; i <= seasons; i++) {
+    $seasonButton = document.createElement('button');
+    $seasonButton.textContent = i;
+    if (i === data[season]) {
+      $seasonButton.className = 'season-button season-active';
+    } else {
+      $seasonButton.className = 'season-button';
+    }
+    $seasonButton.id = `season${i}`;
+    $seasonSelector.appendChild($seasonButton);
+  }
+
+  $ajaxList.insertBefore($seasonSelector, $ajaxList.children[1]);
+};
+
+document.addEventListener('click', event => {
+  if (event.target.className === 'season-button') {
+    const season = data.series === 'Breaking Bad'
+      ? 'bbSeason'
+      : 'bcsSeason';
+
+    const $activeSeason = document.getElementById(`season${data[season]}`);
+    $activeSeason.className = 'season-button';
+
+    data[season] = parseInt(event.target.textContent);
+    document.getElementById(`season${data[season]}`).className = 'season-button season-active';
+
+    const $seasonsLabel = document.querySelector('.seasons-label');
+    $seasonsLabel.textContent = `Season`;
+
+    loadDOM();
+  }
+});
 
 function showPageTitle() {
   $titleRow.className = 'title-row';
@@ -107,11 +192,11 @@ function spoilerSwitch(event) {
   var button = event.target.getAttribute('id') === 'spoiler-button';
   if ((button || container) && data.spoilers === 'off') {
     $spoilerButton.className = 'spoiler-button on';
-    $spoilerButton.textContent = 'On';
+    $spoilerButton.textContent = 'ON';
     data.spoilers = 'on';
   } else if ((button || container)) {
     $spoilerButton.className = 'spoiler-button';
-    $spoilerButton.textContent = 'Off';
+    $spoilerButton.textContent = 'OFF';
     data.spoilers = 'off';
   }
 }
@@ -162,6 +247,18 @@ function createDOM(object) {
     $column75.appendChild($character);
   } else if (object.air_date) {
     $li.setAttribute('id', object.episode_id);
+
+    const series = data.series;
+
+    const season = series === 'Breaking Bad'
+      ? data.bbSeason
+      : data.bcsSeason;
+
+    if (parseInt(object.season) === season && object.series === series) {
+      $li.className = 'list-item';
+    } else {
+      $li.className = 'hidden';
+    }
 
     var $column = document.createElement('div');
     $column.className = 'column100';
@@ -395,7 +492,8 @@ function showEntry(event) {
     }
     $entryPage.appendChild(entryTree);
     $ajaxList.className = 'ajax-list hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     $titleRow.className = 'hidden';
   }
 }
@@ -404,7 +502,7 @@ $ul.addEventListener('click', showEntry);
 
 function showFrontPage(event) {
   if (event.target.className === 'main-header') {
-    $front.className = 'front-page';
+    $front.className = 'front-page-visible';
     $ajaxList.className = 'ajax-list hidden';
     removeChildren($ul);
     removeChildren($entryPage);
@@ -413,12 +511,20 @@ function showFrontPage(event) {
     $seriesButtons.className = 'hidden';
     $back.className = 'hidden';
     $titleRow.className = 'hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     entryCounter = 0;
     data.current = {};
     data.series = 'Breaking Bad';
     $seriesButtons.children[0].className = 'active-category';
     $seriesButtons.children[1].className = 'inactive';
+    var $aboutContainer = document.getElementById('about-container');
+    if ($aboutContainer.className === 'about-container') {
+      $aboutContainer.className = 'hidden';
+    }
+    if (document.querySelector('.season-selector')) {
+      document.querySelector('.season-selector').remove();
+    }
   }
 }
 
@@ -443,17 +549,25 @@ function goBack(event) {
     if ($ajaxList.className === 'ajax-list') {
       $entryPage.className = 'entry-page hidden';
       $ajaxList.className = 'ajax-list hidden';
-      $front.className = 'front-page';
+      $front.className = 'front-page-visible';
       removeChildren($ul);
       $back.className = 'hidden';
       $titleRow.className = 'hidden';
       entryCounter = 0;
-      $arrows.className = 'hidden';
+      $upperArrows.className = 'hidden';
+      $lowerArrows.className = 'hidden';
       $seriesButtons.className = 'hidden';
       data.series = 'Breaking Bad';
       $seriesButtons.children[0].className = 'active-category';
       $seriesButtons.children[1].className = 'inactive';
       $searchBar.className = 'row nav-row';
+      if (document.querySelector('.season-selector')) {
+        document.querySelector('.season-selector').remove();
+      }
+    }
+    var $aboutContainer = document.getElementById('about-container');
+    if ($aboutContainer.className === 'about-container') {
+      $aboutContainer.className = 'hidden';
     }
   } else if (id === 'entry-back') {
     if ($entryPage.className === 'entry-page' || $entryPage.className === 'entry-page fav-entry') {
@@ -461,9 +575,11 @@ function goBack(event) {
       $ajaxList.className = 'ajax-list';
       removeChildren($entryPage);
       if ($ajaxList.getAttribute('data-view') === 'character') {
-        $arrows.className = 'arrow-row';
+        $upperArrows.className = 'arrow-row';
+        $lowerArrows.className = 'arrow-row';
       } else {
-        $arrows.className = 'hidden';
+        $upperArrows.className = 'hidden';
+        $lowerArrows.className = 'hidden';
       }
       if ($ajaxList.getAttribute('data-view') !== 'favorites') {
         $searchBar.className = 'row nav-row';
@@ -471,13 +587,13 @@ function goBack(event) {
       data.current = {};
       showPageTitle();
     } else if ($entryPage.className === 'entry-page search') {
-      $front.className = 'front-page';
+      $front.className = 'front-page-visible';
       $entryPage.className = 'entry-page hidden';
       removeChildren($entryPage);
       $back.className = 'hidden';
     } else if ($ajaxList.getAttribute('data-view') === 'about') {
       $ajaxList.className = 'ajax-list hidden';
-      $front.className = 'front-page';
+      $front.className = 'front-page-visible';
       removeChildren($ul);
     }
   }
@@ -486,14 +602,16 @@ function goBack(event) {
 window.addEventListener('click', goBack);
 
 function switchList(event) {
-  if (event.target.getAttribute('id') === 'right' || event.target.getAttribute('id') === 'right-arrow') {
+  if (event.target.getAttribute('id') === 'upper-right' || event.target.getAttribute('id') === 'upper-right-arrow' || event.target.getAttribute('id') === 'lower-right' || event.target.getAttribute('id') === 'lower-right-arrow') {
     if (entryCounter !== 44) {
       entryCounter += maxEntries;
+      window.scrollTo(0, 0);
     }
   }
-  if (event.target.getAttribute('id') === 'left' || event.target.getAttribute('id') === 'left-arrow') {
+  if (event.target.getAttribute('id') === 'upper-left' || event.target.getAttribute('id') === 'upper-left-arrow' || event.target.getAttribute('id') === 'lower-left' || event.target.getAttribute('id') === 'lower-left-arrow') {
     if (entryCounter !== 0) {
       entryCounter -= maxEntries;
+      window.scrollTo(0, 0);
     }
   }
   for (var i = 0; i < $ul.children.length; i++) {
@@ -508,7 +626,8 @@ function switchList(event) {
   }
 }
 
-$arrows.addEventListener('click', switchList);
+$upperArrows.addEventListener('click', switchList);
+$lowerArrows.addEventListener('click', switchList);
 
 function saveEntry(event) {
   if (event.target.getAttribute('id') === 'save-button') {
@@ -523,32 +642,9 @@ function saveEntry(event) {
 
 $entryPage.addEventListener('click', saveEntry);
 
-function showAbout() {
-  var $li = document.createElement('li');
-  $li.className = 'entry';
-
-  var $message = document.createElement('p');
-  $message.className = 'message';
-  $message.textContent = `A database including all of the characters and episodes
-  from the hit TV shows Breaking Bad and Better Call Saul. Each episode and character
-   has its own page containing various tidbits of information. Pages can be accessed by clicking
-   on a category from the home page or by using the search bar. Every page can be saved to your
-   Favorites list for future reference. To prevent plot details such as character status and season
-   appearances from being spoiled, set the Spoilers button to 'Off' in the top right corner. All of
-   the information and most of the images on this site are provided by the Breaking Bad API.`;
-  $li.appendChild($message);
-
-  var $link = document.createElement('a');
-  $link.textContent = 'Breaking Bad API';
-  $link.setAttribute('href', 'https://breakingbadapi.com/');
-  $li.appendChild($link);
-
-  $ul.appendChild($li);
-}
-
 function loadFavorites() {
   for (var key in data) {
-    if (key !== 'current' && key !== 'series' && key !== 'spoilers') {
+    if (key !== 'current' && key !== 'series' && key !== 'spoilers' && key !== 'bbSeason' && key !== 'bcsSeason') {
       var cat = document.createElement('li');
       cat.textContent = keyToString(key);
       cat.className = 'fav-category';
@@ -626,6 +722,7 @@ function changeSeries(event) {
     $seriesButtons.children[0].className = 'inactive';
     data.series = 'Better Call Saul';
     removeChildren($ul);
+    appendSeasonSelector();
     appendLoader();
     getAPIData('episodes?series=Better+Call+Saul');
   } else if (event.target.className === 'inactive' && event.target.textContent === 'Breaking Bad') {
@@ -633,6 +730,7 @@ function changeSeries(event) {
     $seriesButtons.children[1].className = 'inactive';
     data.series = 'Breaking Bad';
     removeChildren($ul);
+    appendSeasonSelector();
     appendLoader();
     getAPIData('episodes?series=Breaking+Bad');
   }
@@ -645,6 +743,10 @@ var $categoryInput = document.querySelector('#category-selector');
 
 function searchAPI(event) {
   event.preventDefault();
+  var $aboutContainer = document.getElementById('about-container');
+  if ($aboutContainer.className === 'about-container') {
+    $aboutContainer.className = 'hidden';
+  }
   var newString = convertStringToAPI($searchInput.value);
   if ($categoryInput.value === 'characters') {
     loadCharEntry('characters?name=' + newString);
@@ -691,8 +793,12 @@ function loadCharEntry(category) {
     $entryPage.appendChild(entryTree);
     data.current = xhr.response[0];
     $front.className = 'hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     $seriesButtons.className = 'hidden';
+    if (document.querySelector('.season-selector')) {
+      document.querySelector('.season-selector').remove();
+    }
   });
 
   xhr.send();
@@ -717,13 +823,17 @@ function loadEpEntry(series, episode) {
     $back.className = 'fas fa-arrow-left';
     $titleRow.className = 'hidden';
     $front.className = 'hidden';
-    $arrows.className = 'hidden';
+    $upperArrows.className = 'hidden';
+    $lowerArrows.className = 'hidden';
     $seriesButtons.className = 'hidden';
     if (entryTree) {
       $entryPage.appendChild(entryTree);
     } else {
       entryTree = createErrorMessage();
       $entryPage.appendChild(entryTree);
+    }
+    if (document.querySelector('.season-selector')) {
+      document.querySelector('.season-selector').remove();
     }
   });
 
