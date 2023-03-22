@@ -2,6 +2,10 @@
 
 A database including all of the characters and episodes from the hit TV shows Breaking Bad and Better Call Saul. Each episode and character has its own page containing various tidbits of information. Users can easily access these pages by using the included search bar, and every page can be saved to a "Favorites" list for future reference. All of the information and most of the images on this site have been provided by the Breaking Bad API. I plan on continuing to implement more information from the API in the near future, including character quotes.
 
+# API Notice ⚠️
+
+The Breaking Bad API is no longer available. As a result, the Breaking Bad Database live site is currently down.
+
 ## Spoiler Support
 
 This site contains major spoilers for both Breaking Bad and Better Call Saul. To ensure major plot details are not spoiled, set the Spoiler button to 'Off'. The spoiler button can be found in the top right corner of the Characters, Episodes, and Favorites pages.
